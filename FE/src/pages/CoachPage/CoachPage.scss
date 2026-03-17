@@ -1,0 +1,113 @@
+.coach-page-container {
+  padding: 20px;
+  max-width: 1200px; /* Adjust as needed */
+  margin: 0 auto;
+  font-family: Arial, sans-serif; /* Using a common fallback font */
+}
+
+.coaching-team-title {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2.5em;
+  color: #333;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Vertically center items */
+  margin-bottom: 40px;
+  gap: 20px;
+}
+
+.search-input {
+  padding: 12px 20px; /* Increased padding */
+  border: 1px solid #e0e0e0; /* Lighter border */
+  border-radius: 25px 0 0 25px; /* More rounded */
+  outline: none;
+  width: 600px !important; /* Added !important to try and override */
+  font-size: 1em;
+}
+
+.search-button {
+  padding: 12px 20px; /* Increased padding */
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 35px; /* More rounded */
+  cursor: pointer;
+  display: flex; /* Use flex to center arrow */
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2em;
+}
+
+.coach-heading {
+  margin-bottom: 20px;
+  font-size: 1.8em;
+  color: #333;
+}
+
+.coach-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjusted min width */
+  gap: 40px; /* Increased gap */
+  margin-bottom: 40px;
+}
+
+.coach-card {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 20px; /* Increased padding */
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Added subtle shadow */
+  background-color: #fff;
+}
+
+.coach-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px; /* Slightly more rounded corners */
+  margin-bottom: 15px; /* Increased margin */
+}
+
+.coach-name {
+  font-size: 1.2em; /* Slightly larger font */
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.coach-title {
+  font-size: 1em; /* Slightly larger font */
+  color: #666; /* Slightly darker color */
+  margin-bottom: 10px;
+}
+
+.coach-rating {
+  font-size: 1em; /* Slightly larger font */
+  color: #ffc107; /* Yellow color for stars */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.coach-rating span:first-child {
+    margin-right: 5px;
+}
+
+.more-button {
+  display: block;
+  margin: 30px auto; /* Adjusted margin */
+  padding: 12px 40px; /* Increased padding */
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 25px; /* More rounded */
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.more-button:hover {
+  background-color: #333;
+}

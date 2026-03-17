@@ -1,0 +1,101 @@
+.achievement-section {
+  padding: 20px;
+  text-align: center;
+  h1 {
+    font-size: 3em;
+    color: black; // Reddish color for title
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  h2 {
+    font-size: 50px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 16px;
+    color: BLACK;
+    margin-bottom: 20px;
+  }
+  .full-badge {
+    background-color: #ffffff;
+    font-size: 50px;
+    margin-bottom: 10px;
+    text-align: left;
+    padding: 40px;
+    max-width: 1500px;
+    border-radius: 20px;
+    margin: auto; /* Center the block and add vertical margin */
+
+    h3 {
+      font-weight: 400;
+      font-size: 30px; /* Adjust font size as needed */
+      margin-bottom: 30px;
+    }
+  }
+}
+
+.badge-section-content {
+  max-width: 900px; /* Limit the width of the content */
+  margin: 20px auto; /* Center the content block and add vertical margin */
+  text-align: left; /* Align text within this section to the left */
+
+  h2 {
+    font-size: 20px; /* Slightly smaller than main title */
+    margin-bottom: 15px; /* Space below the heading */
+    color: #333; /* Darker color for section heading */
+  }
+}
+
+.badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Adjust spacing as needed */
+  justify-content: center; /* Center the badges within the flex container */
+  margin-top: 0; /* Remove top margin as it's handled by badge-section-content */
+
+  /* Optional: styles for responsive layout if needed */
+  @media (min-width: 768px) {
+    display: flex; /* Keep flex for horizontal layout */
+    grid-template-columns: none; /* Remove grid styles */
+    justify-content: center; /* Ensure centering on larger screens */
+  }
+}
+
+.upcoming-badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Adjust spacing as needed */
+  justify-content: center; /* Center the badges within the flex container */
+  margin-top: 20px; /* Add some space above the upcoming badge list */
+}
+
+.badge-frame {
+  // This class might not be needed anymore if we use badge-section-content
+  // Review and potentially remove if redundant.
+  border: 1px solid #a7d3ff; /* Light blue border */
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px; /* Padding inside the frame */
+  margin-top: 30px; /* Space above the frame */
+  max-width: 900px; /* Limit the width of the frame */
+  margin-left: auto; /* Center the frame */
+  margin-right: auto; /* Center the frame */
+  background-color: #ffffff; /* White background for the frame */
+}
+
+.upcoming-badge-section {
+  background-color: #ffffff;
+  margin-top: 20px; /* Add space between achieved and upcoming sections */
+  text-align: left;
+  padding: 40px;
+  max-width: 1500px;
+  border-radius: 20px;
+  margin: 20px auto; /* Center the block and add vertical margin */
+
+  h3 {
+    font-weight: 400;
+    font-size: 30px; /* Adjust font size as needed */
+    margin-bottom: 20px; /* Add space below the title */
+  }
+}

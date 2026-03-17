@@ -1,0 +1,71 @@
+.implementation-time-container {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 960px;
+  margin: 20px auto;
+}
+
+.implementation-time-container h2 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+
+  font-size: 1.5em;
+  color: #333;
+}
+
+.date-inputs-container {
+  display: flex;
+  gap: 50px; /* Space between the two date inputs */
+  justify-content: center; /* Center the two date input groups */
+}
+
+.date-input-group {
+  display: flex; /* Make the group a flex container */
+  flex-direction: column; /* Stack label and input vertically */
+  align-items: center; /* Center content horizontally within the group */
+}
+
+.date-input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.date-input-group input[type="text"] {
+  width: 100%;
+  padding: 10px 50px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.input-icon-container {
+  position: relative;
+  display: flex; /* Use flex to align input and icon */
+  align-items: center;
+}
+
+.input-icon-container input[type="text"] {
+  flex-grow: 1; /* Allow input to take up remaining space */
+  padding-right: 30px; /* Add padding to the right for the icon */
+}
+
+/* Style for the react-datepicker input */
+.date-input {
+  width: 200px; /* Set a specific width for the date input */
+  padding: 10px; /* Keep existing padding or adjust as needed */
+  border: 1px solid #ccc; /* Keep existing border or adjust */
+  border-radius: 4px; /* Keep existing border-radius or adjust */
+  box-sizing: border-box; /* Ensure padding and border are included in width */
+}
+
+.calendar-icon-2 {
+  position: absolute;
+  right: 10px; /* Adjust the right position as needed */
+  cursor: pointer; /* Indicate it's clickable */
+  color: #555; /* Adjust color as needed */
+}

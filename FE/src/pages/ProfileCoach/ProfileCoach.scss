@@ -1,0 +1,227 @@
+.profile-coach-container {
+  padding: 20px;
+  max-width: 900px; /* Adjust as needed */
+  margin: 0 auto; /* Keep auto margin for horizontal centering of the whole container */
+  font-family: Arial, sans-serif; /* Using a common fallback font */
+  text-align: left; /* Add text-align left to the container as a general rule */
+}
+
+.profile-header {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 30px;
+  width: 100%; /* Ensure it takes full width if its parent allows */
+}
+
+.profile-image-container {
+  margin-right: 30px;
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.profile-image {
+  width: 180px; /* Adjust size as needed */
+  height: 180px; /* Adjust size as needed */
+  border-radius: 50%; /* Make it round */
+  object-fit: cover; /* Ensure image covers the area */
+  border: 5px solid #f0f0f0; /* Optional subtle border */
+}
+
+.profile-info {
+  flex-grow: 1;
+  text-align: left;
+  padding-left: 0; /* Explicitly remove left padding */
+  margin-left: 0; /* Explicitly remove left margin */
+}
+
+.coach-name {
+  font-size: 2em;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.coach-detail {
+  font-size: 1em;
+  margin-bottom: 5px;
+  color: #555;
+  padding-left: 0;
+  margin-left: 0;
+  display: block !important; /* Use !important to override conflicting styles */
+}
+
+.coach-detail .highlight {
+  color: #a3643d; /* Highlight color from the image */
+  font-weight: bold;
+}
+
+.coach-rating {
+  font-size: 1em;
+  color: #ffc107;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 0; /* Explicitly remove left padding */
+  margin-left: 0; /* Explicitly remove left margin */
+}
+
+.coach-rating span:first-child {
+  margin-right: 5px;
+}
+
+.book-button {
+  padding: 10px 30px;
+  background-color: #9c7055; /* Red color from the image */
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: background-color 0.3s ease;
+}
+
+.book-button:hover {
+  background-color: #8d5e41; /* Darker red on hover */
+}
+
+.profile-description {
+  margin-bottom: 40px;
+  line-height: 1.6;
+  color: #444;
+}
+
+.profile-description p {
+    margin-bottom: 15px; /* Space between paragraphs */
+}
+
+.suggested-coaches-section {
+  margin-top: 30px;
+}
+
+.suggested-heading {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.suggested-coaches-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Adjust min width as needed */
+  gap: 20px; /* Space between suggested coach cards */
+  margin-bottom: 30px;
+}
+
+/* Reuse styles from CoachPage for suggested coach cards if they are the same */
+.coach-card {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* Lighter shadow */
+  background-color: #fff;
+}
+
+.coach-image {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.coach-name {
+  font-size: 1.1em;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.coach-title {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+/* Note: The coach-rating style is already defined above and reused */
+
+.more-button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 30px;
+  background-color: black; /* Black background for this button */
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.more-button:hover {
+  background-color: #333;
+}
+
+.chat-box {
+  position: fixed; /* Fixed position relative to the viewport */
+  bottom: 20px; /* Distance from the bottom */
+  right: 20px; /* Distance from the right */
+  width: 300px; /* Adjust width as needed */
+  height: 400px; /* Adjust height as needed */
+  background-color: #fff; /* White background */
+  border: 1px solid #ccc; /* Border */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  display: flex; /* Use flexbox for internal layout */
+  flex-direction: column; /* Stack header, body, and input vertically */
+  overflow: hidden; /* Hide anything outside the rounded corners */
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.chat-header {
+  padding: 10px;
+  background-color: #f0f0f0; /* Light grey header */
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between; /* Space out title and close button */
+  align-items: center;
+  font-weight: bold;
+}
+
+.chat-header button {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.chat-body {
+  flex-grow: 1; /* Allow body to take up available space */
+  padding: 10px;
+  overflow-y: auto; /* Add scroll if content overflows */
+  /* Styles for messages will go here */
+}
+
+.chat-input {
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  display: flex;
+}
+
+.chat-input input {
+  flex-grow: 1; /* Allow input to take up available space */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+  outline: none;
+}
+
+.chat-input button {
+  padding: 8px 15px;
+  background-color: #9c7055; /* Match book button color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.chat-input button:hover {
+  background-color: #7c4a2b; /* Darker red on hover */
+}

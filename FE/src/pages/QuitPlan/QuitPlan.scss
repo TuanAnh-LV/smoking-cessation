@@ -1,0 +1,151 @@
+.quit-plan-page {
+  min-height: 100vh;
+  padding: 40px 0;
+  text-align: center;
+
+  .title {
+    color: black;
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    color: #222;
+    font-size: 1.1rem;
+    margin-bottom: 32px;
+  }
+  .form-grid {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  
+  .reasons-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    text-align: left;
+
+    .reasons-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+
+      .icon {
+        font-size: 1.7rem;
+        margin-right: 10px;
+        color: #ff5c5c;
+      }
+      .reasons-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+      }
+    }
+
+    .reasons-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px 32px;
+      margin-bottom: 18px;
+
+      .reason-item {
+        flex: 1 1 45%;
+        display: flex;
+        align-items: center;
+        font-size: 1.08rem;
+        font-weight: 500;
+        margin-bottom: 6px;
+        input[type="checkbox"] {
+          width: 22px;
+          height: 22px;
+          margin-right: 10px;
+        }
+      }
+    }
+
+    .reasons-textarea {
+      width: 100%;
+      min-height: 70px;
+      border-radius: 10px;
+      border: 1px solid #eee;
+      padding: 12px 14px;
+      font-size: 1rem;
+      resize: vertical;
+      margin-top: 8px;
+    }
+  }
+  .goal-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    text-align: left;
+    flex: 1 1 48%;
+    min-width: 300px;
+  
+    h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+  
+    .goal-select {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+    }
+  
+    h4 {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+  
+    .note-textarea {
+      width: 100%;
+      min-height: 70px;
+      border-radius: 10px;
+      border: 1px solid #eee;
+      padding: 12px 14px;
+      font-size: 1rem;
+      resize: vertical;
+      margin-top: 8px;
+    }
+  }
+}
+    .suggestion-box {
+      background-color: #fff8e1;
+      border-left: 5px solid #ff9800;
+      padding: 12px 16px;
+      margin: 16px 0;
+      font-style: italic;
+      color: #444;
+      border-radius: 4px;
+    }
+  
+    .save-button {
+      background-color: #000;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: background-color 0.3s ease;
+      
+        &:hover {
+          background-color: #333;
+        }
+    }
+  
+    .save-button:disabled {
+      background-color: #999;
+      cursor: not-allowed; }
+}

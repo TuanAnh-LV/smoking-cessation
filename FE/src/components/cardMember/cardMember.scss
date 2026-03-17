@@ -1,0 +1,294 @@
+.card-member-section {
+  margin-bottom: 80px;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+
+    h2 {
+      font-size: 64px;
+      font-weight: 600;
+      color: #804622;
+      margin-bottom: 50px;
+    }
+
+    .cards-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .member-card {
+      background-color: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 350px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+
+      .package-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 20px;
+
+        .package-title,
+        .package-title-2 {
+          font-size: 18px;
+          font-weight: 600;
+          color: #9c7055;
+          background-color: #ede0cf;
+          padding: 4px 12px;
+          border-radius: 15px;
+        }
+
+        .package-badge {
+          font-size: 14px;
+          font-weight: 500;
+          color: red;
+        }
+      }
+
+      .package-price {
+        font-size: 40px;
+        font-weight: bold;
+        color: #000;
+        margin-bottom: 10px;
+
+        &.free {
+          color: #000;
+        }
+      }
+
+      .package-description {
+        font-size: 15px;
+        color: #666;
+        line-height: 1.4;
+        margin-bottom: 20px;
+        flex-grow: 1;
+      }
+
+      .package-features {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 30px;
+        width: 100%;
+
+        li {
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+          font-size: 15px;
+          color: #333;
+
+          .check-icon {
+            margin-right: 10px;
+          }
+        }
+      }
+
+      .package-button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        background-color: #000;
+        color: white;
+
+        &:hover {
+          background-color: #333;
+        }
+
+        &.primary {
+          background-color: #ff2d55;
+          color: white;
+
+          &:hover {
+            background-color: rgb(201, 145, 145);
+          }
+        }
+
+        &.super {
+          background-color: white;
+          color: black;
+          border: 1px solid #d7d7d7;
+
+          &:hover {
+            color: white;
+            background-color: #865b40;
+          }
+        }
+
+        // ✅ Style cho nút bị disable
+        &:disabled {
+          background-color: #ccc !important;
+          color: #888 !important;
+          cursor: not-allowed;
+          pointer-events: none;
+          position: relative;
+
+          &::after {
+            content: "";
+            font-size: 14px;
+          }
+        }
+      }
+
+      &.monthly {
+        background-color: white;
+
+        .package-title {
+          background-color: #f9dedc;
+        }
+
+        .package-price {
+          color: black;
+        }
+      }
+
+      &.yearly {
+        .package-price {
+          color: black;
+        }
+      }
+    }
+  }
+}
+
+// Responsive for tablets
+@media (max-width: 768px) {
+  .card-member-section {
+    padding: 60px 0;
+
+    h2 {
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+
+    .cards-container {
+      gap: 20px;
+    }
+
+    .member-card {
+      max-width: 300px;
+      padding: 25px;
+
+      .package-header {
+        margin-bottom: 15px;
+
+        .package-title {
+          font-size: 16px;
+          padding: 6px 12px;
+        }
+
+        .package-badge {
+          font-size: 12px;
+        }
+      }
+
+      .package-price {
+        font-size: 32px;
+        margin-bottom: 8px;
+      }
+
+      .package-description {
+        font-size: 14px;
+        margin-bottom: 15px;
+      }
+
+      .package-features {
+        margin-bottom: 20px;
+
+        li {
+          font-size: 14px;
+          margin-bottom: 8px;
+
+          .check-icon {
+            margin-right: 8px;
+          }
+        }
+      }
+
+      .package-button {
+        padding: 10px;
+        font-size: 15px;
+      }
+    }
+  }
+}
+
+// Responsive for mobile
+@media (max-width: 480px) {
+  .card-member-section {
+    padding: 40px 0;
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .cards-container {
+      gap: 15px;
+    }
+
+    .member-card {
+      max-width: 100%;
+      padding: 20px;
+
+      .package-header {
+        margin-bottom: 10px;
+
+        .package-title {
+          font-size: 15px;
+          padding: 5px 10px;
+        }
+
+        .package-badge {
+          font-size: 11px;
+        }
+      }
+
+      .package-price {
+        font-size: 28px;
+        margin-bottom: 6px;
+      }
+
+      .package-description {
+        font-size: 13px;
+        margin-bottom: 10px;
+      }
+
+      .package-features {
+        margin-bottom: 15px;
+
+        li {
+          font-size: 13px;
+          margin-bottom: 6px;
+
+          .check-icon {
+            margin-right: 6px;
+          }
+        }
+      }
+
+      .package-button {
+        padding: 8px;
+        font-size: 14px;
+      }
+    }
+  }
+}

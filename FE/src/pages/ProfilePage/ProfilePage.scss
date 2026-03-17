@@ -1,0 +1,128 @@
+/** Google Fonts import (thêm vào đầu file SCSS, dùng @import hoặc nhúng vào index.html nếu cần) */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap");
+
+.profile-section {
+  min-height: 80vh;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Montserrat", Arial, sans-serif;
+}
+
+.profile-card {
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+  position: relative;
+  transition: none;
+}
+
+.profile-avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: none;
+  margin-bottom: 18px;
+  box-shadow: none;
+  transition: none;
+}
+
+.profile-name {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #22223b;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.profile-username {
+  color: #634928;
+  background: #ede0cf;
+  border-radius: 12px;
+  display: inline-block;
+  padding: 2px 16px;
+  font-size: 1rem;
+  margin-bottom: 18px;
+  opacity: 0.8;
+}
+
+.profile-info {
+  text-align: center;
+  margin-bottom: 22px;
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+.profile-info div {
+  margin-bottom: 8px;
+  color: #22223b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-info span {
+  font-weight: 400;
+  color: #22223b;
+  margin-right: 8px;
+  min-width: unset;
+  display: inline;
+}
+
+.profile-info p {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-edit-btn {
+  background: #ede0cf;
+  color: #22223b;
+  border: 1px solid #d1d1d1;
+  border-radius: 20px;
+  padding: 8px 22px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+  box-shadow: none;
+  letter-spacing: 0.5px;
+  margin-top: 10px;
+}
+
+.profile-edit-btn:hover {
+  background: #756043;
+  color: black;
+  border: 1px solid #ede0cf;
+  box-shadow: none;
+  transform: scale(1.04);
+}
+
+@media (max-width: 600px) {
+  .profile-section {
+    padding: 16px 0;
+  }
+  .profile-card {
+    padding: 0;
+    max-width: 98vw;
+  }
+  .profile-avatar {
+    width: 90px;
+    height: 90px;
+  }
+  .profile-name {
+    font-size: 1.2rem;
+  }
+  .profile-edit-btn {
+    padding: 8px 14px;
+    font-size: 0.95rem;
+  }
+}

@@ -1,0 +1,262 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 80px;
+
+  .error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 14px;
+    border: 1px solid #ffcdd2;
+  }
+}
+
+.login-container {
+  background-color: #fff; // White background for the container
+  padding: 60px; // Increased padding
+  border-radius: 40px; // Slightly rounded corners for the container if needed, although the image looks sharp-edged.
+  text-align: center; // Center content inside the container
+  width: 100%;
+  max-width: 639px; // Increased maximum width
+
+  gap: 32px;
+}
+
+.main-title {
+  font-size: 50px;
+  font-weight: 500;
+  color: #000; // Black color
+  margin-bottom: 20px; // Increased bottom margin
+}
+
+.subtitle {
+  font-size: 18px; // Increased font size
+  color: #666; // Gray color
+  margin-bottom: 40px; // Increased bottom margin
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px; // Increased space between form groups
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left; // Align labels and inputs to the left
+
+    label {
+      font-size: 16px; // Increased label font size
+      color: #000; // Black color
+      margin-bottom: 5px;
+      font-weight: 500; // Medium weight for labels
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      padding: 15px 20px; // Increased padding
+      border: 1px solid #e0e0e0; // Light gray border
+      border-radius: 25px; // Highly rounded corners
+      font-size: 18px; // Increased input font size
+      color: #333; // Dark gray for input text
+      background-color: #f8f8f8; // Light gray background
+      width: 100%;
+      box-sizing: border-box; // Include padding in width
+
+      &::placeholder {
+        color: #aaa; // Lighter gray for placeholder
+      }
+
+      &:focus {
+        outline: none;
+        border-color: #ff2d55; // Pink border on focus
+        box-shadow: 0 0 5px rgba(255, 133, 218, 0.3); // Pink shadow on focus
+      }
+    }
+
+    .password-input-wrapper {
+      position: relative; // Needed to position the icon inside
+      display: flex;
+      align-items: center;
+
+      input[type="password"] {
+        padding-right: 50px; // Make space for the icon
+      }
+
+      .eye-icon {
+        position: absolute;
+        right: 20px; // Adjust icon position
+        color: #aaa; // Gray color for the icon
+        cursor: pointer; // Indicate it's clickable
+        font-size: 20px; // Increased icon size
+      }
+    }
+  }
+
+  .forgot-password {
+    font-size: 16px; // Increased font size
+    color: #ff2d55; // Pink color
+    text-decoration: none; // Remove underline
+    text-align: right; // Align to the right
+    margin-bottom: 30px; // Increased bottom margin
+
+    &:hover {
+      text-decoration: underline; // Underline on hover
+    }
+  }
+
+  .login-button {
+    display: block;
+    width: 100%;
+    padding: 15px; // Increased padding
+    background-color: #ff2d55; // Pink background
+    color: white; // White text
+    border: none;
+    border-radius: 25px; // Highly rounded corners
+    font-size: 18px; // Increased font size
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 30px; // Increased bottom margin
+
+    &:hover {
+      background-color: #fa012f; // Darker pink on hover
+    }
+  }
+
+  .social-login-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 30px 0; // Increased vertical margin
+    color: #666; // Gray color for text
+    font-size: 16px; // Increased font size
+
+    &::before,
+    &::after {
+      content: "";
+      flex: 1;
+      border-bottom: 1px solid #e0e0e0; // Light gray line
+      margin: 0 10px;
+    }
+  }
+
+  .google-login-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px; // Increased size
+    height: 60px; // Increased size
+    background-color: #fff; // White background
+    border: 1px solid #e0e0e0; // Light gray border
+    border-radius: 50%; // Circular shape
+    cursor: pointer;
+    margin: 0 auto 30px auto; // Increased bottom margin
+
+    .google-icon {
+      font-size: 30px; // Increased icon size
+    }
+
+    &:hover {
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); // Subtle shadow on hover
+    }
+  }
+
+  .signup-link {
+    font-size: 16px; // Increased font size
+    color: #666; // Gray color
+
+    a {
+      color: #ff2d55; // Pink color for the link
+      text-decoration: none; // Remove underline
+
+      &:hover {
+        text-decoration: underline; // Underline on hover
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 480px) {
+  .login-page {
+    padding: 15px;
+  }
+
+  .login-container {
+    padding: 30px; // Adjusted padding for smaller screens
+  }
+
+  .main-title {
+    font-size: 48px; // Adjusted font size for smaller screens
+    margin-bottom: 15px;
+  }
+
+  .subtitle {
+    font-size: 16px; // Adjusted font size for smaller screens
+    margin-bottom: 25px;
+  }
+
+  .login-form {
+    gap: 20px; // Adjusted gap for smaller screens
+
+    .form-group {
+      label {
+        font-size: 14px; // Adjusted font size for smaller screens
+      }
+
+      input[type="email"],
+      input[type="password"] {
+        padding: 12px 15px; // Adjusted padding for smaller screens
+        font-size: 16px; // Adjusted font size for smaller screens
+
+        .password-input-wrapper {
+          input[type="password"] {
+            padding-right: 40px;
+          }
+
+          .eye-icon {
+            right: 15px;
+            font-size: 18px;
+          }
+        }
+      }
+    }
+
+    .forgot-password {
+      font-size: 14px; // Adjusted font size for smaller screens
+      margin-bottom: 20px;
+    }
+
+    .login-button {
+      padding: 12px; // Adjusted padding for smaller screens
+      font-size: 16px; // Adjusted font size for smaller screens
+      margin-bottom: 20px;
+    }
+
+    .social-login-divider {
+      margin: 20px 0; // Adjusted margin for smaller screens
+      font-size: 14px; // Adjusted font size for smaller screens
+    }
+
+    .google-login-button {
+      width: 50px; // Adjusted size for smaller screens
+      height: 50px; // Adjusted size for smaller screens
+      margin: 0 auto 20px auto; // Adjusted margin for smaller screens
+
+      .google-icon {
+        font-size: 24px; // Adjusted icon size for smaller screens
+      }
+    }
+
+    .signup-link {
+      font-size: 14px; // Adjusted font size for smaller screens
+    }
+  }
+}

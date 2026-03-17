@@ -1,0 +1,206 @@
+.transaction-history-container {
+  padding: 25px;
+  background-color: #f7f7f7; /* Slightly lighter background */
+}
+
+.header-transaction {
+  padding: 0px;
+  box-shadow: none;
+  margin-bottom: 25px; /* More space below header */
+}
+
+.header-transaction h1 {
+  font-size: 28px; /* Larger title */
+  font-weight: 700;
+  color: #343a40; /* Darker title color */
+  margin-bottom: 5px;
+}
+
+.header-transaction p {
+  font-size: 16px; /* Larger subtitle */
+  color: #6c757d; /* Medium grey color */
+  margin-bottom: 0;
+}
+
+.summary-cards {
+  display: flex;
+  gap: 25px; /* More space between cards */
+  margin-bottom: 25px;
+}
+
+.summary-card {
+  flex: 1;
+  background-color: #fff;
+  padding: 20px 25px; /* Increased horizontal padding */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Softer, slightly larger shadow */
+}
+
+.summary-card h3 {
+  font-size: 15px; /* Slightly larger title */
+  color: #adb5bd; /* Lighter grey */
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600; /* Semi-bold */
+}
+
+.summary-card p {
+  font-size: 32px; /* Even larger number */
+  font-weight: 700;
+  color: #212529; /* Dark color for numbers */
+}
+
+.summary-card:first-child p {
+  color: #28a745; /* Green for total spending */
+}
+
+.summary-card:last-child p {
+  color: #28a745; /* Green for successful transactions */
+}
+
+.transaction-list {
+  background-color: #fff;
+  padding: 20px 25px; /* Increased horizontal padding */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Softer, slightly larger shadow */
+}
+
+.transaction-list h2 {
+  font-size: 22px; /* Larger heading */
+  font-weight: 700;
+  color: #343a40;
+  margin-bottom: 20px; /* More space below heading */
+}
+
+.controls {
+  display: flex;
+  gap: 15px; /* More space between controls */
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.controls input[type="text"],
+.controls select {
+  padding: 10px 15px; /* Increased padding */
+  border: 1px solid #dee2e6; /* Lighter border */
+  border-radius: 5px;
+  font-size: 15px;
+  color: #495057;
+}
+
+.controls input[type="text"] {
+  flex-grow: 1;
+}
+
+.controls select {
+  min-width: 200px; /* Wider select */
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23495057%22%20d%3D%22M7%2010l5%205%205-5z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px top 50%; /* Adjust arrow position */
+  background-size: 16px auto; /* Adjust arrow size */
+  padding-right: 40px; /* Make space for arrow */
+  cursor: pointer;
+}
+
+.controls button {
+  padding: 10px 20px; /* Increased padding */
+  background-color: #e9ecef;
+  color: #495057;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+  transition: background-color 0.2s ease; /* Smooth hover */
+}
+
+.controls button:hover {
+  background-color: #dee2e6;
+  border-color: #ced4da;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px; /* More space above table */
+}
+
+th,
+td {
+  text-align: left;
+  padding: 15px 15px; /* More padding */
+  border-bottom: 1px solid #e9ecef; /* Very light grey border */
+}
+
+th {
+  background-color: #f8f9fa;
+  font-size: 14px; /* Slightly larger header font */
+  font-weight: 600;
+  color: #495057;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+td {
+  font-size: 15px; /* Slightly larger data font */
+  color: #343a40; /* Darker text color */
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:not(:last-child):hover {
+  background-color: #f8f9fa;
+}
+
+.amount-positive {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.amount-negative {
+  color: #dc3545; /* Red */
+  font-weight: 600;
+}
+
+td:nth-child(6) {
+  /* Status column */
+  text-align: center;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 14px; /* More padding */
+  border-radius: 20px; /* More rounded */
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-align: center;
+  min-width: 80px; /* Minimum width for badges */
+}
+
+.status-badge.completed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-badge.refunded {
+  background-color: #cfe2ff;
+  color: #084298;
+}
+
+.status-badge.processing {
+  background-color: #fff3cd;
+  color: #664d03;
+}
+
+input::placeholder {
+  color: #adb5bd;
+  opacity: 1;
+}

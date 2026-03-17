@@ -1,0 +1,144 @@
+/* BlogPost.scss */
+
+.blog-post {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+
+  .avatar {
+    background-color: #9c7055;
+    color: #fff;
+  }
+
+  .author {
+    font-weight: 600;
+  }
+
+  .date {
+    font-size: 0.85rem;
+    color: #888;
+  }
+}
+
+.post-title {
+  margin: 8px 0 4px 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.post-description {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.post-tags {
+  margin-bottom: 12px;
+
+  .ant-tag {
+    margin-right: 8px;
+  }
+}
+
+.post-content {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  white-space: pre-wrap;
+}
+
+.post-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 12px 0;
+
+  img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px #ddd;
+  }
+}
+
+.post-actions {
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+
+  .like-btn {
+    cursor: pointer;
+    user-select: none;
+
+    &.liked {
+      color: red;
+    }
+  }
+}
+
+.comment-section {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+
+  input {
+    flex: 1;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+
+  button {
+    background: #9c7055;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background: #64391e;
+    }
+  }
+}
+
+.comments {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.comment-item {
+  border-left: 3px solid #eee;
+  padding-left: 12px;
+  font-size: 0.95rem;
+
+  .comment-author {
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .comment-content {
+    margin-bottom: 4px;
+  }
+
+  .comment-actions {
+    font-size: 0.85rem;
+    color: #666;
+
+    span {
+      margin-right: 12px;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

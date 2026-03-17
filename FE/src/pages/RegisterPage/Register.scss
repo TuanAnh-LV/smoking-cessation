@@ -1,0 +1,142 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 80px; // Increased padding from login
+}
+
+.register-form {
+  background-color: #fff; // White background for the container
+  padding: 60px; // Increased padding from login
+  border-radius: 10px; // Slightly rounded corners from login
+  width: 100%;
+  max-width: 639px; // Increased maximum width from login
+  text-align: center;
+  // Added gap for spacing between form groups
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+
+  h1 {
+    font-size: 50px;
+    font-weight: 500;
+    color: #000; // Black color
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 18px; // Increased font size from login
+    color: #666; // Gray color from login
+    margin-bottom: 40px; // Increased bottom margin from login
+  }
+}
+
+.form-group {
+  display: flex; // Added flex from login
+  flex-direction: column; // Added flex-direction from login
+  text-align: left; // Align labels and inputs to the left from login
+  margin-bottom: 0; // Remove margin-bottom as gap is used in parent
+}
+
+label {
+  display: block;
+  font-size: 16px; // Increased font size from login
+  margin-bottom: 5px; // Adjusted margin from login
+  color: #000; // Black color from login
+  font-weight: 500; // Adjusted font weight from login
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"] {
+  width: 100%;
+  padding: 15px 20px; // Increased padding from login
+  border: 1px solid #e0e0e0; // Light gray border from login
+  border-radius: 25px; // Highly rounded corners from login
+  font-size: 18px; // Increased font size from login
+  color: #333; // Dark gray for input text from login
+  background-color: #f8f8f8; // Light gray background from login
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: #aaa; // Lighter gray for placeholder from login
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #ff2d55; // Pink border on focus from login
+    box-shadow: 0 0 5px rgba(255, 133, 218, 0.3); // Pink shadow on focus from login
+  }
+}
+
+// Style for the input rendered by react-datepicker
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon input {
+  padding-right: 50px; // Make space for the icon, adjusted from login
+}
+
+.input-with-icon .icon {
+  position: absolute;
+  right: 20px; // Adjust icon position from login
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa; // Gray color for the icon from login
+  font-size: 20px; // Increased icon size from login
+}
+
+.register-button {
+  width: 100%;
+  padding: 15px; // Increased padding from login
+  background-color: #ff2d55; // Pink button from login
+  color: white; // White text from login
+  border: none;
+  border-radius: 25px; // Highly rounded corners from login
+  font-size: 18px; // Increased font size from login
+  font-weight: 600; // Adjusted font weight from login
+  cursor: pointer;
+  margin-top: 10px; // Adjusted margin-top
+  margin-bottom: 10px; // Adjusted margin-bottom
+  transition: background-color 0.3s ease;
+}
+.register-button:hover {
+  background-color: red; // Darker pink on hover from login
+}
+
+.login-with-google {
+  margin-top: 20px; // Adjusted margin-top
+}
+
+.login-with-google p {
+  font-size: 16px; // Adjusted font size
+  color: #666; // Gray color from login
+  margin-bottom: 10px; // Adjusted margin-bottom
+}
+
+.google-icon-2 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px; // Adjusted size for wider background
+  height: 50px; // Adjusted size for wider background
+  border: 1px solid #e0e0e0;
+  border-radius: 50%;
+  font-size: 24px; // Adjusted icon size to fit new background
+  font-weight: bold;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  &:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.error-text {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
