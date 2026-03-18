@@ -8,14 +8,14 @@ const { isCoach } = require('../middlewares/role.middleware');
  * @swagger
  * tags:
  *   name: QuitStages
- *   description: Quản lý các giai đoạn cai thuốc trong kế hoạch
+ *   description: Manage quit stages in a plan
  */
 
 /**
  * @swagger
  * /api/quit-plans/{planId}/stages:
  *   get:
- *     summary: Lấy danh sách các giai đoạn theo kế hoạch
+ *     summary: Get the list of stages by plan
  *     tags: [QuitStages]
  *     security:
  *       - bearerAuth: []
@@ -25,10 +25,10 @@ const { isCoach } = require('../middlewares/role.middleware');
  *         schema:
  *           type: string
  *         required: true
- *         description: ID của kế hoạch cai thuốc
+ *         description: Quit plan ID
  *     responses:
  *       200:
- *         description: Danh sách giai đoạn trả về thành công
+ *         description: Stage list retrieved successfully
  *         content:
  *           application/json:
  *             schema:
@@ -36,7 +36,7 @@ const { isCoach } = require('../middlewares/role.middleware');
  *               items:
  *                 $ref: '#/components/schemas/QuitStage'
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 stageRouter.get(
   '/:planId/stages',
@@ -49,7 +49,7 @@ stageRouter.get(
  * @swagger
  * /api/quit-plans/stage/{stageId}/progress:
  *   get:
- *     summary: Lấy dữ liệu ghi nhận tiến độ trong 1 stage
+ *     summary: Get progress tracking data within a stage
  *     tags: [QuitStages]
  *     security:
  *       - bearerAuth: []
@@ -59,10 +59,10 @@ stageRouter.get(
  *         schema:
  *           type: string
  *         required: true
- *         description: ID của giai đoạn cần lấy biểu đồ
+ *         description: ID of the stage to retrieve the chart for
  *     responses:
  *       200:
- *         description: Danh sách ghi nhận theo ngày
+ *         description: Daily tracking records
  *         content:
  *           application/json:
  *             schema:
@@ -76,7 +76,7 @@ stageRouter.get(
  *                   cigarette_count:
  *                     type: number
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 stageRouter.get(
   '/stage/:stageId/progress',
@@ -88,7 +88,7 @@ stageRouter.get(
  * @swagger
  * /api/quit-plans/{planId}/stages:
  *   post:
- *     summary: Tạo giai đoạn mới cho kế hoạch cai thuốc
+ *     summary: Create a new stage for the quit plan
  *     tags: [QuitStages]
  *     security:
  *       - bearerAuth: []
@@ -98,7 +98,7 @@ stageRouter.get(
  *         schema:
  *           type: string
  *         required: true
- *         description: ID của kế hoạch cai thuốc
+ *         description: Quit plan ID
  *     requestBody:
  *       required: true
  *       content:
@@ -110,31 +110,31 @@ stageRouter.get(
  *             properties:
  *               name:
  *                 type: string
- *                 description: Tên giai đoạn
+ *                 description: Stage name
  *               description:
  *                 type: string
- *                 description: Mô tả giai đoạn
+ *                 description: Stage description
  *               start_date:
  *                 type: string
  *                 format: date
- *                 description: Ngày bắt đầu giai đoạn
+ *                 description: Stage start date
  *               end_date:
  *                 type: string
  *                 format: date
- *                 description: Ngày kết thúc giai đoạn
+ *                 description: Stage end date
  *               status:
  *                 type: string
  *                 enum: [not_started, in_progress, completed, skipped]
- *                 description: Trạng thái giai đoạn
+ *                 description: Stage status
  *     responses:
  *       201:
- *         description: Giai đoạn tạo thành công
+ *         description: Stage created successfully
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/QuitStage'
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 stageRouter.post(
   '/:planId/stages',
@@ -148,7 +148,7 @@ stageRouter.post(
  * @swagger
  * /api/quit-plans/{planId}/stages/{stageId}:
  *   patch:
- *     summary: Cập nhật giai đoạn theo ID
+ *     summary: Update stage by ID
  *     tags: [QuitStages]
  *     security:
  *       - bearerAuth: []
@@ -158,13 +158,13 @@ stageRouter.post(
  *         schema:
  *           type: string
  *         required: true
- *         description: ID của kế hoạch cai thuốc
+ *         description: Quit plan ID
  *       - in: path
  *         name: stageId
  *         schema:
  *           type: string
  *         required: true
- *         description: ID của giai đoạn cần cập nhật
+ *         description: ID of the stage to update
  *     requestBody:
  *       required: true
  *       content:
@@ -174,33 +174,33 @@ stageRouter.post(
  *             properties:
  *               name:
  *                 type: string
- *                 description: Tên giai đoạn
+ *                 description: Stage name
  *               description:
  *                 type: string
- *                 description: Mô tả giai đoạn
+ *                 description: Stage description
  *               start_date:
  *                 type: string
  *                 format: date
- *                 description: Ngày bắt đầu giai đoạn
+ *                 description: Stage start date
  *               end_date:
  *                 type: string
  *                 format: date
- *                 description: Ngày kết thúc giai đoạn
+ *                 description: Stage end date
  *               status:
  *                 type: string
  *                 enum: [not_started, in_progress, completed, skipped]
- *                 description: Trạng thái giai đoạn
+ *                 description: Stage status
  *     responses:
  *       200:
- *         description: Cập nhật giai đoạn thành công
+ *         description: Stage updated successfully
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/QuitStage'
  *       404:
- *         description: Giai đoạn không tồn tại
+ *         description: Stage does not exist
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 stageRouter.patch(
   '/:planId/stages/:stageId',
@@ -214,7 +214,7 @@ stageRouter.patch(
  * @swagger
  * /api/quit-plans/{planId}/stages/{stageId}:
  *   delete:
- *     summary: Xoá giai đoạn theo ID
+ *     summary: Delete stage by ID
  *     tags: [QuitStages]
  *     security:
  *       - bearerAuth: []
@@ -224,16 +224,16 @@ stageRouter.patch(
  *         schema:
  *           type: string
  *         required: true
- *         description: ID của kế hoạch cai thuốc
+ *         description: Quit plan ID
  *       - in: path
  *         name: stageId
  *         schema:
  *           type: string
  *         required: true
- *         description: ID của giai đoạn cần xoá
+ *         description: ID of the stage to delete
  *     responses:
  *       200:
- *         description: Xoá giai đoạn thành công
+ *         description: Stage deleted successfully
  *         content:
  *           application/json:
  *             schema:
@@ -243,9 +243,9 @@ stageRouter.patch(
  *                   type: string
  *                   example: Stage deleted
  *       404:
- *         description: Giai đoạn không tồn tại
+ *         description: Stage does not exist
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 stageRouter.delete(
   '/:planId/stages/:stageId',
@@ -266,34 +266,34 @@ module.exports = stageRouter;
  *       properties:
  *         _id:
  *           type: string
- *           description: ID của giai đoạn
+ *           description: Stage ID
  *         plan_id:
  *           type: string
- *           description: ID kế hoạch cai thuốc
+ *           description: Quit plan ID
  *         name:
  *           type: string
- *           description: Tên giai đoạn
+ *           description: Stage name
  *         description:
  *           type: string
- *           description: Mô tả chi tiết giai đoạn
+ *           description: Detailed stage description
  *         start_date:
  *           type: string
  *           format: date
- *           description: Ngày bắt đầu giai đoạn
+ *           description: Stage start date
  *         end_date:
  *           type: string
  *           format: date
- *           description: Ngày kết thúc giai đoạn
+ *           description: Stage end date
  *         status:
  *           type: string
  *           enum: [not_started, in_progress, completed, skipped]
- *           description: Trạng thái giai đoạn
+ *           description: Stage status
  *         createdAt:
  *           type: string
  *           format: date-time
- *           description: Ngày tạo bản ghi
+ *           description: Record creation date
  *         updatedAt:
  *           type: string
  *           format: date-time
- *           description: Ngày cập nhật bản ghi
+ *           description: Record update date
  */

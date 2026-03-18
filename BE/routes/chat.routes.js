@@ -34,17 +34,17 @@ router.get(
  * @swagger
  * /api/chat/sessions:
  *   get:
- *     summary: Lấy danh sách phiên chat của coach
+ *     summary: Get the coach chat session list
  *     tags: [Chat]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Danh sách phiên chat
+ *         description: Chat session list
  *       403:
- *         description: Không có quyền
+ *         description: Unauthorized
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.get(
   '/sessions',

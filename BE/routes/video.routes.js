@@ -10,7 +10,7 @@ const router = express.Router();
  * @swagger
  * /api/video/create-user:
  *   post:
- *     summary: Upsert user lên Stream
+ *     summary: Upsert a user to Stream
  *     tags:
  *       - Video
  *     security:
@@ -29,7 +29,7 @@ router.post("/create-user", authenticateToken, createStreamUser);
  * @swagger
  * /api/video/token:
  *   get:
- *     summary: Lấy Stream token cho user
+ *     summary: Get the Stream token for a user
  *     tags:
  *       - Video
  *     security:
@@ -47,7 +47,7 @@ router.get("/token", authenticateToken, getStreamToken);
  * @swagger
  * /api/video/room/{coachId}/{memberId}:
  *   get:
- *     summary: Lấy link phòng Jitsi cho coach và member
+ *     summary: Get the Jitsi room link for coach and member
  *     tags:
  *       - Video
  *     parameters:
@@ -56,16 +56,16 @@ router.get("/token", authenticateToken, getStreamToken);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của coach
+ *         description: Coach ID
  *       - in: path
  *         name: memberId
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của member
+*         description: Member ID
  *     responses:
  *       200:
- *         description: Trả về link phòng Jitsi
+ *         description: Returns the Jitsi room link
  *         content:
  *           application/json:
  *             schema:
@@ -81,7 +81,7 @@ router.get('/room/:coachId/:memberId', getJitsiRoomLink);
 //  * @swagger
 //  * /api/video/jwt:
 //  *   post:
-//  *     summary: Lấy JWT cho Jitsi
+//  *     summary: Get JWT for Jitsi
 //  *     tags:
 //  *       - Video
 //  *     requestBody:
@@ -109,9 +109,9 @@ router.get('/room/:coachId/:memberId', getJitsiRoomLink);
 //  *                 token:
 //  *                   type: string
 //  *       400:
-//  *         description: Thiếu tham số
+//  *         description: Missing parameters
 //  *       500:
-//  *         description: Lỗi server
+//  *         description: Server error
 //  */
 // router.post('/jwt', getJitsiJwt);
 
@@ -119,7 +119,7 @@ router.get('/room/:coachId/:memberId', getJitsiRoomLink);
  * @swagger
  * /api/video/coach/{userId}:
  *   get:
- *     summary: Lấy coachId của user (alias cho /coach-user/coach-of-user/:userId)
+ *     summary: Get the user's coachId (alias for /coach-user/coach-of-user/:userId)
  *     tags:
  *       - Video
  *     parameters:
@@ -128,10 +128,10 @@ router.get('/room/:coachId/:memberId', getJitsiRoomLink);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của user
+ *         description: User ID
  *     responses:
  *       200:
- *         description: Trả về coachId
+ *         description: Returns coachId
  *         content:
  *           application/json:
  *             schema:
@@ -140,9 +140,9 @@ router.get('/room/:coachId/:memberId', getJitsiRoomLink);
  *                 coachId:
  *                   type: string
  *       404:
- *         description: Không tìm thấy coach
+ *         description: Coach not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.get('/coach/:userId', coachUserController.getCoachByUserId);
 

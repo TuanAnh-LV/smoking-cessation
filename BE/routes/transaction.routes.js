@@ -9,20 +9,20 @@ const { isAdmin } = require('../middlewares/role.middleware');
  * @swagger
  * tags:
  *   name: Transactions
- *   description: Lịch sử và quản lý giao dịch
+ *   description: Transaction history and management
  */
 
 /**
  * @swagger
  * /api/transactions/me:
  *   get:
- *     summary: Lấy lịch sử giao dịch của bản thân
+ *     summary: Get your own transaction history
  *     tags: [Transactions]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Danh sách giao dịch cá nhân
+ *         description: Personal transaction list
  */
 router.get('/me', authenticateToken, controller.getMyTransactions);
 
@@ -30,26 +30,26 @@ router.get('/me', authenticateToken, controller.getMyTransactions);
  * @swagger
  * /api/transactions:
  *   get:
- *     summary: Lấy tất cả giao dịch (admin)
+ *     summary: Get all transactions (admin)
  *     tags: [Transactions]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Danh sách giao dịch toàn hệ thống
+ *         description: System-wide transaction list
  */
 router.get('/', authenticateToken, isAdmin, controller.getAllTransactions);
 /**
  * @swagger
  * /api/transactions/summary:
  *   get:
- *     summary: Thống kê giao dịch toàn hệ thống (admin)
+ *     summary: System-wide transaction statistics (admin)
  *     tags: [Transactions]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Thống kê gồm tổng doanh thu và trạng thái giao dịch
+ *         description: Statistics including total revenue and transaction statuses
  */
 router.get('/summary', authenticateToken, isAdmin, controller.getTransactionSummary);
 

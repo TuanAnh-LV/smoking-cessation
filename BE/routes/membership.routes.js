@@ -8,14 +8,14 @@ const { isAdmin } = require('../middlewares/role.middleware');
  * @swagger
  * tags:
  *   name: Membership
- *   description: Quản lý gói thành viên
+ *   description: Membership package management
  */
 
 /**
  * @swagger
  * /api/memberships:
  *   post:
- *     summary: Tạo gói membership mới
+ *     summary: Create a new membership package
  *     tags: [Membership]
  *     security:
  *       - bearerAuth: []
@@ -33,7 +33,7 @@ const { isAdmin } = require('../middlewares/role.middleware');
  *             properties:
  *               name:
  *                 type: string
- *                 example: "Pro 3 tháng"
+ *                 example: "Pro 3 months"
  *               type:
  *                 type: string
  *                 enum: [default, pro]
@@ -57,9 +57,9 @@ const { isAdmin } = require('../middlewares/role.middleware');
  *                 type: boolean
  *     responses:
  *       201:
- *         description: Gói đã được tạo thành công
+ *         description: Package created successfully
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.post('/', authenticateToken, isAdmin, controller.create);
 
@@ -67,11 +67,11 @@ router.post('/', authenticateToken, isAdmin, controller.create);
  * @swagger
  * /api/memberships:
  *   get:
- *     summary: Lấy tất cả các gói membership
+ *     summary: Get all membership packages
  *     tags: [Membership]
  *     responses:
  *       200:
- *         description: Danh sách gói thành viên
+ *         description: Membership package list
  */
 router.get('/', controller.getAll);
 
@@ -79,7 +79,7 @@ router.get('/', controller.getAll);
  * @swagger
  * /api/memberships/{id}:
  *   get:
- *     summary: Lấy chi tiết một gói membership
+ *     summary: Get membership package details
  *     tags: [Membership]
  *     parameters:
  *       - in: path
@@ -87,12 +87,12 @@ router.get('/', controller.getAll);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID gói membership
+ *         description: Membership package ID
  *     responses:
  *       200:
- *         description: Thông tin gói membership
+ *         description: Membership package information
  *       404:
- *         description: Không tìm thấy
+ *         description: Not found
  */
 router.get('/:id', controller.getById);
 
@@ -100,7 +100,7 @@ router.get('/:id', controller.getById);
  * @swagger
  * /api/memberships/{id}:
  *   put:
- *     summary: Cập nhật gói membership
+ *     summary: Update membership package
  *     tags: [Membership]
  *     security:
  *       - bearerAuth: []
@@ -140,9 +140,9 @@ router.get('/:id', controller.getById);
  *                 type: boolean
  *     responses:
  *       200:
- *         description: Cập nhật thành công
+ *         description: Updated successfully
  *       404:
- *         description: Không tìm thấy
+ *         description: Not found
  */
 router.put('/:id', authenticateToken, isAdmin, controller.update);
 
@@ -150,7 +150,7 @@ router.put('/:id', authenticateToken, isAdmin, controller.update);
  * @swagger
  * /api/memberships/{id}:
  *   delete:
- *     summary: Xoá gói membership
+ *     summary: Delete membership package
  *     tags: [Membership]
  *     security:
  *       - bearerAuth: []
@@ -162,9 +162,9 @@ router.put('/:id', authenticateToken, isAdmin, controller.update);
  *           type: string
  *     responses:
  *       200:
- *         description: Đã xoá gói
+*         description: Package deleted successfully
  *       404:
- *         description: Không tìm thấy
+ *         description: Not found
  */
 router.delete('/:id', authenticateToken, isAdmin, controller.remove);
 

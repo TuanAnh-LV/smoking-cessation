@@ -7,7 +7,7 @@ const authenticateToken = require("../middlewares/auth.middleware");
  * @swagger
  * tags:
  *   name: Notification
- *   description: Quản lý thông báo người dùng
+ *   description: User notification management
  */
 
 /**
@@ -15,12 +15,12 @@ const authenticateToken = require("../middlewares/auth.middleware");
  * /api/notifications:
  *   get:
  *     tags: [Notification]
- *     summary: Lấy danh sách thông báo
+ *     summary: Get the notification list
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Danh sách thông báo
+ *         description: Notification list
  *         content:
  *           application/json:
  *             schema:
@@ -35,12 +35,12 @@ router.get("/", authenticateToken, controller.getMyNotifications);
  * /api/notifications/mark-all-read:
  *   post:
  *     tags: [Notification]
- *     summary: Đánh dấu tất cả là đã đọc (tùy chọn nếu có trường read)
+ *     summary: Mark all as read (optional if the read field exists)
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Tất cả thông báo đã được đánh dấu là đọc
+ *         description: All notifications have been marked as read
  */
 router.post("/mark-all-read", authenticateToken, controller.markAllAsRead);
 /**
@@ -48,12 +48,12 @@ router.post("/mark-all-read", authenticateToken, controller.markAllAsRead);
  * /api/notifications/clear-all:
  *   delete:
  *     tags: [Notification]
- *     summary: Xoá tất cả thông báo của người dùng hiện tại
+ *     summary: Delete all notifications of the current user
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Tất cả thông báo đã được xoá
+ *         description: All notifications have been deleted
  *         content:
  *           application/json:
  *             schema:
@@ -61,11 +61,11 @@ router.post("/mark-all-read", authenticateToken, controller.markAllAsRead);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: Đã xoá tất cả thông báo.
+*                   example: All notifications have been deleted.
  *       401:
- *         description: Không xác thực
+ *         description: Unauthenticated
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.delete("/clear-all", authenticateToken, controller.clearAllNotifications);
 
@@ -75,7 +75,7 @@ router.delete("/clear-all", authenticateToken, controller.clearAllNotifications)
  * /api/notifications/{id}/read:
  *   patch:
  *     tags: [Notification]
- *     summary: Đánh dấu một thông báo là đã đọc
+ *     summary: Mark a notification as read
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -86,11 +86,11 @@ router.delete("/clear-all", authenticateToken, controller.clearAllNotifications)
  *           type: string
  *     responses:
  *       200:
- *         description: Đã đánh dấu là đã đọc
+ *         description: Marked as read
  *       404:
- *         description: Notification không tìm thấy
+ *         description: Notification not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.patch("/:id/read", authenticateToken, controller.markAsRead);
 
@@ -99,7 +99,7 @@ router.patch("/:id/read", authenticateToken, controller.markAsRead);
  * /api/notifications/{id}:
  *   delete:
  *     tags: [Notification]
- *     summary: Xoá thông báo theo ID
+ *     summary: Delete notification by ID
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -112,9 +112,9 @@ router.patch("/:id/read", authenticateToken, controller.markAsRead);
  *       200:
  *         description: Notification deleted
  *       404:
- *         description: Notification không tìm thấy
+ *         description: Notification not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.delete("/:id", authenticateToken, controller.deleteNotification);
 

@@ -131,7 +131,7 @@ router.delete('/:id', authenticateToken, isCoach, coachUserController.deleteCoac
  * @swagger
  * /api/coach-users/{id}:
  *   get:
- *     summary: Lấy chi tiết một coach-user relation
+ *     summary: Get coach-user relation details
  *     tags: [CoachUsers]
  *     parameters:
  *       - in: path
@@ -139,10 +139,10 @@ router.delete('/:id', authenticateToken, isCoach, coachUserController.deleteCoac
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của quan hệ coach-user
+ *         description: Coach-user relation ID
  *     responses:
  *       200:
- *         description: Thông tin chi tiết quan hệ coach-user
+ *         description: Coach-user relation details
  *         content:
  *           application/json:
  *             schema:
@@ -157,9 +157,9 @@ router.delete('/:id', authenticateToken, isCoach, coachUserController.deleteCoac
  *                   items:
  *                     type: object
  *       404:
- *         description: Không tìm thấy quan hệ
+ *         description: Relation not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.get('/:id', coachUserController.getCoachUserById);
 /**
@@ -167,21 +167,21 @@ router.get('/:id', coachUserController.getCoachUserById);
  * /api/coach-users/by-user/{userId}:
  *   get:
  *     tags: [CoachUsers]
- *     summary: Lấy quan hệ coach-user theo userId
+ *     summary: Get coach-user relation by userId
  *     parameters:
  *       - in: path
  *         name: userId
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của user
+ *         description: User ID
  *     responses:
  *       200:
- *         description: Quan hệ kèm theo quit plan
+ *         description: Relation with quit plan
  *       404:
- *         description: Không tìm thấy quan hệ
+ *         description: Relation not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.get('/by-user/:userId', authenticateToken, coachUserController.getCoachUserByUserId);
 module.exports = router;

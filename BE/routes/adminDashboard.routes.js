@@ -68,7 +68,7 @@ router.get(
  * /api/admin/reminders/send:
  *   post:
  *     tags: [AdminDashboard]
- *     summary: Admin gửi reminder đến user
+ *     summary: Admin sends a reminder to a user
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -85,10 +85,10 @@ router.get(
  *                 example: ["user_id_1", "user_id_2"]
  *               title:
  *                 type: string
- *                 example: Nhắc cập nhật nhật ký
+ *                 example: Reminder to update your journal
  *               content:
  *                 type: string
- *                 example: Bạn đã cập nhật quá trình bỏ thuốc hôm nay chưa?
+ *                 example: Have you updated your quitting progress today?
  *               remind_at:
  *                 type: string
  *                 format: date-time
@@ -116,12 +116,12 @@ router.post(
  * /api/admin/coaches:
  *   get:
  *     tags: [AdminDashboard]
- *     summary: Lấy danh sách tất cả coach
+ *     summary: Get all coaches
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Trả về danh sách coach
+ *         description: Returns the list of coaches
  *         content:
  *           application/json:
  *             schema:

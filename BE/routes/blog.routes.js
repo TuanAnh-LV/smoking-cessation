@@ -12,7 +12,7 @@ const {
  * @swagger
  * tags:
  *   name: Blogs
- *   description: APIs quản lý blog chia sẻ
+ *   description: Blog sharing management APIs
  */
 
 /**
@@ -24,16 +24,16 @@ const {
  *       properties:
  *         url:
  *           type: string
- *           description: URL của hình ảnh
+ *           description: Image URL
  *           example: "https://res.cloudinary.com/example/image/upload/v1234567890/blog-images/image.jpg"
  *         public_id:
  *           type: string
- *           description: Public ID của Cloudinary
+ *           description: Cloudinary public ID
  *           example: "blog-images/image"
  *         caption:
  *           type: string
- *           description: Chú thích hình ảnh
- *           example: "Hình ảnh minh họa"
+ *           description: Image caption
+ *           example: "Illustration image"
  *     Blog:
  *       type: object
  *       required:
@@ -43,19 +43,19 @@ const {
  *       properties:
  *         _id:
  *           type: string
- *           description: ID tự động của blog
+ *           description: Auto-generated blog ID
  *         title:
  *           type: string
- *           description: Tiêu đề blog
- *           example: "Hướng dẫn bỏ thuốc lá hiệu quả"
+ *           description: Blog title
+ *           example: "Effective guide to quitting smoking"
  *         description:
  *           type: string
- *           description: Mô tả ngắn
- *           example: "Những phương pháp khoa học giúp bỏ thuốc lá thành công"
+ *           description: Short description
+ *           example: "Scientific methods that help you quit smoking successfully"
  *         content:
  *           type: string
- *           description: Nội dung blog
- *           example: "Nội dung chi tiết về cách bỏ thuốc lá..."
+ *           description: Blog content
+ *           example: "Detailed content about how to quit smoking..."
  *         author_id:
  *           type: object
  *           properties:
@@ -63,14 +63,14 @@ const {
  *               type: string
  *             full_name:
  *               type: string
- *               example: "Nguyễn Văn A"
+ *               example: "John Doe"
  *             profilePicture:
  *               type: string
  *         status:
  *           type: string
  *           enum: [draft, published]
  *           default: published
- *           description: Trạng thái blog
+ *           description: Blog status
  *         category:
  *           type: object
  *           properties:
@@ -78,7 +78,7 @@ const {
  *               type: string
  *             name:
  *               type: string
- *               example: "Sức khỏe"
+ *               example: "Health"
  *             slug:
  *               type: string
  *               example: "suc-khoe"
@@ -91,7 +91,7 @@ const {
  *                 type: string
  *               name:
  *                 type: string
- *                 example: "Bỏ thuốc"
+ *                 example: "Quit Smoking"
  *               slug:
  *                 type: string
  *                 example: "bo-thuoc"
@@ -102,39 +102,39 @@ const {
  *         isFeatured:
  *           type: boolean
  *           default: false
- *           description: Blog nổi bật
+ *           description: Featured blog
  *         viewCount:
  *           type: integer
  *           default: 0
- *           description: Số lượt xem
+ *           description: View count
  *         likeCount:
  *           type: integer
  *           default: 0
- *           description: Số lượt like
+ *           description: Like count
  *         commentCount:
  *           type: integer
  *           default: 0
- *           description: Số bình luận
+ *           description: Comment count
  *         isLiked:
  *           type: boolean
- *           description: User hiện tại đã like chưa
+ *           description: Whether the current user has liked it
  *         shared_badges:
  *           type: array
  *           items:
  *             type: string
- *           description: Danh sách badge được chia sẻ
+ *           description: List of shared badges
  *         published_at:
  *           type: string
  *           format: date-time
- *           description: Thời gian xuất bản
+ *           description: Published time
  *         createdAt:
  *           type: string
  *           format: date-time
- *           description: Thời gian tạo
+ *           description: Created time
  *         updatedAt:
  *           type: string
  *           format: date-time
- *           description: Thời gian cập nhật cuối
+ *           description: Last updated time
  *     BlogInput:
  *       type: object
  *       required:
@@ -143,29 +143,29 @@ const {
  *       properties:
  *         title:
  *           type: string
- *           description: Tiêu đề blog
- *           example: "Hướng dẫn bỏ thuốc lá hiệu quả"
+ *           description: Blog title
+ *           example: "Effective guide to quitting smoking"
  *         description:
  *           type: string
- *           description: Mô tả ngắn
- *           example: "Những phương pháp khoa học giúp bỏ thuốc lá thành công"
+ *           description: Short description
+ *           example: "Scientific methods that help you quit smoking successfully"
  *         content:
  *           type: string
- *           description: Nội dung blog
- *           example: "Nội dung chi tiết về cách bỏ thuốc lá..."
+ *           description: Blog content
+ *           example: "Detailed content about how to quit smoking..."
  *         status:
  *           type: string
  *           enum: [draft, published]
  *           default: published
  *         category:
  *           type: string
- *           description: ID của category
+ *           description: Category ID
  *           example: "507f1f77bcf86cd799439011"
  *         tags:
  *           type: array
  *           items:
  *             type: string
- *           description: Danh sách ID của tags
+ *           description: List of tag IDs
  *           example: ["507f1f77bcf86cd799439012", "507f1f77bcf86cd799439013"]
  *         isFeatured:
  *           type: boolean
@@ -175,7 +175,7 @@ const {
  *           items:
  *             type: string
  *             format: binary
- *           description: Hình ảnh blog
+ *           description: Blog images
  *     BlogListResponse:
  *       type: object
  *       properties:
@@ -204,7 +204,7 @@ const {
  * @swagger
  * /api/blogs:
  *   post:
- *     summary: Tạo blog mới với hình ảnh
+ *     summary: Create a new blog with images
  *     tags: [Blogs]
  *     security:
  *       - bearerAuth: []
@@ -218,29 +218,29 @@ const {
  *             properties:
  *               title:
  *                 type: string
- *                 description: Tiêu đề blog
- *                 example: "Hướng dẫn bỏ thuốc lá hiệu quả"
+ *                 description: Blog title
+ *                 example: "Effective guide to quitting smoking"
  *               description:
  *                 type: string
- *                 description: Mô tả ngắn
- *                 example: "Những phương pháp khoa học giúp bỏ thuốc lá thành công"
+ *                 description: Short description
+ *                 example: "Scientific methods that help you quit smoking successfully"
  *               content:
  *                 type: string
- *                 description: Nội dung blog
- *                 example: "Nội dung chi tiết về cách bỏ thuốc lá..."
+ *                 description: Blog content
+ *                 example: "Detailed content about how to quit smoking..."
  *               status:
  *                 type: string
  *                 enum: [draft, published]
  *                 default: published
  *               category:
  *                 type: string
- *                 description: ID của category
+ *                 description: Category ID
  *                 example: "507f1f77bcf86cd799439011"
  *               tags:
  *                 type: array
  *                 items:
  *                   type: string
- *                 description: Danh sách ID của tags
+ *                 description: List of tag IDs
  *               isFeatured:
  *                 type: boolean
  *                 default: false
@@ -249,7 +249,7 @@ const {
  *                 items:
  *                   type: string
  *                   format: binary
- *                 description: Hình ảnh blog (tối đa 10 ảnh)
+ *                 description: Blog images (maximum 10 images)
  *     responses:
  *       201:
  *         description: Blog created successfully
@@ -265,9 +265,9 @@ const {
  *                   $ref: '#/components/schemas/Blog'
  *                 message:
  *                   type: string
- *                   example: "Tạo blog thành công"
+ *                   example: "Blog created successfully"
  *       400:
- *         description: Thiếu dữ liệu hoặc lỗi upload
+ *         description: Missing data or upload error
  *         content:
  *           application/json:
  *             schema:
@@ -278,11 +278,11 @@ const {
  *                   example: false
  *                 error:
  *                   type: string
- *                   example: "Title và content là bắt buộc"
+ *                   example: "Title and content are required"
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.post(
   "/",
@@ -296,7 +296,7 @@ router.post(
  * @swagger
  * /api/blogs:
  *   get:
- *     summary: Lấy danh sách blog với filter nâng cao
+ *     summary: Get the blog list with advanced filters
  *     tags: [Blogs]
  *     parameters:
  *       - in: query
@@ -304,34 +304,34 @@ router.post(
  *         schema:
  *           type: integer
  *           default: 1
- *         description: Trang hiện tại
+ *         description: Current page
  *       - in: query
  *         name: limit
  *         schema:
  *           type: integer
  *           default: 10
- *         description: Số blog mỗi trang
+ *         description: Number of blogs per page
  *       - in: query
  *         name: author
  *         schema:
  *           type: string
- *         description: ID của tác giả
+ *         description: Author ID
  *       - in: query
  *         name: status
  *         schema:
  *           type: string
  *           enum: [draft, published]
- *         description: Trạng thái blog
+ *         description: Blog status
  *       - in: query
  *         name: search
  *         schema:
  *           type: string
- *         description: Tìm kiếm theo tiêu đề, nội dung, mô tả
+ *         description: Search by title, content, or description
  *       - in: query
  *         name: category
  *         schema:
  *           type: string
- *         description: ID danh mục
+ *         description: Category ID
  *       - in: query
  *         name: tag
  *         schema:
@@ -341,22 +341,22 @@ router.post(
  *         name: isFeatured
  *         schema:
  *           type: boolean
- *         description: Lọc bài nổi bật
+ *         description: Filter featured blogs
  *       - in: query
  *         name: sort
  *         schema:
  *           type: string
  *           enum: [newest, oldest, featured, popular]
- *         description: Sắp xếp (mới nhất, cũ nhất, nổi bật, nhiều view)
+ *         description: Sort by (newest, oldest, featured, most viewed)
  *     responses:
  *       200:
- *         description: Danh sách blog
+ *         description: Blog list
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/BlogListResponse'
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  *         content:
  *           application/json:
  *             schema:
@@ -367,7 +367,7 @@ router.post(
  *                   example: false
  *                 error:
  *                   type: string
- *                   example: "Lỗi server"
+ *                   example: "Server error"
  */
 router.get("/", authOrGuest, blogController.getBlogs);
 
@@ -375,7 +375,7 @@ router.get("/", authOrGuest, blogController.getBlogs);
  * @swagger
  * /api/blogs/my:
  *   get:
- *     summary: Lấy danh sách blog của user hiện tại
+ *     summary: Get the current user's blog list
  *     tags: [Blogs]
  *     security:
  *       - bearerAuth: []
@@ -385,30 +385,30 @@ router.get("/", authOrGuest, blogController.getBlogs);
  *         schema:
  *           type: integer
  *           default: 1
- *         description: Trang hiện tại
+ *         description: Current page
  *       - in: query
  *         name: limit
  *         schema:
  *           type: integer
  *           default: 10
- *         description: Số blog mỗi trang
+ *         description: Number of blogs per page
  *       - in: query
  *         name: status
  *         schema:
  *           type: string
  *           enum: [draft, published]
- *         description: Trạng thái blog
+ *         description: Blog status
  *     responses:
  *       200:
- *         description: Danh sách blog của user
+ *         description: List of the user's blogs
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/BlogListResponse'
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.get("/my", authenticateToken, blogController.getMyBlogs);
 
@@ -416,7 +416,7 @@ router.get("/my", authenticateToken, blogController.getMyBlogs);
  * @swagger
  * /api/blogs/{id}:
  *   get:
- *     summary: Lấy chi tiết blog
+ *     summary: Get blog details
  *     tags: [Blogs]
  *     parameters:
  *       - in: path
@@ -424,11 +424,11 @@ router.get("/my", authenticateToken, blogController.getMyBlogs);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của blog
+*         description: Blog ID
  *         example: "507f1f77bcf86cd799439011"
  *     responses:
  *       200:
- *         description: Chi tiết blog
+ *         description: Blog details
  *         content:
  *           application/json:
  *             schema:
@@ -440,7 +440,7 @@ router.get("/my", authenticateToken, blogController.getMyBlogs);
  *                 blog:
  *                   $ref: '#/components/schemas/Blog'
  *       404:
- *         description: Không tìm thấy
+ *         description: Not found
  *         content:
  *           application/json:
  *             schema:
@@ -451,9 +451,9 @@ router.get("/my", authenticateToken, blogController.getMyBlogs);
  *                   example: false
  *                 error:
  *                   type: string
- *                   example: "Không tìm thấy blog"
+ *                   example: "Blog not found"
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.get("/:id", authOrGuest, blogController.getBlogById);
 
@@ -461,7 +461,7 @@ router.get("/:id", authOrGuest, blogController.getBlogById);
  * @swagger
  * /api/blogs/{id}:
  *   put:
- *     summary: Cập nhật blog
+ *     summary: Update blog
  *     tags: [Blogs]
  *     security:
  *       - bearerAuth: []
@@ -471,7 +471,7 @@ router.get("/:id", authOrGuest, blogController.getBlogById);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của blog
+*         description: Blog ID
  *         example: "507f1f77bcf86cd799439011"
  *     requestBody:
  *       required: true
@@ -482,24 +482,24 @@ router.get("/:id", authOrGuest, blogController.getBlogById);
  *             properties:
  *               title:
  *                 type: string
- *                 description: Tiêu đề blog
+ *                 description: Blog title
  *               description:
  *                 type: string
- *                 description: Mô tả ngắn
+ *                 description: Short description
  *               content:
  *                 type: string
- *                 description: Nội dung blog
+ *                 description: Blog content
  *               status:
  *                 type: string
  *                 enum: [draft, published]
  *               category:
  *                 type: string
- *                 description: ID của category
+ *                 description: Category ID
  *               tags:
  *                 type: array
  *                 items:
  *                   type: string
- *                 description: Danh sách ID của tags
+ *                 description: List of tag IDs
  *               isFeatured:
  *                 type: boolean
  *               images:
@@ -507,10 +507,10 @@ router.get("/:id", authOrGuest, blogController.getBlogById);
  *                 items:
  *                   type: string
  *                   format: binary
- *                 description: Hình ảnh mới
+ *                 description: New images
  *     responses:
  *       200:
- *         description: Cập nhật thành công
+ *         description: Updated successfully
  *         content:
  *           application/json:
  *             schema:
@@ -523,15 +523,15 @@ router.get("/:id", authOrGuest, blogController.getBlogById);
  *                   $ref: '#/components/schemas/Blog'
  *                 message:
  *                   type: string
- *                   example: "Cập nhật blog thành công"
+*                   example: "Blog updated successfully"
  *       400:
- *         description: Dữ liệu không hợp lệ
+ *         description: Invalid data
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       403:
- *         description: Không có quyền
+ *         description: Unauthorized
  *       404:
- *         description: Không tìm thấy
+ *         description: Not found
  */
 router.put(
   "/:id",
@@ -545,7 +545,7 @@ router.put(
  * @swagger
  * /api/blogs/{id}:
  *   delete:
- *     summary: Xoá blog
+ *     summary: Delete blog
  *     tags: [Blogs]
  *     security:
  *       - bearerAuth: []
@@ -555,11 +555,11 @@ router.put(
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của blog
+*         description: Blog ID
  *         example: "507f1f77bcf86cd799439011"
  *     responses:
  *       200:
- *         description: Đã xoá
+ *         description: Deleted successfully
  *         content:
  *           application/json:
  *             schema:
@@ -570,13 +570,13 @@ router.put(
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: "Xóa blog thành công"
+ *                   example: "Blog deleted successfully"
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       403:
- *         description: Không có quyền
+ *         description: Unauthorized
  *       404:
- *         description: Không tìm thấy
+ *         description: Not found
  */
 router.delete("/:id", authenticateToken, blogController.deleteBlog);
 
@@ -584,7 +584,7 @@ router.delete("/:id", authenticateToken, blogController.deleteBlog);
  * @swagger
  * /api/blogs/{blogId}/images/{imageIndex}:
  *   delete:
- *     summary: Xóa hình ảnh từ blog
+ *     summary: Delete an image from a blog
  *     tags: [Blogs]
  *     security:
  *       - bearerAuth: []
@@ -594,18 +594,18 @@ router.delete("/:id", authenticateToken, blogController.deleteBlog);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của blog
+*         description: Blog ID
  *         example: "507f1f77bcf86cd799439011"
  *       - in: path
  *         name: imageIndex
  *         required: true
  *         schema:
  *           type: integer
- *         description: Index của hình ảnh trong array (bắt đầu từ 0)
+ *         description: Index of the image in the array (starting from 0)
  *         example: 0
  *     responses:
  *       200:
- *         description: Xóa hình ảnh thành công
+ *         description: Image deleted successfully
  *         content:
  *           application/json:
  *             schema:
@@ -616,15 +616,15 @@ router.delete("/:id", authenticateToken, blogController.deleteBlog);
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: "Xóa hình ảnh thành công"
+ *                   example: "Image deleted successfully"
  *       400:
- *         description: Index không hợp lệ
+ *         description: Invalid index
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       403:
- *         description: Không có quyền
+ *         description: Unauthorized
  *       404:
- *         description: Không tìm thấy blog
+ *         description: Blog not found
  */
 router.delete(
   "/:blogId/images/:imageIndex",
@@ -636,7 +636,7 @@ router.delete(
  * @swagger
  * /api/blogs/{id}/rate:
  *   post:
- *     summary: Rating blog bằng sao (1-5)
+ *     summary: Rate a blog with stars (1-5)
  *     tags: [Blogs]
  *     security:
  *       - bearerAuth: []
@@ -646,7 +646,7 @@ router.delete(
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của blog
+*         description: Blog ID
  *         example: "507f1f77bcf86cd799439011"
  *     requestBody:
  *       required: true
@@ -659,11 +659,11 @@ router.delete(
  *                 type: number
  *                 minimum: 1
  *                 maximum: 5
- *                 description: Số sao rating (1-5)
+ *                 description: Rating stars (1-5)
  *                 example: 5
  *     responses:
  *       200:
- *         description: Rating thành công
+ *         description: Rating submitted successfully
  *         content:
  *           application/json:
  *             schema:
@@ -671,7 +671,7 @@ router.delete(
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Rating thành công"
+ *                   example: "Rating submitted successfully"
  *                 averageRating:
  *                   type: string
  *                   example: "4.5"
@@ -682,11 +682,11 @@ router.delete(
  *                   type: number
  *                   example: 5
  *       400:
- *         description: Rating không hợp lệ
+ *         description: Invalid rating
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       404:
- *         description: Không tìm thấy blog
+ *         description: Blog not found
  */
 router.post("/:id/rate", authenticateToken, blogController.rateBlog);
 
@@ -694,7 +694,7 @@ router.post("/:id/rate", authenticateToken, blogController.rateBlog);
  * @swagger
  * /api/blogs/{id}/rating:
  *   get:
- *     summary: Lấy rating của user cho blog
+ *     summary: Get the user's rating for a blog
  *     tags: [Blogs]
  *     security:
  *       - bearerAuth: []
@@ -704,11 +704,11 @@ router.post("/:id/rate", authenticateToken, blogController.rateBlog);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của blog
+*         description: Blog ID
  *         example: "507f1f77bcf86cd799439011"
  *     responses:
  *       200:
- *         description: Lấy rating thành công
+ *         description: Rating retrieved successfully
  *         content:
  *           application/json:
  *             schema:
@@ -725,9 +725,9 @@ router.post("/:id/rate", authenticateToken, blogController.rateBlog);
  *                   type: number
  *                   example: 10
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       404:
- *         description: Không tìm thấy blog
+ *         description: Blog not found
  */
 router.get("/:id/rating", authenticateToken, blogController.getUserRating);
 
@@ -735,7 +735,7 @@ router.get("/:id/rating", authenticateToken, blogController.getUserRating);
  * @swagger
  * /api/blogs/{id}/share-badges:
  *   post:
- *     summary: Chia sẻ huy hiệu
+ *     summary: Share badges
  *     tags: [Blogs]
  *     security:
  *       - bearerAuth: []
@@ -745,7 +745,7 @@ router.get("/:id/rating", authenticateToken, blogController.getUserRating);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của blog
+*         description: Blog ID
  *         example: "507f1f77bcf86cd799439011"
  *     requestBody:
  *       required: true
@@ -760,11 +760,11 @@ router.get("/:id/rating", authenticateToken, blogController.getUserRating);
  *                 type: array
  *                 items:
  *                   type: string
- *                 description: Danh sách ID của badges
+ *                 description: List of badge IDs
  *                 example: ["507f1f77bcf86cd799439012", "507f1f77bcf86cd799439013"]
  *     responses:
  *       200:
- *         description: Thành công
+ *         description: Success
  *         content:
  *           application/json:
  *             schema:
@@ -775,15 +775,15 @@ router.get("/:id/rating", authenticateToken, blogController.getUserRating);
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: "Chia sẻ huy hiệu thành công"
+*                   example: "Badges shared successfully"
  *       400:
- *         description: Dữ liệu không hợp lệ
+ *         description: Invalid data
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       403:
- *         description: Không có quyền
+ *         description: Unauthorized
  *       404:
- *         description: Không tìm thấy blog
+ *         description: Blog not found
  */
 router.post("/:id/share-badges", authenticateToken, blogController.shareBadges);
 

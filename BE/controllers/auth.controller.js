@@ -156,7 +156,6 @@ exports.loginWithGoogle = async (req, res) => {
         isEmailVerified: true
       });
 
-      // 👉 Gán default membership cho user mới tạo
       const defaultPackage = await MembershipPackage.findOne({ type: 'default' });
       if (defaultPackage) {
         const now = new Date();
