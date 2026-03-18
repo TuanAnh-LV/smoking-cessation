@@ -8,7 +8,7 @@ const { isAdmin } = require("../middlewares/role.middleware");
  * @swagger
  * tags:
  *   name: Categories
- *   description: APIs quản lý danh mục blog
+ *   description: Blog category management APIs
  */
 
 /**
@@ -23,27 +23,27 @@ const { isAdmin } = require("../middlewares/role.middleware");
  *       properties:
  *         _id:
  *           type: string
- *           description: ID tự động của category
+ *           description: Auto-generated category ID
  *         name:
  *           type: string
- *           description: Tên danh mục
- *           example: "Công nghệ"
+ *           description: Category name
+ *           example: "Technology"
  *         slug:
  *           type: string
  *           description: Slug URL-friendly
  *           example: "cong-nghe"
  *         description:
  *           type: string
- *           description: Mô tả danh mục
- *           example: "Các bài viết về công nghệ mới nhất"
+ *           description: Category description
+ *           example: "Articles about the latest technology"
  *         createdAt:
  *           type: string
  *           format: date-time
- *           description: Thời gian tạo
+ *           description: Created time
  *         updatedAt:
  *           type: string
  *           format: date-time
- *           description: Thời gian cập nhật cuối
+ *           description: Last updated time
  *     CategoryInput:
  *       type: object
  *       required:
@@ -52,23 +52,23 @@ const { isAdmin } = require("../middlewares/role.middleware");
  *       properties:
  *         name:
  *           type: string
- *           description: Tên danh mục
- *           example: "Công nghệ"
+ *           description: Category name
+ *           example: "Technology"
  *         slug:
  *           type: string
  *           description: Slug URL-friendly
  *           example: "cong-nghe"
  *         description:
  *           type: string
- *           description: Mô tả danh mục (tùy chọn)
- *           example: "Các bài viết về công nghệ mới nhất"
+ *           description: Category description (optional)
+ *           example: "Articles about the latest technology"
  */
 
 /**
  * @swagger
  * /api/categories:
  *   get:
- *     summary: Lấy tất cả danh mục
+ *     summary: Get all categories
  *     tags: [Categories]
  *     parameters:
  *       - in: query
@@ -76,21 +76,21 @@ const { isAdmin } = require("../middlewares/role.middleware");
  *         schema:
  *           type: integer
  *           default: 1
- *         description: Trang hiện tại
+ *         description: Current page
  *       - in: query
  *         name: limit
  *         schema:
  *           type: integer
  *           default: 10
- *         description: Số lượng danh mục mỗi trang
+ *         description: Number of categories per page
  *       - in: query
  *         name: search
  *         schema:
  *           type: string
- *         description: Tìm kiếm theo tên danh mục
+ *         description: Search by category name
  *     responses:
  *       200:
- *         description: Danh sách danh mục thành công
+ *         description: Category list retrieved successfully
  *         content:
  *           application/json:
  *             schema:
@@ -113,7 +113,7 @@ const { isAdmin } = require("../middlewares/role.middleware");
  *                   type: integer
  *                   example: 1
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  *         content:
  *           application/json:
  *             schema:
@@ -124,7 +124,7 @@ const { isAdmin } = require("../middlewares/role.middleware");
  *                   example: false
  *                 error:
  *                   type: string
- *                   example: "Lỗi server"
+ *                   example: "Server error"
  */
 router.get("/", categoryController.getCategories);
 
@@ -132,7 +132,7 @@ router.get("/", categoryController.getCategories);
  * @swagger
  * /api/categories/{id}:
  *   get:
- *     summary: Lấy danh mục theo ID
+ *     summary: Get category by ID
  *     tags: [Categories]
  *     parameters:
  *       - in: path
@@ -140,11 +140,11 @@ router.get("/", categoryController.getCategories);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của danh mục
+ *         description: Category ID
  *         example: "507f1f77bcf86cd799439011"
  *     responses:
  *       200:
- *         description: Lấy danh mục thành công
+ *         description: Category retrieved successfully
  *         content:
  *           application/json:
  *             schema:
@@ -156,7 +156,7 @@ router.get("/", categoryController.getCategories);
  *                 category:
  *                   $ref: '#/components/schemas/Category'
  *       404:
- *         description: Không tìm thấy danh mục
+ *         description: Category not found
  *         content:
  *           application/json:
  *             schema:
@@ -167,9 +167,9 @@ router.get("/", categoryController.getCategories);
  *                   example: false
  *                 error:
  *                   type: string
- *                   example: "Không tìm thấy danh mục"
+ *                   example: "Category not found"
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.get("/:id", categoryController.getCategoryById);
 
@@ -177,7 +177,7 @@ router.get("/:id", categoryController.getCategoryById);
  * @swagger
  * /api/categories:
  *   post:
- *     summary: Tạo danh mục mới (Admin only)
+ *     summary: Create a new category (Admin only)
  *     tags: [Categories]
  *     security:
  *       - bearerAuth: []
@@ -188,12 +188,12 @@ router.get("/:id", categoryController.getCategoryById);
  *           schema:
  *             $ref: '#/components/schemas/CategoryInput'
  *           example:
- *             name: "Công nghệ"
+ *             name: "Technology"
  *             slug: "cong-nghe"
- *             description: "Các bài viết về công nghệ mới nhất"
+ *             description: "Articles about the latest technology"
  *     responses:
  *       201:
- *         description: Tạo danh mục thành công
+ *         description: Category created successfully
  *         content:
  *           application/json:
  *             schema:
@@ -206,9 +206,9 @@ router.get("/:id", categoryController.getCategoryById);
  *                   $ref: '#/components/schemas/Category'
  *                 message:
  *                   type: string
- *                   example: "Tạo danh mục thành công"
+ *                   example: "Category created successfully"
  *       400:
- *         description: Dữ liệu không hợp lệ
+ *         description: Invalid data
  *         content:
  *           application/json:
  *             schema:
@@ -219,13 +219,13 @@ router.get("/:id", categoryController.getCategoryById);
  *                   example: false
  *                 error:
  *                   type: string
- *                   example: "Tên danh mục đã tồn tại"
+ *                   example: "Category name already exists"
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       403:
- *         description: Không có quyền admin
+ *         description: Unauthorized admin
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.post("/", authenticateToken, isAdmin, categoryController.createCategory);
 
@@ -233,7 +233,7 @@ router.post("/", authenticateToken, isAdmin, categoryController.createCategory);
  * @swagger
  * /api/categories/{id}:
  *   put:
- *     summary: Cập nhật danh mục (Admin only)
+ *     summary: Update category (Admin only)
  *     tags: [Categories]
  *     security:
  *       - bearerAuth: []
@@ -243,7 +243,7 @@ router.post("/", authenticateToken, isAdmin, categoryController.createCategory);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của danh mục
+ *         description: Category ID
  *         example: "507f1f77bcf86cd799439011"
  *     requestBody:
  *       required: true
@@ -254,19 +254,19 @@ router.post("/", authenticateToken, isAdmin, categoryController.createCategory);
  *             properties:
  *               name:
  *                 type: string
- *                 description: Tên danh mục mới
- *                 example: "Công nghệ mới"
+ *                 description: New category name
+ *                 example: "New Technology"
  *               slug:
  *                 type: string
- *                 description: Slug mới
+ *                 description: New slug
  *                 example: "cong-nghe-moi"
  *               description:
  *                 type: string
- *                 description: Mô tả mới
- *                 example: "Các bài viết về công nghệ mới nhất năm 2024"
+ *                 description: New description
+ *                 example: "Articles about the latest technology in 2024"
  *     responses:
  *       200:
- *         description: Cập nhật thành công
+ *         description: Updated successfully
  *         content:
  *           application/json:
  *             schema:
@@ -279,17 +279,17 @@ router.post("/", authenticateToken, isAdmin, categoryController.createCategory);
  *                   $ref: '#/components/schemas/Category'
  *                 message:
  *                   type: string
- *                   example: "Cập nhật danh mục thành công"
+*                   example: "Category updated successfully"
  *       400:
- *         description: Dữ liệu không hợp lệ
+ *         description: Invalid data
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       403:
- *         description: Không có quyền admin
+ *         description: Unauthorized admin
  *       404:
- *         description: Không tìm thấy danh mục
+ *         description: Category not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.put(
   "/:id",
@@ -302,7 +302,7 @@ router.put(
  * @swagger
  * /api/categories/{id}:
  *   delete:
- *     summary: Xóa danh mục (Admin only)
+ *     summary: Delete category (Admin only)
  *     tags: [Categories]
  *     security:
  *       - bearerAuth: []
@@ -312,11 +312,11 @@ router.put(
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của danh mục
+ *         description: Category ID
  *         example: "507f1f77bcf86cd799439011"
  *     responses:
  *       200:
- *         description: Xóa thành công
+ *         description: Deleted successfully
  *         content:
  *           application/json:
  *             schema:
@@ -327,17 +327,17 @@ router.put(
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: "Xóa danh mục thành công"
+*                   example: "Category deleted successfully"
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       403:
- *         description: Không có quyền admin
+ *         description: Unauthorized admin
  *       404:
- *         description: Không tìm thấy danh mục
+ *         description: Category not found
  *       409:
- *         description: Không thể xóa vì có blog đang sử dụng
+ *         description: Cannot delete because some blogs are using it
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.delete(
   "/:id",

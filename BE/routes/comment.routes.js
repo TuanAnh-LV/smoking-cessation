@@ -7,7 +7,7 @@ const authenticateToken = require("../middlewares/auth.middleware");
  * @swagger
  * tags:
  *   name: Comments
- *   description: APIs cho bình luận blog
+ *   description: Blog comment APIs
  */
 
 /**
@@ -23,11 +23,11 @@ const authenticateToken = require("../middlewares/auth.middleware");
  *       properties:
  *         _id:
  *           type: string
- *           description: ID tự động của comment
+ *           description: Auto-generated comment ID
  *         content:
  *           type: string
- *           description: Nội dung bình luận
- *           example: "Bài viết rất hay và hữu ích!"
+ *           description: Comment content
+ *           example: "This article is very helpful and informative!"
  *         user_id:
  *           type: object
  *           properties:
@@ -35,35 +35,35 @@ const authenticateToken = require("../middlewares/auth.middleware");
  *               type: string
  *             full_name:
  *               type: string
- *               example: "Nguyễn Văn A"
+ *               example: "John Doe"
  *             profilePicture:
  *               type: string
  *         blog_id:
  *           type: string
- *           description: ID của blog
+*           description: Blog ID
  *         parent_id:
  *           type: string
- *           description: ID của comment cha (nếu là reply)
+ *           description: Parent comment ID (if it is a reply)
  *         replies:
  *           type: array
  *           items:
  *             $ref: '#/components/schemas/Comment'
- *           description: Danh sách replies
+ *           description: Reply list
  *         likeCount:
  *           type: integer
  *           default: 0
- *           description: Số lượt like
+ *           description: Like count
  *         isLiked:
  *           type: boolean
- *           description: User hiện tại đã like chưa
+ *           description: Whether the current user has liked it
  *         createdAt:
  *           type: string
  *           format: date-time
- *           description: Thời gian tạo
+ *           description: Created time
  *         updatedAt:
  *           type: string
  *           format: date-time
- *           description: Thời gian cập nhật cuối
+ *           description: Last updated time
  *     CommentInput:
  *       type: object
  *       required:
@@ -71,15 +71,15 @@ const authenticateToken = require("../middlewares/auth.middleware");
  *       properties:
  *         content:
  *           type: string
- *           description: Nội dung bình luận
- *           example: "Bài viết rất hay và hữu ích!"
+ *           description: Comment content
+ *           example: "This article is very helpful and informative!"
  *         blog_id:
  *           type: string
- *           description: ID của blog (cho route /comments)
+*           description: Blog ID (for the /comments route)
  *           example: "507f1f77bcf86cd799439011"
  *         parent_id:
  *           type: string
- *           description: ID của comment cha (cho reply)
+ *           description: Parent comment ID (for replies)
  *           example: "507f1f77bcf86cd799439012"
  *     CommentListResponse:
  *       type: object
@@ -106,7 +106,7 @@ const authenticateToken = require("../middlewares/auth.middleware");
  * @swagger
  * /api/comments:
  *   post:
- *     summary: Tạo bình luận mới (blog_id trong body)
+ *     summary: Create a new comment (blog_id in body)
  *     tags: [Comments]
  *     security:
  *       - bearerAuth: []
@@ -122,19 +122,19 @@ const authenticateToken = require("../middlewares/auth.middleware");
  *             properties:
  *               content:
  *                 type: string
- *                 description: Nội dung bình luận
- *                 example: "Bài viết rất hay và hữu ích!"
+ *                 description: Comment content
+ *                 example: "This article is very helpful and informative!"
  *               blog_id:
  *                 type: string
- *                 description: ID của blog
+*                 description: Blog ID
  *                 example: "507f1f77bcf86cd799439011"
  *               parent_id:
  *                 type: string
- *                 description: ID của comment cha (cho reply)
+ *                 description: Parent comment ID (for replies)
  *                 example: "507f1f77bcf86cd799439012"
  *     responses:
  *       201:
- *         description: Bình luận đã được tạo
+ *         description: Comment created successfully
  *         content:
  *           application/json:
  *             schema:
@@ -147,9 +147,9 @@ const authenticateToken = require("../middlewares/auth.middleware");
  *                   $ref: '#/components/schemas/Comment'
  *                 message:
  *                   type: string
- *                   example: "Tạo bình luận thành công"
+ *                   example: "Comment created successfully"
  *       400:
- *         description: Thiếu nội dung hoặc dữ liệu không hợp lệ
+ *         description: Missing content or invalid data
  *         content:
  *           application/json:
  *             schema:
@@ -160,13 +160,13 @@ const authenticateToken = require("../middlewares/auth.middleware");
  *                   example: false
  *                 error:
  *                   type: string
- *                   example: "Nội dung bình luận là bắt buộc"
+ *                   example: "Comment content is required"
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       404:
- *         description: Không tìm thấy blog hoặc comment cha
+ *         description: Blog or parent comment not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.post("/comments", authenticateToken, commentController.createComment);
 
@@ -174,7 +174,7 @@ router.post("/comments", authenticateToken, commentController.createComment);
  * @swagger
  * /api/comments/{blogId}:
  *   get:
- *     summary: Lấy danh sách bình luận của blog
+ *     summary: Get the blog comment list
  *     tags: [Comments]
  *     parameters:
  *       - in: path
@@ -182,31 +182,31 @@ router.post("/comments", authenticateToken, commentController.createComment);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của blog
+*         description: Blog ID
  *         example: "507f1f77bcf86cd799439011"
  *       - in: query
  *         name: page
  *         schema:
  *           type: integer
  *           default: 1
- *         description: Trang hiện tại
+ *         description: Current page
  *       - in: query
  *         name: limit
  *         schema:
  *           type: integer
  *           default: 10
- *         description: Số lượng bình luận mỗi trang
+ *         description: Number of comments per page
  *     responses:
  *       200:
- *         description: Danh sách bình luận
+ *         description: Comment list
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/CommentListResponse'
  *       404:
- *         description: Không tìm thấy blog
+ *         description: Blog not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.get("/comments/:blogId", commentController.getCommentsByBlog);
 
@@ -214,7 +214,7 @@ router.get("/comments/:blogId", commentController.getCommentsByBlog);
  * @swagger
  * /api/blogs/{id}/comments:
  *   post:
- *     summary: Thêm bình luận vào blog (blog_id trong URL)
+ *     summary: Add a comment to a blog (blog_id in URL)
  *     tags: [Comments]
  *     security:
  *       - bearerAuth: []
@@ -224,7 +224,7 @@ router.get("/comments/:blogId", commentController.getCommentsByBlog);
  *         schema:
  *           type: string
  *         required: true
- *         description: ID của blog
+*         description: Blog ID
  *         example: "507f1f77bcf86cd799439011"
  *     requestBody:
  *       required: true
@@ -237,15 +237,15 @@ router.get("/comments/:blogId", commentController.getCommentsByBlog);
  *             properties:
  *               content:
  *                 type: string
- *                 description: Nội dung bình luận
- *                 example: "Bài viết rất hay và hữu ích!"
+ *                 description: Comment content
+ *                 example: "This article is very helpful and informative!"
  *               parent_id:
  *                 type: string
- *                 description: ID của comment cha (cho reply)
+ *                 description: Parent comment ID (for replies)
  *                 example: "507f1f77bcf86cd799439012"
  *     responses:
  *       201:
- *         description: Bình luận đã được tạo
+ *         description: Comment created successfully
  *         content:
  *           application/json:
  *             schema:
@@ -258,15 +258,15 @@ router.get("/comments/:blogId", commentController.getCommentsByBlog);
  *                   $ref: '#/components/schemas/Comment'
  *                 message:
  *                   type: string
- *                   example: "Tạo bình luận thành công"
+ *                   example: "Comment created successfully"
  *       400:
- *         description: Thiếu nội dung
+ *         description: Missing content
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       404:
- *         description: Không tìm thấy blog
+ *         description: Blog not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.post(
   "/blogs/:id/comments",
@@ -278,7 +278,7 @@ router.post(
  * @swagger
  * /api/blogs/{id}/comments:
  *   get:
- *     summary: Lấy danh sách bình luận của blog (blog_id trong URL)
+ *     summary: Get the blog comment list (blog_id in URL)
  *     tags: [Comments]
  *     parameters:
  *       - in: path
@@ -286,31 +286,31 @@ router.post(
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của blog
+*         description: Blog ID
  *         example: "507f1f77bcf86cd799439011"
  *       - in: query
  *         name: page
  *         schema:
  *           type: integer
  *           default: 1
- *         description: Trang hiện tại
+ *         description: Current page
  *       - in: query
  *         name: limit
  *         schema:
  *           type: integer
  *           default: 10
- *         description: Số lượng bình luận mỗi trang
+ *         description: Number of comments per page
  *     responses:
  *       200:
- *         description: Danh sách bình luận
+ *         description: Comment list
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/CommentListResponse'
  *       404:
- *         description: Không tìm thấy blog
+ *         description: Blog not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.get("/blogs/:id/comments", commentController.getCommentsByBlog);
 
@@ -318,7 +318,7 @@ router.get("/blogs/:id/comments", commentController.getCommentsByBlog);
  * @swagger
  * /api/comments/{id}/reply:
  *   post:
- *     summary: Trả lời một bình luận
+ *     summary: Reply to a comment
  *     tags: [Comments]
  *     security:
  *       - bearerAuth: []
@@ -328,7 +328,7 @@ router.get("/blogs/:id/comments", commentController.getCommentsByBlog);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của bình luận cha
+ *         description: Parent comment ID
  *         example: "507f1f77bcf86cd799439012"
  *     requestBody:
  *       required: true
@@ -341,11 +341,11 @@ router.get("/blogs/:id/comments", commentController.getCommentsByBlog);
  *             properties:
  *               content:
  *                 type: string
- *                 description: Nội dung reply
- *                 example: "Cảm ơn bạn nhé!"
+ *                 description: Reply content
+ *                 example: "Thank you!"
  *     responses:
  *       201:
- *         description: Trả lời đã được tạo
+ *         description: Reply created successfully
  *         content:
  *           application/json:
  *             schema:
@@ -358,15 +358,15 @@ router.get("/blogs/:id/comments", commentController.getCommentsByBlog);
  *                   $ref: '#/components/schemas/Comment'
  *                 message:
  *                   type: string
- *                   example: "Tạo reply thành công"
+ *                   example: "Reply created successfully"
  *       400:
- *         description: Thiếu nội dung
+ *         description: Missing content
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       404:
- *         description: Không tìm thấy bình luận cha
+ *         description: Parent comment not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.post(
   "/comments/:id/reply",
@@ -378,7 +378,7 @@ router.post(
  * @swagger
  * /api/comments/{id}/like:
  *   post:
- *     summary: Like một bình luận
+ *     summary: Like a comment
  *     tags: [Comments]
  *     security:
  *       - bearerAuth: []
@@ -388,11 +388,11 @@ router.post(
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của bình luận
+ *         description: Comment ID
  *         example: "507f1f77bcf86cd799439012"
  *     responses:
  *       200:
- *         description: Đã like
+ *         description: Liked successfully
  *         content:
  *           application/json:
  *             schema:
@@ -403,15 +403,15 @@ router.post(
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: "Đã like bình luận"
+ *                   example: "Comment liked successfully"
  *       400:
- *         description: Đã like trước đó
+ *         description: Already liked
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       404:
- *         description: Không tìm thấy bình luận
+ *         description: Comment not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.post(
   "/comments/:id/like",
@@ -423,7 +423,7 @@ router.post(
  * @swagger
  * /api/comments/{id}/unlike:
  *   post:
- *     summary: Unlike một bình luận
+ *     summary: Unlike a comment
  *     tags: [Comments]
  *     security:
  *       - bearerAuth: []
@@ -433,11 +433,11 @@ router.post(
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của bình luận
+ *         description: Comment ID
  *         example: "507f1f77bcf86cd799439012"
  *     responses:
  *       200:
- *         description: Đã unlike
+ *         description: Unliked successfully
  *         content:
  *           application/json:
  *             schema:
@@ -448,13 +448,13 @@ router.post(
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: "Đã unlike bình luận"
+ *                   example: "Comment unliked successfully"
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       404:
- *         description: Không tìm thấy bình luận
+ *         description: Comment not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.post(
   "/comments/:id/unlike",
@@ -466,7 +466,7 @@ router.post(
  * @swagger
  * /api/comments/{id}:
  *   put:
- *     summary: Cập nhật bình luận
+ *     summary: Update a comment
  *     tags: [Comments]
  *     security:
  *       - bearerAuth: []
@@ -476,7 +476,7 @@ router.post(
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của bình luận
+ *         description: Comment ID
  *         example: "507f1f77bcf86cd799439012"
  *     requestBody:
  *       required: true
@@ -489,11 +489,11 @@ router.post(
  *             properties:
  *               content:
  *                 type: string
- *                 description: Nội dung mới
- *                 example: "Nội dung mới cập nhật"
+ *                 description: New content
+ *                 example: "Updated content"
  *     responses:
  *       200:
- *         description: Bình luận đã được cập nhật
+ *         description: Comment updated successfully
  *         content:
  *           application/json:
  *             schema:
@@ -506,17 +506,17 @@ router.post(
  *                   $ref: '#/components/schemas/Comment'
  *                 message:
  *                   type: string
- *                   example: "Cập nhật bình luận thành công"
+*                   example: "Comment updated successfully"
  *       400:
- *         description: Dữ liệu không hợp lệ
+ *         description: Invalid data
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       403:
- *         description: Không có quyền cập nhật
+*         description: No permission to update
  *       404:
- *         description: Không tìm thấy bình luận
+ *         description: Comment not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.put("/comments/:id", authenticateToken, commentController.updateComment);
 
@@ -524,7 +524,7 @@ router.put("/comments/:id", authenticateToken, commentController.updateComment);
  * @swagger
  * /api/comments/{id}:
  *   delete:
- *     summary: Xoá bình luận
+ *     summary: Delete a comment
  *     tags: [Comments]
  *     security:
  *       - bearerAuth: []
@@ -534,11 +534,11 @@ router.put("/comments/:id", authenticateToken, commentController.updateComment);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của bình luận
+ *         description: Comment ID
  *         example: "507f1f77bcf86cd799439012"
  *     responses:
  *       200:
- *         description: Bình luận đã bị xoá
+ *         description: Comment deleted successfully
  *         content:
  *           application/json:
  *             schema:
@@ -549,15 +549,15 @@ router.put("/comments/:id", authenticateToken, commentController.updateComment);
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: "Xóa bình luận thành công"
+ *                   example: "Comment deleted successfully"
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       403:
- *         description: Không có quyền xóa
+*         description: No permission to delete
  *       404:
- *         description: Không tìm thấy bình luận
+ *         description: Comment not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.delete(
   "/comments/:id",

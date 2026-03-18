@@ -9,22 +9,22 @@ const { isAdmin } = require('../middlewares/role.middleware');
  * @swagger
  * tags:
  *   name: UserMembership
- *   description: Quản lý thông tin gói thành viên của người dùng
+ *   description: User membership information management
  */
 
 /**
  * @swagger
  * /api/user-membership/me:
  *   get:
- *     summary: Lấy membership hiện tại của người dùng
+ *     summary: Get the user's current membership
  *     tags: [UserMembership]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Membership hiện tại
+ *         description: Current membership
  *       404:
- *         description: Không có membership
+ *         description: No membership
  */
 router.get('/me', authenticateToken, controller.getCurrentMembership);
 
@@ -32,13 +32,13 @@ router.get('/me', authenticateToken, controller.getCurrentMembership);
  * @swagger
  * /api/user-membership/me/history:
  *   get:
- *     summary: Lịch sử membership của tôi
+ *     summary: My membership history
  *     tags: [UserMembership]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Danh sách các gói đã đăng ký
+ *         description: List of subscribed packages
  */
 router.get('/me/history', authenticateToken, controller.getMyMembershipHistory);
 
@@ -46,13 +46,13 @@ router.get('/me/history', authenticateToken, controller.getMyMembershipHistory);
  * @swagger
  * /api/user-membership:
  *   get:
- *     summary: Admin xem toàn bộ gói người dùng đã mua
+ *     summary: Admin views all packages purchased by users
  *     tags: [UserMembership]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Danh sách membership
+*         description: Membership list
  */
 router.get('/', authenticateToken, isAdmin, controller.getAllMemberships);
 
@@ -104,7 +104,7 @@ router.get('/admin/:id', authenticateToken, isAdmin, controller.getMembershipByU
  * @swagger
  * /api/user-membership/preview-upgrade:
  *   post:
- *     summary: Xem trước chi phí nâng cấp gói membership
+ *     summary: Preview membership upgrade cost
  *     tags: [UserMembership]
  *     security:
  *       - bearerAuth: []
@@ -120,7 +120,7 @@ router.get('/admin/:id', authenticateToken, isAdmin, controller.getMembershipByU
  *                 example: "60f73b2c4c1a4b35f89a1234"
  *     responses:
  *       200:
- *         description: Thông tin chi phí nâng cấp
+ *         description: Upgrade cost information
  *         content:
  *           application/json:
  *             schema:
@@ -139,7 +139,7 @@ router.get('/admin/:id', authenticateToken, isAdmin, controller.getMembershipByU
  *                 totalCost:
  *                   type: number
  *       400:
- *         description: Thiếu thông tin hoặc lỗi tính toán
+ *         description: Missing information or calculation error
  */
 router.post('/preview-upgrade', authenticateToken, controller.previewUpgrade);
 

@@ -8,7 +8,7 @@ const { checkMembershipPermission } = require('../middlewares/membership.middlew
  * @swagger
  * tags:
  *   name: Reminder
- *   description: Quản lý nhắc nhở người dùng
+ *   description: User reminder management
  */
 
 /**
@@ -16,7 +16,7 @@ const { checkMembershipPermission } = require('../middlewares/membership.middlew
  * /api/reminders:
  *   post:
  *     tags: [Reminder]
- *     summary: Tạo reminder mới
+ *     summary: Create a new reminder
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -28,10 +28,10 @@ const { checkMembershipPermission } = require('../middlewares/membership.middlew
  *             properties:
  *               title:
  *                 type: string
- *                 example: Uống nước
+ *                 example: Drink water
  *               content:
  *                 type: string
- *                 example: Nhắc bạn uống 1 cốc nước lúc 9h sáng
+ *                 example: Remind you to drink 1 glass of water at 9 AM
  *               remind_at:
  *                 type: string
  *                 format: date-time
@@ -50,9 +50,9 @@ const { checkMembershipPermission } = require('../middlewares/membership.middlew
  *       201:
  *         description: Reminder created successfully
  *       403:
- *         description: Membership không cho phép tạo reminder
+ *         description: Your membership does not allow creating reminders
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.post(
   '/',
@@ -66,12 +66,12 @@ router.post(
  * /api/reminders:
  *   get:
  *     tags: [Reminder]
- *     summary: Lấy danh sách reminder của người dùng hiện tại
+ *     summary: Get the current user's reminder list
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Danh sách reminder
+ *         description: Reminder list
  *         content:
  *           application/json:
  *             schema:
@@ -79,7 +79,7 @@ router.post(
  *               items:
  *                 $ref: '#/components/schemas/Reminder'
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.get('/', authenticateToken, controller.getMyReminders);
 
@@ -88,7 +88,7 @@ router.get('/', authenticateToken, controller.getMyReminders);
  * /api/reminders/{id}:
  *   delete:
  *     tags: [Reminder]
- *     summary: Xoá một reminder theo ID
+ *     summary: Delete a reminder by ID
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -97,14 +97,14 @@ router.get('/', authenticateToken, controller.getMyReminders);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của reminder
+ *         description: Reminder ID
  *     responses:
  *       200:
  *         description: Reminder deleted
  *       404:
- *         description: Reminder không tìm thấy
+ *         description: Reminder not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.delete('/:id', authenticateToken, controller.deleteReminder);
 
@@ -113,7 +113,7 @@ router.delete('/:id', authenticateToken, controller.deleteReminder);
  * /api/reminders/{id}:
  *   put:
  *     tags: [Reminder]
- *     summary: Cập nhật reminder
+ *     summary: Update reminder
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -122,7 +122,7 @@ router.delete('/:id', authenticateToken, controller.deleteReminder);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của reminder cần cập nhật
+ *         description: ID of the reminder to update
  *     requestBody:
  *       required: true
  *       content:
@@ -146,9 +146,9 @@ router.delete('/:id', authenticateToken, controller.deleteReminder);
  *       200:
  *         description: Reminder updated
  *       404:
- *         description: Reminder không tìm thấy
+ *         description: Reminder not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.put('/:id', authenticateToken, controller.updateReminder);
 

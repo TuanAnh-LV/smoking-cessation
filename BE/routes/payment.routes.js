@@ -8,14 +8,14 @@ const authenticateToken = require('../middlewares/auth.middleware');
  * @swagger
  * tags:
  *   name: PayPal
- *   description: Tích hợp thanh toán qua PayPal
+ *   description: PayPal payment integration
  */
 
 /**
  * @swagger
  * /api/payments/paypal/create:
  *   post:
- *     summary: Tạo đơn thanh toán PayPal
+ *     summary: Create a PayPal payment order
  *     tags: [PayPal]
  *     security:
  *       - bearerAuth: []
@@ -30,7 +30,7 @@ const authenticateToken = require('../middlewares/auth.middleware');
  *                 type: string
  *     responses:
  *       200:
- *         description: Link để người dùng thanh toán
+ *         description: Link for the user to complete payment
  */
 router.post('/paypal/create', authenticateToken, controller.createPaypalOrder);
 
@@ -38,7 +38,7 @@ router.post('/paypal/create', authenticateToken, controller.createPaypalOrder);
  * @swagger
  * /api/payments/paypal/capture:
  *   post:
- *     summary: Xác nhận thanh toán PayPal
+ *     summary: Confirm PayPal payment
  *     tags: [PayPal]
  *     security:
  *       - bearerAuth: []
@@ -53,7 +53,7 @@ router.post('/paypal/create', authenticateToken, controller.createPaypalOrder);
  *                 type: string
  *     responses:
  *       200:
- *         description: Thanh toán thành công và gán membership
+ *         description: Payment successful and membership assigned
  */
 router.post('/paypal/capture', authenticateToken, controller.capturePaypalOrder);
 
@@ -61,26 +61,26 @@ router.post('/paypal/capture', authenticateToken, controller.capturePaypalOrder)
  * @swagger
  * /api/payments/paypal/return:
  *   get:
- *     summary: Xử lý chuyển hướng khi thanh toán PayPal thành công
+ *     summary: Handle redirect after successful PayPal payment
  *     tags: [PayPal]
  *     parameters:
  *       - in: query
  *         name: token
  *         schema:
  *           type: string
- *         description: Token từ PayPal
+ *         description: Token from PayPal
  *       - in: query
  *         name: PayerID
  *         schema:
  *           type: string
- *         description: ID người thanh toán từ PayPal
+ *         description: Payer ID from PayPal
  *     responses:
  *       302:
- *         description: Chuyển hướng về ứng dụng di động
+ *         description: Redirect to the mobile application
  */
 router.get('/paypal/return', (req, res) => {
     const { token, PayerID } = req.query;
-    // Chuyển hướng đến deep link của app, giữ nguyên các tham số
+    // Redirect to the app deep link while preserving all parameters
     res.redirect(`quitsmokingapp://checkout/success?token=${token}&PayerID=${PayerID}`);
 });
 
@@ -88,7 +88,7 @@ router.get('/paypal/return', (req, res) => {
  * @swagger
  * /api/payments/paypal/cancel:
  *   post:
- *     summary: Cập nhật trạng thái huỷ đơn PayPal
+ *     summary: Update PayPal order cancellation status
  *     tags: [PayPal]
  *     requestBody:
  *       required: true
@@ -103,11 +103,11 @@ router.get('/paypal/return', (req, res) => {
  *                 example: "5MN88288F8699084T"
  *     responses:
  *       200:
- *         description: Huỷ thành công
+ *         description: Cancelled successfully
  *       404:
- *         description: Không tìm thấy giao dịch
+ *         description: Transaction not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.post('/paypal/cancel', controller.cancelPaypalOrder);
 

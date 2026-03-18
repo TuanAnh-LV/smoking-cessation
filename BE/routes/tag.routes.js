@@ -8,7 +8,7 @@ const { isAdmin } = require("../middlewares/role.middleware");
  * @swagger
  * tags:
  *   name: Tags
- *   description: APIs quản lý tags blog
+ *   description: Blog tag management APIs
  */
 
 /**
@@ -23,10 +23,10 @@ const { isAdmin } = require("../middlewares/role.middleware");
  *       properties:
  *         _id:
  *           type: string
- *           description: ID tự động của tag
+*           description: Auto-generated tag ID
  *         name:
  *           type: string
- *           description: Tên tag
+*           description: Tag name
  *           example: "JavaScript"
  *         slug:
  *           type: string
@@ -35,11 +35,11 @@ const { isAdmin } = require("../middlewares/role.middleware");
  *         createdAt:
  *           type: string
  *           format: date-time
- *           description: Thời gian tạo
+ *           description: Created time
  *         updatedAt:
  *           type: string
  *           format: date-time
- *           description: Thời gian cập nhật cuối
+ *           description: Last updated time
  *     TagInput:
  *       type: object
  *       required:
@@ -48,7 +48,7 @@ const { isAdmin } = require("../middlewares/role.middleware");
  *       properties:
  *         name:
  *           type: string
- *           description: Tên tag
+*           description: Tag name
  *           example: "JavaScript"
  *         slug:
  *           type: string
@@ -60,7 +60,7 @@ const { isAdmin } = require("../middlewares/role.middleware");
  * @swagger
  * /api/tags:
  *   get:
- *     summary: Lấy tất cả tags
+ *     summary: Get all tags
  *     tags: [Tags]
  *     parameters:
  *       - in: query
@@ -68,21 +68,21 @@ const { isAdmin } = require("../middlewares/role.middleware");
  *         schema:
  *           type: integer
  *           default: 1
- *         description: Trang hiện tại
+ *         description: Current page
  *       - in: query
  *         name: limit
  *         schema:
  *           type: integer
  *           default: 10
- *         description: Số lượng tags mỗi trang
+ *         description: Number of tags per page
  *       - in: query
  *         name: search
  *         schema:
  *           type: string
- *         description: Tìm kiếm theo tên tag
+ *         description: Search by tag name
  *     responses:
  *       200:
- *         description: Danh sách tags thành công
+ *         description: Tag list retrieved successfully
  *         content:
  *           application/json:
  *             schema:
@@ -105,7 +105,7 @@ const { isAdmin } = require("../middlewares/role.middleware");
  *                   type: integer
  *                   example: 1
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  *         content:
  *           application/json:
  *             schema:
@@ -116,7 +116,7 @@ const { isAdmin } = require("../middlewares/role.middleware");
  *                   example: false
  *                 error:
  *                   type: string
- *                   example: "Lỗi server"
+ *                   example: "Server error"
  */
 router.get("/", tagController.getTags);
 
@@ -124,7 +124,7 @@ router.get("/", tagController.getTags);
  * @swagger
  * /api/tags/{id}:
  *   get:
- *     summary: Lấy tag theo ID
+ *     summary: Get tag by ID
  *     tags: [Tags]
  *     parameters:
  *       - in: path
@@ -132,11 +132,11 @@ router.get("/", tagController.getTags);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của tag
+ *         description: Tag ID
  *         example: "507f1f77bcf86cd799439011"
  *     responses:
  *       200:
- *         description: Lấy tag thành công
+ *         description: Tag retrieved successfully
  *         content:
  *           application/json:
  *             schema:
@@ -148,7 +148,7 @@ router.get("/", tagController.getTags);
  *                 tag:
  *                   $ref: '#/components/schemas/Tag'
  *       404:
- *         description: Không tìm thấy tag
+ *         description: Tag not found
  *         content:
  *           application/json:
  *             schema:
@@ -159,9 +159,9 @@ router.get("/", tagController.getTags);
  *                   example: false
  *                 error:
  *                   type: string
- *                   example: "Không tìm thấy tag"
+ *                   example: "Tag not found"
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.get("/:id", tagController.getTagById);
 
@@ -169,7 +169,7 @@ router.get("/:id", tagController.getTagById);
  * @swagger
  * /api/tags:
  *   post:
- *     summary: Tạo tag mới (Admin only)
+ *     summary: Create a new tag (Admin only)
  *     tags: [Tags]
  *     security:
  *       - bearerAuth: []
@@ -184,7 +184,7 @@ router.get("/:id", tagController.getTagById);
  *             slug: "react"
  *     responses:
  *       201:
- *         description: Tạo tag thành công
+ *         description: Tag created successfully
  *         content:
  *           application/json:
  *             schema:
@@ -197,9 +197,9 @@ router.get("/:id", tagController.getTagById);
  *                   $ref: '#/components/schemas/Tag'
  *                 message:
  *                   type: string
- *                   example: "Tạo tag thành công"
+ *                   example: "Tag created successfully"
  *       400:
- *         description: Dữ liệu không hợp lệ
+ *         description: Invalid data
  *         content:
  *           application/json:
  *             schema:
@@ -210,13 +210,13 @@ router.get("/:id", tagController.getTagById);
  *                   example: false
  *                 error:
  *                   type: string
- *                   example: "Tên tag đã tồn tại"
+ *                   example: "Tag name already exists"
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       403:
- *         description: Không có quyền admin
+ *         description: Unauthorized admin
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.post("/", authenticateToken, isAdmin, tagController.createTag);
 
@@ -224,7 +224,7 @@ router.post("/", authenticateToken, isAdmin, tagController.createTag);
  * @swagger
  * /api/tags/{id}:
  *   put:
- *     summary: Cập nhật tag (Admin only)
+ *     summary: Update tag (Admin only)
  *     tags: [Tags]
  *     security:
  *       - bearerAuth: []
@@ -234,7 +234,7 @@ router.post("/", authenticateToken, isAdmin, tagController.createTag);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của tag
+ *         description: Tag ID
  *         example: "507f1f77bcf86cd799439011"
  *     requestBody:
  *       required: true
@@ -245,15 +245,15 @@ router.post("/", authenticateToken, isAdmin, tagController.createTag);
  *             properties:
  *               name:
  *                 type: string
- *                 description: Tên tag mới
+ *                 description: New tag name
  *                 example: "React.js"
  *               slug:
  *                 type: string
- *                 description: Slug mới
+ *                 description: New slug
  *                 example: "react-js"
  *     responses:
  *       200:
- *         description: Cập nhật thành công
+ *         description: Updated successfully
  *         content:
  *           application/json:
  *             schema:
@@ -266,17 +266,17 @@ router.post("/", authenticateToken, isAdmin, tagController.createTag);
  *                   $ref: '#/components/schemas/Tag'
  *                 message:
  *                   type: string
- *                   example: "Cập nhật tag thành công"
+ *                   example: "Tag updated successfully"
  *       400:
- *         description: Dữ liệu không hợp lệ
+ *         description: Invalid data
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       403:
- *         description: Không có quyền admin
+ *         description: Unauthorized admin
  *       404:
- *         description: Không tìm thấy tag
+ *         description: Tag not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.put("/:id", authenticateToken, isAdmin, tagController.updateTag);
 
@@ -284,7 +284,7 @@ router.put("/:id", authenticateToken, isAdmin, tagController.updateTag);
  * @swagger
  * /api/tags/{id}:
  *   delete:
- *     summary: Xóa tag (Admin only)
+ *     summary: Delete tag (Admin only)
  *     tags: [Tags]
  *     security:
  *       - bearerAuth: []
@@ -294,11 +294,11 @@ router.put("/:id", authenticateToken, isAdmin, tagController.updateTag);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của tag
+ *         description: Tag ID
  *         example: "507f1f77bcf86cd799439011"
  *     responses:
  *       200:
- *         description: Xóa thành công
+ *         description: Deleted successfully
  *         content:
  *           application/json:
  *             schema:
@@ -309,17 +309,17 @@ router.put("/:id", authenticateToken, isAdmin, tagController.updateTag);
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: "Xóa tag thành công"
+ *                   example: "Tag deleted successfully"
  *       401:
- *         description: Chưa đăng nhập
+ *         description: Unauthenticated
  *       403:
- *         description: Không có quyền admin
+ *         description: Unauthorized admin
  *       404:
- *         description: Không tìm thấy tag
+ *         description: Tag not found
  *       409:
- *         description: Không thể xóa vì có blog đang sử dụng
+ *         description: Cannot delete because some blogs are using it
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.delete("/:id", authenticateToken, isAdmin, tagController.deleteTag);
 

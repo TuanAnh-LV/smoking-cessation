@@ -18,7 +18,7 @@ const upload = multer({ storage });
  * /api/coaches:
  *   post:
  *     tags: [Coaches]
- *     summary: Tạo mới một coach (có thể upload avatar)
+ *     summary: Create a new coach (avatar upload supported)
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -53,11 +53,11 @@ const upload = multer({ storage });
  *                 format: binary
  *     responses:
  *       201:
- *         description: Tạo coach thành công
+ *         description: Coach created successfully
  *       409:
- *         description: Email đã tồn tại
+ *         description: Email already exists
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.post('/', authenticateToken, isAdmin,upload.single("avatar"), coachController.createCoach);
 
@@ -82,7 +82,7 @@ router.get('/', authenticateToken, coachController.getCoaches);
  * /api/coaches/{id}:
  *   patch:
  *     tags: [Coaches]
- *     summary: Cập nhật thông tin coach (có thể upload avatar)
+ *     summary: Update coach information (avatar upload supported)
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -91,7 +91,7 @@ router.get('/', authenticateToken, coachController.getCoaches);
  *         schema:
  *           type: string
  *         required: true
- *         description: ID của coach cần cập nhật
+ *         description: ID of the coach to update
  *     requestBody:
  *       required: false
  *       content:
@@ -116,11 +116,11 @@ router.get('/', authenticateToken, coachController.getCoaches);
  *                 format: binary
  *     responses:
  *       200:
- *         description: Cập nhật coach thành công
+ *         description: Coach updated successfully
  *       404:
- *         description: Không tìm thấy coach
+ *         description: Coach not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.patch('/:id', authenticateToken, isAdmin,upload.single("avatar"), coachController.updateCoach);
 
@@ -129,23 +129,23 @@ router.patch('/:id', authenticateToken, isAdmin,upload.single("avatar"), coachCo
  * /api/coaches/{id}:
  *   get:
  *     tags: [Coaches]
- *     summary: Lấy thông tin chi tiết một coach
+ *     summary: Get coach details
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
- *         description: ID của coach
+ *         description: Coach ID
  *         required: true
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: Thông tin coach
+ *         description: Coach information
  *       404:
- *         description: Không tìm thấy coach
+ *         description: Coach not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.get(
   "/:id",
@@ -158,7 +158,7 @@ router.get(
  * /api/coaches/{id}:
  *   delete:
  *     tags: [Coaches]
- *     summary: Xoá một coach
+ *     summary: Delete a coach
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -167,14 +167,14 @@ router.get(
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của coach cần xoá
+ *         description: ID of the coach to delete
  *     responses:
  *       200:
- *         description: Xoá thành công
+ *         description: Deleted successfully
  *       404:
- *         description: Không tìm thấy coach
+ *         description: Coach not found
  *       500:
- *         description: Lỗi server
+ *         description: Server error
  */
 router.delete('/:id', authenticateToken, isAdmin, coachController.deleteCoach);
 

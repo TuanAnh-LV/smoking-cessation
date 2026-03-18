@@ -9,18 +9,18 @@ const { isAdmin } = require('../middlewares/role.middleware');
  * @swagger
  * tags:
  *   name: Badges
- *   description: Quản lý huy hiệu trong hệ thống
+ *   description: System badge management
  */
 
 /**
  * @swagger
  * /api/badges:
  *   get:
- *     summary: Lấy tất cả huy hiệu
+ *     summary: Get all badges
  *     tags: [Badges]
  *     responses:
  *       200:
- *         description: Trả về danh sách huy hiệu
+ *         description: Returns the list of badges
  */
 router.get("/", badgeController.getAllBadges);
 
@@ -167,7 +167,7 @@ router.get('/summary', authenticateToken, badgeController.getBadgeSummary);
  * @swagger
  * /api/badges:
  *   post:
- *     summary: Tạo huy hiệu mới
+ *     summary: Create a new badge
  *     tags: [Badges]
  *     security:
  *       - bearerAuth: []
@@ -208,9 +208,9 @@ router.get('/summary', authenticateToken, badgeController.getBadgeSummary);
  *                     type: string
  *     responses:
  *       201:
- *         description: Huy hiệu đã được tạo thành công
+ *         description: Badge created successfully
  *       400:
- *         description: Lỗi dữ liệu đầu vào
+ *         description: Invalid input data
  */
 router.post('/', authenticateToken, isAdmin, badgeController.createBadge);
 
@@ -218,7 +218,7 @@ router.post('/', authenticateToken, isAdmin, badgeController.createBadge);
  * @swagger
  * /api/badges/{id}:
  *   get:
- *     summary: Lấy huy hiệu theo ID
+ *     summary: Get badge by ID
  *     tags: [Badges]
  *     parameters:
  *       - in: path
@@ -226,19 +226,19 @@ router.post('/', authenticateToken, isAdmin, badgeController.createBadge);
  *         schema:
  *           type: string
  *         required: true
- *         description: ID của huy hiệu
+ *         description: Badge ID
  *     responses:
  *       200:
- *         description: Trả về huy hiệu tương ứng
+ *         description: Returns the corresponding badge
  *       404:
- *         description: Không tìm thấy huy hiệu
+ *         description: Badge not found
  */
 router.get("/:id", badgeController.getBadgeById);
 /**
  * @swagger
  * /api/badges/{id}:
  *   put:
- *     summary: Cập nhật huy hiệu theo ID
+ *     summary: Update badge by ID
  *     tags: [Badges]
  *     security:
  *       - bearerAuth: []
@@ -248,7 +248,7 @@ router.get("/:id", badgeController.getBadgeById);
  *         schema:
  *           type: string
  *         required: true
- *         description: ID của huy hiệu cần cập nhật
+ *         description: ID of the badge to update
  *     requestBody:
  *       required: true
  *       content:
@@ -282,9 +282,9 @@ router.get("/:id", badgeController.getBadgeById);
  *                     type: string
  *     responses:
  *       200:
- *         description: Huy hiệu đã được cập nhật
+ *         description: Badge updated successfully
  *       404:
- *         description: Không tìm thấy huy hiệu
+ *         description: Badge not found
  */
 router.put('/:id', authenticateToken, isAdmin, badgeController.updateBadge);
 
@@ -292,7 +292,7 @@ router.put('/:id', authenticateToken, isAdmin, badgeController.updateBadge);
  * @swagger
  * /api/badges/{id}:
  *   delete:
- *     summary: Xoá huy hiệu theo ID
+ *     summary: Delete badge by ID
  *     tags: [Badges]
  *     security:
  *       - bearerAuth: []
@@ -302,12 +302,12 @@ router.put('/:id', authenticateToken, isAdmin, badgeController.updateBadge);
  *         schema:
  *           type: string
  *         required: true
- *         description: ID của huy hiệu cần xoá
+ *         description: ID of the badge to delete
  *     responses:
  *       200:
- *         description: Đã xoá huy hiệu thành công
+ *         description: Badge deleted successfully
  *       404:
- *         description: Không tìm thấy huy hiệu
+ *         description: Badge not found
  */
 router.delete('/:id', authenticateToken,isAdmin, badgeController.deleteBadge);
 
