@@ -4,7 +4,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const swaggerUI = require("swagger-ui-express");
-const swaggerSpec = require("./config/swagger.js");
+const swaggerSpec = require("./config/swagger.config");
 
 dotenv.config();
 
