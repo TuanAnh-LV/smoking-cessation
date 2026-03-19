@@ -26,8 +26,6 @@ A full-stack web application to support smoking-cessation tracking and related f
 - Realtime / Chat (if applicable)
   - Support chat / community (Socket)
 
-> Nếu bạn xác nhận dự án có/không có các mục “Admin”, “Chat/Realtime”, mình sẽ chỉnh lại cho đúng.
-
 ## Project Structure
 
 - `BE/` — Backend (Node.js)
