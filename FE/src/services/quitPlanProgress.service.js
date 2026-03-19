@@ -18,13 +18,14 @@ export const QuitPlanProgressService = {
       url: API.QUITPLANPROGRESS.GET_ALL_PROGRESS
         .replace(":id", planId)
         .replace(":id", stageId),
-      isLoading: true,
+      isLoading: false,
     });
   },
     getStageProgress: (stageId) => {
   return BaseService.get({
     url: API.QUITSTAGE.GET_BY_STAGE.replace(":stageId", stageId),
     isAuth: true,
+    isLoading: false,
   });
 }
 };

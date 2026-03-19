@@ -18,7 +18,7 @@ export const SmokingStatusService = {
       url: API.SMOKINGSTATUS.GET_ALL_SMOKING
         .replace(":id", planId)
         .replace(":id", stageId),
-      isLoading: true,
+      isLoading: false,
     });
   },
 
@@ -33,7 +33,7 @@ export const SmokingStatusService = {
   getLatestPrePlanStatus: () => {
     return BaseService.get({
       url: API.SMOKINGSTATUS.GET_LAST_SMOKING_STATUS,
-      isLoading: true,
+      isLoading: false,
       isAuth: true,
     });
   }  

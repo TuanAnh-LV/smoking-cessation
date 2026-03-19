@@ -1,56 +1,65 @@
 import React from "react";
-import "./ImplementationTime.scss";
-import { MdDateRange } from "react-icons/md";
 import DatePicker from "react-datepicker";
+import { MdDateRange } from "react-icons/md";
 import "react-datepicker/dist/react-datepicker.css";
+import "./ImplementationTime.scss";
 
-const ImplementationTime = ({ startDate, setStartDate, endDate }) => {
-  // Hàm định dạng dd/mm/yyyy
-  const formatDMY = (date) => {
-    if (!date) return "";
-    const d = new Date(date);
-    const day = String(d.getDate()).padStart(2, "0");
-    const month = String(d.getMonth() + 1).padStart(2, "0");
-    const year = d.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
+const formatDMY = (date) => {
+  if (!date) return "";
+  const parsedDate = new Date(date);
+  const day = String(parsedDate.getDate()).padStart(2, "0");
+  const month = String(parsedDate.getMonth() + 1).padStart(2, "0");
+  const year = parsedDate.getFullYear();
+  return `${day}/${month}/${year}`;
+};
 
+const ImplementationTime = ({ startDate, setStartDate, endDate, isLoading = false }) => {
   return (
-    <div className="implementation-time-container">
-      <h2>Thời gian thực hiện</h2>
-      <div className="date-inputs-container">
-        <div className="date-input-group">
-          <label htmlFor="startDate">Ngày bắt đầu</label>
-          <div className="input-icon-container">
-            <DatePicker
-              id="startDate"
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              dateFormat="dd/MM/yyyy"
-              placeholderText="dd/mm/yyyy"
-              minDate={new Date(new Date().setHours(0, 0, 0, 0))}
-              className="date-input"
-            />
-
-            <MdDateRange className="calendar-icon-2" />
-          </div>
-        </div>
-
-        <div className="date-input-group">
-          <label htmlFor="endDate">Ngày dự kiến hoàn thành</label>
-          <div className="input-icon-container">
-            <input
-              id="endDate"
-              value={formatDMY(endDate)}
-              readOnly
-              className="date-input"
-              placeholder="dd/mm/yyyy"
-            />
-            <MdDateRange className="calendar-icon-2" />
-          </div>
-        </div>
+    <section className="implementation-time">
+      <div className="implementation-time__header">
+        <h2>Timeline</h2>
+        <p>Choose when you want to start and review the expected completion date.</p>
       </div>
-    </div>
+
+      {isLoading ? (
+        <div className="implementation-time__grid implementation-time__grid--skeleton">
+          <div className="implementation-time__skeleton-field"></div>
+          <div className="implementation-time__skeleton-field"></div>
+        </div>
+      ) : (
+        <div className="implementation-time__grid">
+          <div className="implementation-time__field">
+            <label htmlFor="startDate">Start date</label>
+            <div className="implementation-time__input">
+              <DatePicker
+                id="startDate"
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                dateFormat="dd/MM/yyyy"
+                placeholderText="DD/MM/YYYY"
+                minDate={new Date(new Date().setHours(0, 0, 0, 0))}
+                className="implementation-time__control"
+              />
+              <MdDateRange className="implementation-time__icon" />
+            </div>
+          </div>
+
+          <div className="implementation-time__field">
+            <label htmlFor="endDate">Estimated completion</label>
+            <div className="implementation-time__input">
+              <input
+                id="endDate"
+                value={formatDMY(endDate)}
+                readOnly
+                className="implementation-time__control"
+                placeholder="DD/MM/YYYY"
+              />
+              <MdDateRange className="implementation-time__icon" />
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
   );
 };
 

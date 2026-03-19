@@ -13,21 +13,21 @@ export const QuitPlanService = {
   getSuggestedQuitPlan: () => {
     return BaseService.get({
       url: API.QUITPLAN.GET_SUGGESTED_QUITPLAN,
-      isLoading: true,
+      isLoading: false,
       isAuth: true,
     });
   } ,
   getUserQuitPlans: (id) => {
     return BaseService.get({
       url: API.QUITPLAN.GET_QUIT_PLAN_OF_USER.replace(":id", id),
-      isLoading: true,
+      isLoading: false,
     });
   },
 
   getQuitPlanDetail: (id) => {
     return BaseService.get({
       url: API.QUITPLAN.GET_DETAIL_QUITPLAN.replace(":id", id),
-      isLoading: true,
+      isLoading: false,
     });
   },
 
@@ -42,7 +42,7 @@ export const QuitPlanService = {
   getPlanSummary: (planId) => {
     return BaseService.get({
       url: API.QUITPLAN.GET_QUITPLAN_SUMMARY.replace(":id",planId),
-      isLoading: true,
+      isLoading: false,
       isAuth: true,
     });
   },

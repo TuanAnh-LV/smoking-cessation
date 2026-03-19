@@ -1,6 +1,53 @@
+@import "tailwindcss";
+
 * {
-    /* margin: 0;
-    padding: 0;
-    box-sizing: border-box; */
-    font-family: "Baloo Bhai 2", sans-serif;  }
-        @import "tailwindcss";
+  box-sizing: border-box;
+  font-family: "Baloo Bhai 2", sans-serif;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background-color: #ffffff;
+  color: #111827;
+}
+
+a,
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-shell__header,
+.app-shell__footer {
+  width: 100%;
+}
+
+.app-shell__header {
+  background-color: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+}
+
+.app-main__content {
+  width: min(100%, 1280px);
+  margin: 0 auto;
+}

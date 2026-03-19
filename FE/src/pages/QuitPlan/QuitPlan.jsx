@@ -1,74 +1,78 @@
 import React, { useEffect, useState } from "react";
-import "./QuitPlan.scss";
+import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 import { FaHeart } from "react-icons/fa";
-import CardPlan from "../../components/cardPlan/CardPlan";
-import ImplementationTime from "../../components/ImplementationTime/ImplementationTime";
-import Coach from "../../components/coach/coach";
 import { SmokingStatusService } from "../../services/smokingStatus.service";
 import { QuitPlanService } from "../../services/quitPlan.service";
 import { UserService } from "../../services/user.service";
-import { useAuth } from "../../context/authContext";
-import { message } from "antd";
-import { useNavigate } from "react-router-dom";
 import { QuitGoalDraftService } from "../../services/quitGoal.service";
+import { useAuth } from "../../context/authContext";
+import CardPlan from "../../components/cardPlan/CardPlan";
+import ImplementationTime from "../../components/ImplementationTime/ImplementationTime";
+import Coach from "../../components/coach/coach";
+import "./QuitPlan.scss";
+
+const reasonOptions = [
+  "Health for yourself and your family",
+  "Save costs",
+  "Improve appearance",
+  "Set an example for your children",
+  "Increase confidence",
+  "Improves mouth and teeth odor",
+  "Long-lasting stress relief",
+  "Other",
+];
+
 const QuitPlan = () => {
   const [isSaving, setIsSaving] = useState(false);
-  const [latestStatus, setLatestStatus] = useState(null);
   const [stageSuggestion, setStageSuggestion] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const { userInfo } = useAuth();
   const [membershipPackageCode, setMembershipPackageCode] = useState(null);
+  const [isSuggestionLoading, setIsSuggestionLoading] = useState(true);
+  const [isMembershipLoading, setIsMembershipLoading] = useState(true);
+  const [isGoalLoading, setIsGoalLoading] = useState(true);
   const [goal, setGoal] = useState("");
-  // const [note, setNote] = useState("");
   const [reasons, setReasons] = useState([]);
   const [reasonsDetail, setReasonsDetail] = useState("");
   const [selectedCoachId, setSelectedCoachId] = useState(null);
-  const navigate = useNavigate();
   const [customMaxCigs, setCustomMaxCigs] = useState([]);
-
-  const reasonOptions = [
-    "Health for yourself and your family",
-    "Save costs",
-    "Improve appearance",
-    "Set an example for your children",
-    "Increase confidence",
-    "Improves mouth and teeth odor",
-    "Long-lasting stress relief",
-    "Other",
-  ];
+  const { userInfo } = useAuth();
+  const navigate = useNavigate();
 
   const handleReasonChange = (e) => {
     const { value, checked } = e.target;
     setReasons((prev) =>
-      checked ? [...prev, value] : prev.filter((r) => r !== value)
+      checked ? [...prev, value] : prev.filter((reason) => reason !== value),
     );
   };
 
   useEffect(() => {
     SmokingStatusService.getLatestPrePlanStatus()
       .then((res) => {
-        setLatestStatus(res);
-        const { cigarette_count, suction_frequency } = res;
+        const statusData = res?.data || res;
+        const cigaretteCount = statusData?.cigarette_count ?? 0;
+        const suctionFrequency = statusData?.suction_frequency;
 
-        if (cigarette_count <= 5 && suction_frequency === "light") {
+        if (cigaretteCount <= 5 && suctionFrequency === "light") {
+          setStageSuggestion("Suggested: 2 stages for a faster transition.");
+        } else if (cigaretteCount <= 15 || suctionFrequency === "medium") {
           setStageSuggestion(
-            "\ud83d\udca1 Suggested: 2 stages (Reduce → Quit)"
-          );
-        } else if (cigarette_count <= 15 || suction_frequency === "medium") {
-          setStageSuggestion(
-            "\ud83d\udca1 Suggested: 3 stages (Cut down → Quit → Maintain)"
+            "Suggested: 3 stages to reduce gradually and hold momentum.",
           );
         } else {
           setStageSuggestion(
-            "\ud83d\udca1 Suggested: 4 stages (Reduce gradually → Quit → Sustain)"
+            "Suggested: 4 stages for a steadier and more sustainable reduction.",
           );
         }
       })
       .catch(() => {
         setStageSuggestion(
-          "\u2139\ufe0f No smoking status found. A default 3-stage plan will be used."
+          "No smoking status was found yet. A balanced default structure will be used.",
         );
+      })
+      .finally(() => {
+        setIsSuggestionLoading(false);
       });
   }, []);
 
@@ -81,67 +85,84 @@ const QuitPlan = () => {
         setMembershipPackageCode(code);
       } catch (err) {
         console.error("Failed to fetch membership", err);
+      } finally {
+        setIsMembershipLoading(false);
       }
     };
 
-    fetchMembership();
+    if (userInfo?._id) {
+      fetchMembership();
+    } else {
+      setIsMembershipLoading(false);
+    }
   }, [userInfo]);
+
   useEffect(() => {
     const fetchGoalDraft = async () => {
       try {
         const res = await QuitGoalDraftService.getGoalDraft();
         const draft = res?.data;
-        console.log("Goal draft res:", draft);
 
-        if (!res) return;
-
-        // So sánh user_id từ API với user đang đăng nhập
-        if (draft.user_id === userInfo?._id) {
-          if (draft.goal) setGoal(draft.goal);
+        if (draft?.user_id === userInfo?._id && draft?.goal) {
+          setGoal(draft.goal);
         }
       } catch (err) {
         console.error("Failed to load goal draft", err);
+      } finally {
+        setIsGoalLoading(false);
       }
     };
 
-    fetchGoalDraft();
-  }, [userInfo]);
-  const handleSavePlan = async () => {
-    if (!startDate || isNaN(startDate.getTime())) {
-      message.error("Please select a valid start date");
-      return;
+    if (userInfo?._id) {
+      fetchGoalDraft();
+    } else {
+      setIsGoalLoading(false);
     }
-    if (!goal) {
-      message.error("Please select your quit goal");
+  }, [userInfo]);
+
+  const handleSavePlan = async () => {
+    if (!startDate || Number.isNaN(startDate.getTime())) {
+      message.error("Please select a valid start date.");
       return;
     }
 
-    // (Tùy chọn) Cảnh báo nếu không chọn lý do nào
-    if (reasons.length === 0) {
-      message.warning("You haven’t selected any reasons for quitting.");
+    if (!goal) {
+      message.error("Please complete your quit goal before creating a plan.");
+      return;
     }
+
+    if (reasons.length === 0) {
+      message.warning("You have not selected any reasons for quitting yet.");
+    }
+
     try {
       setIsSaving(true);
 
-      const startDateISO = startDate.toISOString();
-
       const res = await QuitPlanService.createQuitPlan({
         goal,
-        start_date: startDateISO,
-        // note,
+        start_date: startDate.toISOString(),
         coach_user_id: selectedCoachId || null,
         reasons,
         reasons_detail: reasonsDetail,
         custom_max_values: customMaxCigs,
       });
 
-      localStorage.setItem("currentPlanId", res.data.plan._id);
-      window.dispatchEvent(new Event("storage"));
-      navigate(`/progress/${res.data.plan._id}`);
-      message.success("Quit plan created successfully!");
+      const createdPlanId = res?.data?.plan?._id;
+      if (createdPlanId) {
+        localStorage.setItem("currentPlanId", createdPlanId);
+        window.dispatchEvent(new Event("storage"));
+        message.success("Quit plan created successfully.");
+        navigate(`/progress/${createdPlanId}`);
+        return;
+      }
+
+      message.error("Plan was created, but no plan id was returned.");
     } catch (err) {
       const errorMessage =
-        err?.response?.data?.message || "Failed to create quit plan.";
+        err?.error?.response?.data?.error ||
+        err?.error?.response?.data?.message ||
+        err?.message ||
+        "Failed to create quit plan.";
       message.error(errorMessage);
     } finally {
       setIsSaving(false);
@@ -150,84 +171,142 @@ const QuitPlan = () => {
 
   return (
     <div className="quit-plan-page">
-      <h1 className="title">Make a plan to quit smoking</h1>
-      <p className="subtitle">
-        Create a smoking cessation plan that fits your situation and goals
-      </p>
+      <section className="quit-plan-hero">
+        <span className="quit-plan-hero__eyebrow">PERSONAL PLAN</span>
+        <h1 className="quit-plan-hero__title">
+          Build a quit plan that fits your pace.
+        </h1>
+        <p className="quit-plan-hero__description">
+          Review your goal, define the reasons that matter most, and shape a
+          step-by-step roadmap that feels realistic enough to follow through.
+        </p>
+      </section>
 
-      {stageSuggestion && (
-        <div className="suggestion-box">{stageSuggestion}</div>
+      {(isSuggestionLoading || stageSuggestion) && (
+        <section className="quit-plan-banner">
+          {isSuggestionLoading ? (
+            <div className="quit-plan-banner__skeleton"></div>
+          ) : (
+            <>
+              <span className="quit-plan-banner__label">Plan suggestion</span>
+              <p>{stageSuggestion}</p>
+            </>
+          )}
+        </section>
       )}
 
-      <div className="form-grid">
-        <div className="reasons-card">
-          <div className="reasons-header">
-            <span className="icon">
+      <section className="quit-plan-overview">
+        <div className="quit-plan-card quit-plan-card--reasons">
+          <div className="quit-plan-card__header">
+            <span className="quit-plan-card__icon">
               <FaHeart />
             </span>
-            <span className="reasons-title">Reasons for quitting smoking</span>
+            <div>
+              <h2>Why are you quitting?</h2>
+              <p>Pick the motivations you want this plan to reinforce.</p>
+            </div>
           </div>
-          <div className="reasons-list">
-            {reasonOptions.map((reason, idx) => (
-              <label className="reason-item" key={idx}>
-                <input
-                  type="checkbox"
-                  value={reason}
-                  checked={reasons.includes(reason)}
-                  onChange={handleReasonChange}
-                />
-                <span>{reason}</span>
-              </label>
-            ))}
-          </div>
-          <textarea
-            className="reasons-textarea"
-            placeholder="Describe in detail your reasons..."
-            value={reasonsDetail}
-            onChange={(e) => setReasonsDetail(e.target.value)}
-          />
+
+          {isGoalLoading ? (
+            <div className="quit-plan-reasons-skeleton">
+              {reasonOptions.map((reason) => (
+                <div className="quit-plan-reason-skeleton" key={reason}></div>
+              ))}
+              <div className="quit-plan-textarea-skeleton"></div>
+            </div>
+          ) : (
+            <>
+              <div className="quit-plan-reasons">
+                {reasonOptions.map((reason) => (
+                  <label className="quit-plan-reason" key={reason}>
+                    <input
+                      type="checkbox"
+                      value={reason}
+                      checked={reasons.includes(reason)}
+                      onChange={handleReasonChange}
+                    />
+                    <span>{reason}</span>
+                  </label>
+                ))}
+              </div>
+
+              <textarea
+                className="quit-plan-textarea"
+                placeholder="Add personal context, triggers, or anything you want this plan to account for."
+                value={reasonsDetail}
+                onChange={(e) => setReasonsDetail(e.target.value)}
+              />
+            </>
+          )}
         </div>
 
-        <div className="goal-card">
-          <h3>Your goal</h3>
-          <div
-            style={{
-              fontSize: "1rem",
-              fontWeight: 500,
-              marginTop: "6px",
-              padding: "10px",
-            }}
-          >
-            {goal || "No goal selected yet"}
+        <div className="quit-plan-card quit-plan-card--goal">
+          <div className="quit-plan-card__header">
+            <div>
+              <h2>Your current goal</h2>
+              <p>This goal is pulled from the setup you completed earlier.</p>
+            </div>
           </div>
+
+          {isGoalLoading || isMembershipLoading ? (
+            <div className="quit-plan-goal-skeleton">
+              <div className="quit-plan-goal-skeleton__box"></div>
+              <div className="quit-plan-goal-skeleton__summary">
+                <div className="quit-plan-goal-skeleton__item"></div>
+                <div className="quit-plan-goal-skeleton__item"></div>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className={`quit-plan-goal ${goal ? "has-goal" : ""}`}>
+                {goal ? goal.replaceAll("_", " ") : "No goal selected yet"}
+              </div>
+
+              <div className="quit-plan-summary">
+                <div className="quit-plan-summary__item">
+                  <span>Selected reasons</span>
+                  <strong>{reasons.length}</strong>
+                </div>
+                <div className="quit-plan-summary__item">
+                  <span>Coach support</span>
+                  <strong>
+                    {membershipPackageCode === "pro" ? "Available" : "Standard"}
+                  </strong>
+                </div>
+              </div>
+            </>
+          )}
         </div>
-      </div>
+      </section>
 
       <ImplementationTime
         startDate={startDate}
         setStartDate={setStartDate}
         endDate={endDate}
+        isLoading={isGoalLoading}
       />
 
       <CardPlan
         selectedStartDate={startDate}
         onLastStageEndDate={setEndDate}
         onUpdateCustomMaxValues={setCustomMaxCigs}
+        isLoading={isGoalLoading}
       />
 
-      {membershipPackageCode === "pro" && (
-        <>
-          <Coach setSelectedCoachId={setSelectedCoachId} />
-        </>
+      {(isMembershipLoading || membershipPackageCode === "pro") && (
+        <Coach
+          setSelectedCoachId={setSelectedCoachId}
+          isLoading={isMembershipLoading}
+        />
       )}
 
-      <div style={{ textAlign: "center", marginTop: "30px" }}>
+      <div className="quit-plan-actions">
         <button
-          className="save-button"
+          className="quit-plan-save-button"
           onClick={handleSavePlan}
           disabled={isSaving}
         >
-          {isSaving ? "Saving..." : "Save plan"}
+          {isSaving ? "Saving..." : "Create plan"}
         </button>
       </div>
     </div>

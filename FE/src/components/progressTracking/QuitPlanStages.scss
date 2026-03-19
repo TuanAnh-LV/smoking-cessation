@@ -1,0 +1,171 @@
+.quit-plan-stages {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.quit-plan-stage {
+  border: 1px solid #eadfce;
+  border-radius: 24px;
+  background-color: #fffdfa;
+}
+
+.quit-plan-stage--completed {
+  background-color: #f8f5ef;
+}
+
+.quit-plan-stage--not_started {
+  background-color: #fffcf6;
+}
+
+.quit-plan-stage__summary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  padding: 20px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h3 {
+    margin-top: 8px;
+    color: #111827;
+    font-size: 1.12rem;
+    font-weight: 700;
+  }
+}
+
+.quit-plan-stage__status {
+  display: inline-flex;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background-color: rgba(128, 70, 34, 0.1);
+  color: #804622;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.quit-plan-stage__date {
+  margin-top: 8px;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.quit-plan-stage__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  color: #4b5563;
+  font-size: 0.92rem;
+
+  strong {
+    color: #111827;
+  }
+}
+
+.quit-plan-stage__body {
+  padding: 0 20px 20px;
+}
+
+.quit-plan-stage__description {
+  margin: 0;
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+.quit-plan-stage__form {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.quit-plan-stage__field {
+  flex: 1;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    color: #1f2937;
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 16px;
+    border: 1px solid #ddd2c2;
+    border-radius: 14px;
+    background-color: #fff;
+    color: #111827;
+    font-size: 0.96rem;
+
+    &:focus {
+      outline: none;
+      border-color: #804622;
+      box-shadow: 0 0 0 4px rgba(128, 70, 34, 0.12);
+    }
+
+    &:disabled {
+      background-color: #f3f4f6;
+      color: #6b7280;
+    }
+  }
+}
+
+.quit-plan-stage__submit {
+  min-width: 160px;
+  min-height: 48px;
+  padding: 0 18px;
+  border: 1px solid #111827;
+  border-radius: 14px;
+  background-color: #111827;
+  color: #fff;
+  font-size: 0.94rem;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:disabled {
+    border-color: #d1d5db;
+    background-color: #d1d5db;
+    color: #6b7280;
+    cursor: not-allowed;
+  }
+}
+
+@media (max-width: 640px) {
+  .quit-plan-stage__summary,
+  .quit-plan-stage__body {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .quit-plan-stage__summary {
+    flex-direction: column;
+  }
+
+  .quit-plan-stage__meta {
+    align-items: flex-start;
+  }
+
+  .quit-plan-stage__form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .quit-plan-stage__submit {
+    width: 100%;
+  }
+}

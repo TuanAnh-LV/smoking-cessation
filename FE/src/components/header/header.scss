@@ -1,36 +1,99 @@
 .header {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto minmax(180px, 1fr);
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
   align-items: center;
-  padding: 1rem 2rem;
+  gap: 24px;
+  padding: 16px 32px;
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  flex-wrap: wrap; // Cho responsive
+  position: relative;
+  min-height: 92px;
+
+  .header-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    position: relative;
+    z-index: 2;
+    min-width: 0;
+    justify-self: start;
+  }
+
+  .logo-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+  }
 
   .logo {
-    height: 80px;
+    height: 64px;
     width: auto;
   }
 
   .nav-links {
     display: flex;
-    gap: 4rem;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+    gap: clamp(18px, 2.6vw, 40px);
+    min-width: 0;
 
     a {
+      display: inline-flex;
+      align-items: center;
       text-decoration: none;
-      color: #333;
-      font-weight: 500;
       transition: color 0.3s ease;
 
       &:hover {
         color: rgb(128, 70, 34);
       }
     }
+
+    .nav-item {
+      display: inline-flex;
+      align-items: center;
+      margin: 0;
+      color: #333;
+      font-weight: 500;
+      font-size: 1rem;
+      line-height: 1.2;
+      transition: color 0.3s ease;
+    }
+
+    .nav-item-button {
+      padding: 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .nav-item:hover,
+    .nav-item-button:hover {
+      color: rgb(128, 70, 34);
+    }
   }
 
   .hamburger-menu-icon {
-    display: none; /* Hidden by default on larger screens */
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background-color: #fff;
     cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+      background-color: #f9fafb;
+      border-color: #d1d5db;
+    }
+
     .icon {
       font-size: 1.8rem;
       color: #333;
@@ -41,6 +104,7 @@
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    justify-self: end;
 
     .notification-button {
       position: relative;
@@ -122,92 +186,174 @@
 
   .auth-buttons {
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    gap: 14px;
+    justify-self: end;
+
+    a {
+      display: inline-flex;
+    }
 
     .login,
     .register {
-      padding: 0.5rem 1.5rem;
-      border-radius: 20px;
-      font-weight: 500;
+      min-height: 46px;
+      min-width: 128px;
+      padding: 0 24px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background-color 0.25s ease, border-color 0.25s ease,
+        color 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .login {
-      background-color: transparent;
-      border: 1px solid black;
-      color: #020a13;
+      background-color: #fff;
+      border: 1.5px solid #d1d5db;
+      color: #111827;
 
       &:hover {
-        background-color: #ff2d55;
-        color: white;
+        background-color: #f9fafb;
+        border-color: #9ca3af;
+        color: #111827;
+        transform: translateY(-1px);
       }
     }
 
     .register {
       background-color: black;
-
+      border: 1.5px solid #000;
       color: white;
+      box-shadow: 0 10px 24px rgba(17, 24, 39, 0.12);
 
       &:hover {
-        background-color: #ff2d55;
+        background-color: #1f2937;
+        border-color: #1f2937;
         color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 14px 28px rgba(17, 24, 39, 0.16);
       }
     }
-    
   }
 
-  // Responsive
-  @media (max-width: 1018px) {
-    .auth-buttons,
-    .logged-in-icons {
-      /* On screens <= 1018px, center the buttons/icons group */
-      margin: 0 auto; /* Centers the block if it has a defined width, or helps in flex/grid */
-    }
+  @media (max-width: 1100px) {
+    grid-template-columns: auto 1fr auto;
 
     .nav-links {
-      /* On screens <= 1018px, center the nav links */
-      margin: 0 auto;
+      grid-column: 1 / -1;
+      grid-row: 2;
+      width: 100%;
+      justify-content: center;
+      padding-top: 4px;
     }
   }
 
   @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 14px 16px;
+    gap: 14px;
 
     .header-top-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       width: 100%;
     }
 
     .nav-links {
-      display: none; /* Hidden by default on small screens */
+      display: none;
       flex-direction: column;
       width: 100%;
-      background-color: #fff; /* Match header background */
-      position: absolute;
-      top: 70px; /* Adjust based on header height */
-      left: 0;
-      padding: 1rem 2rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      gap: 1rem; /* Adjust spacing for vertical links */
-      align-items: center; /* Center links when stacked vertically */
+      order: 3;
+      padding: 12px;
+      border: 1px solid #ececec;
+      border-radius: 18px;
+      background-color: #fff;
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
+      gap: 0;
+      align-items: stretch;
+
+      a,
+      .nav-item-button {
+        width: 100%;
+      }
+
+      a,
+      .nav-item-button {
+        padding: 12px 14px;
+        border-radius: 12px;
+      }
+
+      .nav-item {
+        width: 100%;
+      }
+
+      a:hover,
+      .nav-item-button:hover {
+        background-color: #f9fafb;
+      }
 
       &.open {
-        display: flex; /* Show when menu is open */
+        display: flex;
       }
     }
 
     .hamburger-menu-icon {
-      display: block; /* Show on small screens */
+      display: inline-flex;
     }
 
     .auth-buttons,
     .logged-in-icons {
-      gap: 1rem; /* Adjust gap if needed */
+      width: 100%;
+      justify-content: flex-end;
+      justify-self: auto;
+    }
+
+    .auth-buttons {
+      gap: 0.75rem;
+
+      .login,
+      .register {
+        min-width: 112px;
+        min-height: 44px;
+        padding: 0 20px;
+        font-size: 0.96rem;
+      }
+    }
+
+    .logged-in-icons {
+      gap: 0.75rem;
+
+      .logout-button span {
+        display: none;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .logo {
+      height: 56px;
+    }
+
+    .auth-buttons {
+      justify-content: stretch;
+
+      a {
+        flex: 1;
+      }
+
+      .login,
+      .register {
+        width: 100%;
+        min-width: 0;
+      }
+    }
+
+    .logged-in-icons {
+      justify-content: space-between;
+    }
+
+    .nav-links {
+      padding: 10px;
     }
   }
 }

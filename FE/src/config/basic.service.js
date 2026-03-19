@@ -1,4 +1,4 @@
-import { toggleLoading } from '../app/loadingSlice';
+import { startLoading, stopLoading } from "../app/loadingSlice";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { getItemInLocalStorage } from '../utils/localStorage';
@@ -32,35 +32,52 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (res) => {
-    store.dispatch(toggleLoading(false));
+    if (res.config?.__showGlobalLoading) {
+      store.dispatch(stopLoading());
+    }
     return res;
   },
   (err) => {
-    store.dispatch(toggleLoading(false));
+    if (err.config?.__showGlobalLoading) {
+      store.dispatch(stopLoading());
+    }
     const { response } = err;
     if (response?.status === 401) {
       localStorage.clear();
       window.location.href = ROUTER_URL.LOGIN;
     }
      if (response?.status === 403 && !localStorage.getItem('token')) {
-      console.warn("403 Forbidden - likely due to missing token on public page");
+     console.warn("403 Forbidden - likely due to missing token on public page");
       return Promise.reject(err);
     }
     handleErrorByToast(err);
-    return Promise.reject(new HttpException(err, response?.status || 500));
+    return Promise.reject(
+      new HttpException(
+        response?.data?.error ||
+          response?.data?.message ||
+          err.message ||
+          "An unexpected error occurred.",
+        response?.status || 500,
+        err
+      )
+    );
   }
 );
 
 // ✅ Hiện loading nếu cần
 const checkLoading = (isLoading = false) => {
-  if (isLoading) store.dispatch(toggleLoading(true));
+  if (isLoading) {
+    store.dispatch(startLoading());
+  }
 };
 
 // ✅ Toast lỗi
 const handleErrorByToast = (error) => {
-  const messages = error.response?.data?.message || error.message;
+  const messages =
+    error.response?.data?.error ||
+    error.response?.data?.message ||
+    error.message;
   toast.error(messages);
-  store.dispatch(toggleLoading(false));
   return null;
 };
 
@@ -74,7 +91,11 @@ export const BaseService = {
       }
     }
     checkLoading(isLoading);
-    return axiosInstance.get(url, { params: cleanedParams, headers });
+    return axiosInstance.get(url, {
+      params: cleanedParams,
+      headers,
+      __showGlobalLoading: isLoading,
+    });
   },
 
   post({ url, isLoading = true, payload = {}, headers = {} }) {
@@ -86,7 +107,10 @@ export const BaseService = {
       ...(isFormData ? { 'Content-Type': 'multipart/form-data' } : {})
     };
   
-    return axiosInstance.post(url, payload, { headers: finalHeaders });
+    return axiosInstance.post(url, payload, {
+      headers: finalHeaders,
+      __showGlobalLoading: isLoading,
+    });
   },
 
   put({ url, isLoading = true, payload = {}, headers = {} }) {
@@ -98,18 +122,29 @@ export const BaseService = {
       ...(isFormData ? { 'Content-Type': 'multipart/form-data' } : {})
     };
   
-    return axiosInstance.put(url, payload, { headers: finalHeaders });
+    return axiosInstance.put(url, payload, {
+      headers: finalHeaders,
+      __showGlobalLoading: isLoading,
+    });
   },
   
 
   remove({ url, isLoading = true, payload = {}, headers = {} }) {
     checkLoading(isLoading);
-    return axiosInstance.delete(url, { params: payload, headers });
+    return axiosInstance.delete(url, {
+      params: payload,
+      headers,
+      __showGlobalLoading: isLoading,
+    });
   },
 
   getById({ url, isLoading = true, payload = {}, headers = {} }) {
     checkLoading(isLoading);
-    return axiosInstance.get(url, { params: payload, headers });
+    return axiosInstance.get(url, {
+      params: payload,
+      headers,
+      __showGlobalLoading: isLoading,
+    });
   },
   patch({ url, isLoading = true, payload = {}, headers = {} }) {
     checkLoading(isLoading);
@@ -120,7 +155,10 @@ export const BaseService = {
       ...(isFormData ? { 'Content-Type': 'multipart/form-data' } : {})
     };
 
-    return axiosInstance.patch(url, payload, { headers: finalHeaders });
+    return axiosInstance.patch(url, payload, {
+      headers: finalHeaders,
+      __showGlobalLoading: isLoading,
+    });
   },
 
 
@@ -147,10 +185,15 @@ export const BaseService = {
       }
     })
       .then((res) => {
-        store.dispatch(toggleLoading(false));
+        if (isLoading) {
+          store.dispatch(stopLoading());
+        }
         return res.data;
       })
       .catch((error) => {
+        if (isLoading) {
+          store.dispatch(stopLoading());
+        }
         handleErrorByToast(error);
         return null;
       });

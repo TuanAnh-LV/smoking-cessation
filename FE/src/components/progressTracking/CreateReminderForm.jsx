@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { ReminderService } from "../../services/reminder.service";
 import { message } from "antd";
-import { Plus, Edit, Trash2, Clock } from "lucide-react";
+import { Plus, Edit } from "lucide-react";
+import { ReminderService } from "../../services/reminder.service";
+import "./CreateReminderForm.scss";
 
 const CreateReminderForm = ({ planId, onCreated }) => {
   const [formVisible, setFormVisible] = useState(false);
@@ -27,19 +28,17 @@ const CreateReminderForm = ({ planId, onCreated }) => {
     e.preventDefault();
 
     const localTime = new Date(form.remind_at);
-    if (isNaN(localTime.getTime())) {
+    if (Number.isNaN(localTime.getTime())) {
       message.error("Remind time is not valid");
       return;
     }
 
-    // Convert local → UTC
     const utcTime = new Date(
       localTime.getTime() - localTime.getTimezoneOffset() * 60000
     );
     const utcISOString = new Date(form.remind_at).toISOString();
 
-    const nowUTC = new Date();
-    if (utcTime <= nowUTC) {
+    if (utcTime <= new Date()) {
       message.error("Please choose a time in the future");
       return;
     }
@@ -57,7 +56,7 @@ const CreateReminderForm = ({ planId, onCreated }) => {
         repeat_pattern: form.is_recurring ? form.repeat_pattern : null,
       });
 
-      message.success("Reminder created!");
+      message.success("Reminder created");
       setForm({
         title: "",
         content: "",
@@ -69,104 +68,92 @@ const CreateReminderForm = ({ planId, onCreated }) => {
       setFormVisible(false);
     } catch (err) {
       message.error(
-        err?.response?.data?.message || "Failed to create reminder"
+        err?.error?.response?.data?.message ||
+          err?.error?.response?.data?.error ||
+          err?.message ||
+          "Failed to create reminder"
       );
     }
   };
 
   return (
-    <div className="mb-6">
-      <button
-        onClick={toggleForm}
-        className="mb-3 px-4 py-2 flex items-center gap-1 bg-black text-white rounded h-[40px] px-3 py-1 cursor-pointer hover:bg-gray-800 transition-all"
-      >
+    <div className="reminder-form">
+      <button type="button" onClick={toggleForm} className="reminder-form__toggle">
         {formVisible ? <Edit size={18} /> : <Plus size={18} />}
-        {formVisible ? "Cancel Reminder" : "Create Reminder"}
+        {formVisible ? "Close reminder form" : "Create reminder"}
       </button>
 
       {formVisible && (
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white rounded-xl shadow-md p-5 space-y-4 border"
-        >
-          <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-            <Edit size={20} /> New Reminder
-          </h2>
+        <form onSubmit={handleSubmit} className="reminder-form__panel">
+          <div className="reminder-form__panel-header">
+            <h3>New reminder</h3>
+            <p>Schedule a prompt to keep the plan visible during the day.</p>
+          </div>
 
-          {/* --- Title --- */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Title
-            </label>
+          <div className="reminder-form__field">
+            <label htmlFor="title">Title</label>
             <input
+              id="title"
               type="text"
               name="title"
               value={form.title}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring focus:ring-blue-300"
-              placeholder="e.g., Drink water"
+              placeholder="Drink water"
             />
           </div>
 
-          {/* --- Content --- */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Content
-            </label>
+          <div className="reminder-form__field">
+            <label htmlFor="content">Content</label>
             <textarea
+              id="content"
               name="content"
               value={form.content}
               onChange={handleChange}
-              rows={2}
-              className="w-full border border-gray-300 rounded-md px-3 py-2"
+              rows={3}
               placeholder="Optional description"
             />
           </div>
 
-          {/* --- Time --- */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Remind at
-            </label>
-            <input
-              type="datetime-local"
-              name="remind_at"
-              value={form.remind_at}
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 rounded-md px-3 py-2"
-            />
-          </div>
+          <div className="reminder-form__grid">
+            <div className="reminder-form__field">
+              <label htmlFor="remind_at">Remind at</label>
+              <input
+                id="remind_at"
+                type="datetime-local"
+                name="remind_at"
+                value={form.remind_at}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          {/* --- Repeat toggle --- */}
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id="is_recurring"
-              name="is_recurring"
-              checked={form.is_recurring}
-              onChange={handleChange}
-            />
-            <label htmlFor="is_recurring" className="text-sm text-gray-700">
-              Repeat
-            </label>
-          </div>
-
-          {/* --- Repeat pattern --- */}
-          {form.is_recurring && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Repeat pattern
+            <div className="reminder-form__field reminder-form__field--toggle">
+              <label htmlFor="is_recurring">Repeat</label>
+              <label className="reminder-form__checkbox">
+                <input
+                  type="checkbox"
+                  id="is_recurring"
+                  name="is_recurring"
+                  checked={form.is_recurring}
+                  onChange={handleChange}
+                />
+                <span>Recurring reminder</span>
               </label>
+            </div>
+          </div>
+
+          {form.is_recurring && (
+            <div className="reminder-form__field">
+              <label htmlFor="repeat_pattern">Repeat pattern</label>
               <select
+                id="repeat_pattern"
                 name="repeat_pattern"
                 value={form.repeat_pattern}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
                 required
               >
-                <option value="">Select...</option>
+                <option value="">Select pattern</option>
                 <option value="daily">Daily</option>
                 <option value="weekly">Weekly</option>
                 <option value="monthly">Monthly</option>
@@ -174,11 +161,8 @@ const CreateReminderForm = ({ planId, onCreated }) => {
             </div>
           )}
 
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 font-medium"
-          >
-            Save Reminder
+          <button type="submit" className="reminder-form__submit">
+            Save reminder
           </button>
         </form>
       )}

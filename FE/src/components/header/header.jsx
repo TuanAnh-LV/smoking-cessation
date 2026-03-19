@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
-import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { HiOutlineMenuAlt3, HiX } from "react-icons/hi";
 import { useAuth } from "../../context/authContext";
 import { message } from "antd";
 import { SmokingStatusService } from "../../services/smokingStatus.service";
@@ -96,6 +96,7 @@ const Header = () => {
   }, []);
   const handleQuitPlanClick = async (e) => {
     e.preventDefault();
+    closeMenu();
     if (!isLoggedIn) {
       navigate("/login");
       return;
@@ -121,6 +122,9 @@ const Header = () => {
     message.success("Logout successful!");
     navigate("/login");
   };
+
+  const closeMenu = () => setIsMenuOpen(false);
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -135,38 +139,56 @@ const Header = () => {
   }, []);
   return (
     <div className="header">
-      <img src={LogoBlack} alt="Quit Smoking Logo" className="logo" />
+      <div className="header-top-row">
+        <Link to="/" className="logo-link" onClick={closeMenu}>
+          <img src={LogoBlack} alt="Quit Smoking Logo" className="logo" />
+        </Link>
 
-      <div
-        className="hamburger-menu-icon"
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
-      >
-        <HiOutlineMenuAlt3 className="icon" />
+        <button
+          type="button"
+          className="hamburger-menu-icon"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMenuOpen}
+        >
+          {isMenuOpen ? (
+            <HiX className="icon" />
+          ) : (
+            <HiOutlineMenuAlt3 className="icon" />
+          )}
+        </button>
       </div>
 
       <div className={`nav-links ${isMenuOpen ? "open" : ""}`}>
-        <Link to="/">
-          <p>Home</p>
+        <Link to="/" onClick={closeMenu}>
+          <span className="nav-item">Home</span>
         </Link>
-        <Link to="/achievements">
-          <p>Achievements</p>
+        <Link to="/achievements" onClick={closeMenu}>
+          <span className="nav-item">Achievements</span>
         </Link>
         {isLoggedIn && planId && (
           <>
-            <Link to={planId ? `/progress/${planId}` : "/status"}>
-              Track Progress
+            <Link
+              to={planId ? `/progress/${planId}` : "/status"}
+              onClick={closeMenu}
+            >
+              <span className="nav-item">Track Progress</span>
             </Link>
           </>
         )}
 
         {!planId && (
-          <p onClick={handleQuitPlanClick} style={{ cursor: "pointer" }}>
+          <button
+            type="button"
+            className="nav-item nav-item-button"
+            onClick={handleQuitPlanClick}
+          >
             Quit Plan
-          </p>
+          </button>
         )}
 
-        <Link to="/blogs">
-          <p>Blogs</p>
+        <Link to="/blogs" onClick={closeMenu}>
+          <span className="nav-item">Blogs</span>
         </Link>
       </div>
 
@@ -204,7 +226,10 @@ const Header = () => {
                 <Link
                   to="/profile"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded"
-                  onClick={() => setIsProfileDropdownOpen(false)}
+                  onClick={() => {
+                    setIsProfileDropdownOpen(false);
+                    closeMenu();
+                  }}
                 >
                   Profile
                 </Link>
@@ -212,7 +237,10 @@ const Header = () => {
                   <Link
                     to="/admin"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded"
-                    onClick={() => setIsProfileDropdownOpen(false)}
+                    onClick={() => {
+                      setIsProfileDropdownOpen(false);
+                      closeMenu();
+                    }}
                   >
                     Admin Dashboard
                   </Link>
@@ -221,7 +249,10 @@ const Header = () => {
                   <Link
                     to="/coach"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded"
-                    onClick={() => setIsProfileDropdownOpen(false)}
+                    onClick={() => {
+                      setIsProfileDropdownOpen(false);
+                      closeMenu();
+                    }}
                   >
                     Coach Dashboard
                   </Link>
@@ -237,10 +268,10 @@ const Header = () => {
         </div>
       ) : (
         <div className="auth-buttons">
-          <Link to="/login">
+          <Link to="/login" onClick={closeMenu}>
             <button className="login">Login</button>
           </Link>
-          <Link to="/register">
+          <Link to="/register" onClick={closeMenu}>
             <button className="register">Register</button>
           </Link>
         </div>

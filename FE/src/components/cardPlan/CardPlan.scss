@@ -1,133 +1,230 @@
-.plan-container {
-  font-family: sans-serif;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.card-plan {
+  width: min(100%, 1180px);
+  margin: 0 auto 24px;
+  padding: 28px;
+  border: 1px solid rgba(128, 70, 34, 0.12);
+  border-radius: 28px;
+  background-color: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 22px 50px rgba(82, 45, 18, 0.08);
 }
 
-.plan-title {
-  padding: 20px;
+.card-plan__header {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin-bottom: 30px;
-
-  .calendar-icon {
-    font-size: 2em;
-    margin-right: 10px;
-  }
-
-  h2 {
-    font-size: 2em;
-    font-weight: bold;
-  }
-}
-
-.plan-cards {
-  /* Removed conflicting styles - will re-add in media query for desktop */
-}
-
-.card {
-  background-color: white;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border: 1px solid #5e5d5d;
+  align-items: flex-start;
+  gap: 14px;
   margin-bottom: 20px;
 
-  .content-card {
-    text-align: left;
-    padding: 10px;
-  }
-
-  h3 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-  }
-
-  .time {
-    color: red;
-    margin-bottom: 10px;
+  h2 {
+    margin: 0 0 6px;
+    color: #111827;
+    font-size: 1.45rem;
+    font-weight: 700;
   }
 
   p {
-    margin-bottom: 10px;
+    margin: 0;
+    color: #5b6472;
+    font-size: 0.96rem;
+    line-height: 1.7;
+  }
+}
+
+.card-plan__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background-color: rgba(128, 70, 34, 0.1);
+  color: #804622;
+  font-size: 1.05rem;
+}
+
+.card-plan__empty {
+  padding: 20px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #fbf6ef 0%, #fffdfa 100%);
+  color: #6b7280;
+  text-align: center;
+}
+
+.card-plan__skeleton-box,
+.card-plan__skeleton-stage {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f8f5ef 0%, #f3ede3 100%);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.5),
+      transparent
+    );
+    animation: cardPlanSkeletonShimmer 1.4s infinite;
+  }
+}
+
+.card-plan__skeleton-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.card-plan__skeleton-box {
+  min-height: 76px;
+  border-radius: 18px;
+}
+
+.card-plan__skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.card-plan__skeleton-stage {
+  min-height: 280px;
+  border-radius: 22px;
+}
+
+.card-plan__summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.card-plan__summary-item {
+  padding: 16px 18px;
+  border-radius: 18px;
+  background-color: #f8f5ef;
+
+  span,
+  strong {
+    display: block;
   }
 
-  h4 {
-    margin-top: 15px;
-    margin-bottom: 5px;
+  span {
+    margin-bottom: 6px;
+    color: #6b7280;
+    font-size: 0.9rem;
   }
 
-  ul {
-    list-style: disc;
-    margin-left: 20px;
-    margin-bottom: 20px;
-    padding: 0;
-
-    li {
-      margin-bottom: 5px;
-    }
+  strong {
+    color: #111827;
+    font-size: 1rem;
   }
-    .stage-row {
-      display: flex;
-      flex-wrap: wrap; 
-      gap: 16px;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-  
-    .stage-box {
-      flex: 1 1 300px;
-      background: #f9f9f9;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 12px;
-    }
-        .stage-description {
-          text-align: left; 
-          font-size: 0.95em;
-          line-height: 1.8;
-          max-height: 500px;
-          overflow-y: auto;
-          white-space: normal;   }
-  
-  button {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
+}
+
+.card-plan__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.card-plan__stage {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 100%;
+  padding: 20px;
+  border: 1px solid #eadfce;
+  border-radius: 22px;
+  background-color: #fffdfa;
+}
+
+.card-plan__stage-index {
+  display: inline-flex;
+  margin-bottom: 12px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background-color: rgba(128, 70, 34, 0.1);
+  color: #804622;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.card-plan__stage-top {
+  h3 {
+    margin: 0 0 8px;
+    color: #111827;
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+}
+
+.card-plan__stage-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #4b5563;
+  font-size: 0.94rem;
+  line-height: 1.7;
+
+  p {
+    margin: 0;
+  }
+}
+
+.card-plan__field {
+  margin-top: auto;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    color: #1f2937;
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  input {
     width: 100%;
-  }
+    min-height: 48px;
+    padding: 0 16px;
+    border: 1px solid #ddd2c2;
+    border-radius: 14px;
+    background-color: #fff;
+    color: #111827;
+    font-size: 0.98rem;
 
-  .button {
-    background-color: #333;
-    color: white;
-
-    &:hover {
-      background-color: #ee6f6f;
-    }
-
-    &.selected {
-      background-color: #af1f1f;
+    &:focus {
+      outline: none;
+      border-color: #804622;
+      box-shadow: 0 0 0 4px rgba(128, 70, 34, 0.12);
     }
   }
 }
 
-@media (min-width: 992px) {
-  .plan-cards {
-    display: flex;
-    gap: 20px;
+@keyframes cardPlanSkeletonShimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (max-width: 640px) {
+  .card-plan {
+    padding: 22px 18px;
+    border-radius: 22px;
   }
 
-  .card {
-    width: 300px;
-    margin-bottom: 0;
+  .card-plan__summary {
+    grid-template-columns: 1fr;
+  }
+
+  .card-plan__skeleton-summary {
+    grid-template-columns: 1fr;
   }
 }

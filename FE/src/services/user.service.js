@@ -43,21 +43,21 @@ export const UserService = {
   getUserCoach: (id) => {
     return BaseService.get({
       url: API.USER.GET_COACH_OF_USER.replace(":id", id),
-      isLoading: true,
+      isLoading: false,
     });
   },
 
   getUserMembership: (id) => {
     return BaseService.get({
       url: API.USER.GET_CURRENT_MEMBERSHIP.replace(":id", id),
-      isLoading: true,
+      isLoading: false,
     });
   },
 
   getUserQuitPlans: (id) => {
     return BaseService.get({
       url: API.USER.GET_ALL_QUITPAN_OF_USER.replace(":id", id),
-      isLoading: true,
+      isLoading: false,
     });
   },
 };
