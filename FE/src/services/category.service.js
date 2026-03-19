@@ -2,9 +2,10 @@ import { BaseService } from "../config/basic.service";
 import { API } from "../const/path.api";
 
 export const CategoryService = {
-  getAllCategories: () =>
+  getAllCategories: (params = {}) =>
     BaseService.get({
       url: API.CATEGORY.GET_ALL,
+      params,
       isLoading: false,
     }),
 
@@ -17,19 +18,19 @@ export const CategoryService = {
   createCategory: (data) =>
     BaseService.post({
       url: API.CATEGORY.CREATE,
-      data,
+      payload: data,
       isLoading: true,
     }),
 
   updateCategory: (id, data) =>
     BaseService.put({
       url: API.CATEGORY.UPDATE.replace(":id", id),
-      data,
+      payload: data,
       isLoading: true,
     }),
 
   deleteCategory: (id) =>
-    BaseService.delete({
+    BaseService.remove({
       url: API.CATEGORY.DELETE.replace(":id", id),
       isLoading: true,
     }),
