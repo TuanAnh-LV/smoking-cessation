@@ -5,290 +5,270 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+  }
+
+  .section-heading {
+    max-width: 760px;
+    margin: 0 auto 40px;
     text-align: center;
 
     h2 {
-      font-size: 64px;
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 4.5vw, 4rem);
       font-weight: 600;
       color: #804622;
-      margin-bottom: 50px;
+      line-height: 1.1;
     }
 
-    .cards-container {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      flex-wrap: wrap;
+    p {
+      margin: 0;
+      color: #4b5563;
+      font-size: clamp(1rem, 1.8vw, 1.125rem);
+      line-height: 1.75;
+    }
+  }
+
+  .cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  .member-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding: 28px;
+    border: 1px solid #ede5dd;
+    border-radius: 28px;
+    background: linear-gradient(180deg, #fffdfb 0%, #ffffff 100%);
+    box-shadow: 0 16px 36px rgba(17, 24, 39, 0.06);
+    text-align: left;
+    transition: transform 0.22s ease, box-shadow 0.22s ease,
+      border-color 0.22s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 44px rgba(17, 24, 39, 0.1);
+      border-color: #dcc8b7;
     }
 
-    .member-card {
-      background-color: white;
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 350px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      text-align: left;
+    &.featured {
+      background: linear-gradient(180deg, #fff8f4 0%, #fff 100%);
+      border-color: #d6b49a;
+      box-shadow: 0 22px 50px rgba(128, 70, 34, 0.12);
+    }
 
-      .package-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        margin-bottom: 20px;
+    &.current {
+      border-color: #c9d7d2;
+      background: linear-gradient(180deg, #f9fdfb 0%, #fff 100%);
+    }
+  }
 
-        .package-title,
-        .package-title-2 {
-          font-size: 18px;
-          font-weight: 600;
-          color: #9c7055;
-          background-color: #ede0cf;
-          padding: 4px 12px;
-          border-radius: 15px;
-        }
+  .card-top {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
 
-        .package-badge {
-          font-size: 14px;
-          font-weight: 500;
-          color: red;
-        }
+  .plan-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .plan-name {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 0 14px;
+    border-radius: 999px;
+    background-color: #f4ebe2;
+    color: #9c7055;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .plan-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 0 12px;
+    border-radius: 999px;
+    background-color: #1f2937;
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+
+    &.muted {
+      background-color: #e5e7eb;
+      color: #374151;
+    }
+  }
+
+  .package-price {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    strong {
+      font-size: clamp(1.9rem, 3vw, 2.5rem);
+      line-height: 1.05;
+      color: #111827;
+    }
+
+    &.free strong {
+      color: #111827;
+    }
+  }
+
+  .original-price {
+    color: #9ca3af;
+    font-size: 0.92rem;
+  }
+
+  .package-description {
+    margin: 0 0 22px;
+    color: #4b5563;
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+
+  .package-features {
+    display: grid;
+    gap: 10px;
+    padding: 0;
+    margin: 0 0 24px;
+    list-style: none;
+    flex: 1;
+
+    li {
+      position: relative;
+      padding-left: 28px;
+      color: #1f2937;
+      font-size: 0.96rem;
+      line-height: 1.5;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 9px;
+        left: 0;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #804622;
       }
 
-      .package-price {
-        font-size: 40px;
-        font-weight: bold;
-        color: #000;
-        margin-bottom: 10px;
+      &.muted {
+        color: #9ca3af;
 
-        &.free {
-          color: #000;
-        }
-      }
-
-      .package-description {
-        font-size: 15px;
-        color: #666;
-        line-height: 1.4;
-        margin-bottom: 20px;
-        flex-grow: 1;
-      }
-
-      .package-features {
-        list-style: none;
-        padding: 0;
-        margin-bottom: 30px;
-        width: 100%;
-
-        li {
-          display: flex;
-          align-items: center;
-          margin-bottom: 10px;
-          font-size: 15px;
-          color: #333;
-
-          .check-icon {
-            margin-right: 10px;
-          }
-        }
-      }
-
-      .package-button {
-        display: block;
-        width: 100%;
-        padding: 12px;
-        font-size: 16px;
-        font-weight: 600;
-        text-align: center;
-        border: none;
-        border-radius: 20px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        background-color: #000;
-        color: white;
-
-        &:hover {
-          background-color: #333;
-        }
-
-        &.primary {
-          background-color: #ff2d55;
-          color: white;
-
-          &:hover {
-            background-color: rgb(201, 145, 145);
-          }
-        }
-
-        &.super {
-          background-color: white;
-          color: black;
-          border: 1px solid #d7d7d7;
-
-          &:hover {
-            color: white;
-            background-color: #865b40;
-          }
-        }
-
-        // ✅ Style cho nút bị disable
-        &:disabled {
-          background-color: #ccc !important;
-          color: #888 !important;
-          cursor: not-allowed;
-          pointer-events: none;
-          position: relative;
-
-          &::after {
-            content: "";
-            font-size: 14px;
-          }
-        }
-      }
-
-      &.monthly {
-        background-color: white;
-
-        .package-title {
-          background-color: #f9dedc;
-        }
-
-        .package-price {
-          color: black;
-        }
-      }
-
-      &.yearly {
-        .package-price {
-          color: black;
+        &::before {
+          background-color: #d1d5db;
         }
       }
     }
   }
+
+  .package-button {
+    width: 100%;
+    min-height: 48px;
+    border: 1.5px solid #111827;
+    border-radius: 999px;
+    background-color: #fff;
+    color: #111827;
+    font-size: 0.98rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.22s ease, color 0.22s ease,
+      border-color 0.22s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      background-color: #111827;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    &.primary {
+      background-color: #111827;
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(17, 24, 39, 0.12);
+
+      &:hover {
+        background-color: #2b3442;
+        border-color: #2b3442;
+      }
+    }
+
+    &:disabled {
+      background-color: #f3f4f6;
+      border-color: #e5e7eb;
+      color: #9ca3af;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+  }
 }
 
-// Responsive for tablets
 @media (max-width: 768px) {
   .card-member-section {
-    padding: 60px 0;
+    margin-bottom: 60px;
 
-    h2 {
-      font-size: 36px;
-      margin-bottom: 30px;
+    .container {
+      padding: 0 14px;
+    }
+
+    .section-heading {
+      margin-bottom: 28px;
     }
 
     .cards-container {
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
     }
 
     .member-card {
-      max-width: 300px;
-      padding: 25px;
-
-      .package-header {
-        margin-bottom: 15px;
-
-        .package-title {
-          font-size: 16px;
-          padding: 6px 12px;
-        }
-
-        .package-badge {
-          font-size: 12px;
-        }
-      }
-
-      .package-price {
-        font-size: 32px;
-        margin-bottom: 8px;
-      }
-
-      .package-description {
-        font-size: 14px;
-        margin-bottom: 15px;
-      }
-
-      .package-features {
-        margin-bottom: 20px;
-
-        li {
-          font-size: 14px;
-          margin-bottom: 8px;
-
-          .check-icon {
-            margin-right: 8px;
-          }
-        }
-      }
-
-      .package-button {
-        padding: 10px;
-        font-size: 15px;
-      }
+      padding: 22px;
+      border-radius: 22px;
     }
   }
 }
 
-// Responsive for mobile
 @media (max-width: 480px) {
   .card-member-section {
-    padding: 40px 0;
+    margin-bottom: 48px;
 
-    h2 {
-      font-size: 28px;
-      margin-bottom: 20px;
+    .container {
+      padding: 0;
+    }
+
+    .section-heading {
+      margin-bottom: 22px;
+      padding: 0 14px;
     }
 
     .cards-container {
-      gap: 15px;
+      grid-template-columns: 1fr;
+      gap: 16px;
     }
 
     .member-card {
-      max-width: 100%;
-      padding: 20px;
+      padding: 20px 18px;
+      border-radius: 20px;
+    }
 
-      .package-header {
-        margin-bottom: 10px;
+    .package-description,
+    .package-features li {
+      font-size: 0.92rem;
+    }
 
-        .package-title {
-          font-size: 15px;
-          padding: 5px 10px;
-        }
-
-        .package-badge {
-          font-size: 11px;
-        }
-      }
-
-      .package-price {
-        font-size: 28px;
-        margin-bottom: 6px;
-      }
-
-      .package-description {
-        font-size: 13px;
-        margin-bottom: 10px;
-      }
-
-      .package-features {
-        margin-bottom: 15px;
-
-        li {
-          font-size: 13px;
-          margin-bottom: 6px;
-
-          .check-icon {
-            margin-right: 6px;
-          }
-        }
-      }
-
-      .package-button {
-        padding: 8px;
-        font-size: 14px;
-      }
+    .package-button {
+      min-height: 46px;
     }
   }
 }

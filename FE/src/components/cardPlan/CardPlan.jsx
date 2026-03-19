@@ -1,33 +1,35 @@
 import React, { useEffect, useState } from "react";
-import "./CardPlan.scss";
 import { GrPlan } from "react-icons/gr";
 import { QuitPlanService } from "../../services/quitPlan.service";
+import "./CardPlan.scss";
 
 const CardPlan = ({
   selectedStartDate,
   onLastStageEndDate,
   onUpdateCustomMaxValues,
+  isLoading = false,
 }) => {
   const [suggestedStages, setSuggestedStages] = useState([]);
   const [maxCigsByStage, setMaxCigsByStage] = useState([]);
+
   useEffect(() => {
     if (!selectedStartDate) {
-      setSuggestedStages([]); // reset nếu chưa chọn ngày
+      setSuggestedStages([]);
+      setMaxCigsByStage([]);
       return;
     }
 
     QuitPlanService.getSuggestedQuitPlan()
       .then((res) => {
-        const stages = res.suggested_stages || res.data?.suggested_stages || [];
-
+        const stages = res?.suggested_stages || res?.data?.suggested_stages || [];
         const parsedStages = stages.map((stage) => {
           const start = new Date(stage.start_date);
           const end = new Date(stage.end_date);
 
           return {
             ...stage,
-            start_date_obj: isNaN(start.getTime()) ? null : start,
-            end_date_obj: isNaN(end.getTime()) ? null : end,
+            start_date_obj: Number.isNaN(start.getTime()) ? null : start,
+            end_date_obj: Number.isNaN(end.getTime()) ? null : end,
           };
         });
 
@@ -37,100 +39,108 @@ const CardPlan = ({
         );
 
         if (parsedStages.length > 0 && onLastStageEndDate) {
-          const last = parsedStages[parsedStages.length - 1];
-          onLastStageEndDate(last.end_date_obj);
+          onLastStageEndDate(parsedStages[parsedStages.length - 1].end_date_obj);
         }
       })
       .catch((err) => {
         console.error("Failed to fetch suggested stages", err);
       });
-  }, [selectedStartDate]);
+  }, [selectedStartDate, onLastStageEndDate]);
 
-  const getTotalDays = () => {
-    if (suggestedStages.length === 0) return 0;
-    const first = suggestedStages[0].start_date_obj;
-    const last = suggestedStages[suggestedStages.length - 1].end_date_obj;
-    if (!first || !last || isNaN(first) || isNaN(last)) return 0;
-
-    const diffTime = last - first;
-    return Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
-  };
   useEffect(() => {
     if (onUpdateCustomMaxValues) {
       onUpdateCustomMaxValues(maxCigsByStage);
     }
-  }, [maxCigsByStage]);
+  }, [maxCigsByStage, onUpdateCustomMaxValues]);
+
+  const getTotalDays = () => {
+    if (suggestedStages.length === 0) return 0;
+    const firstDate = suggestedStages[0].start_date_obj;
+    const lastDate = suggestedStages[suggestedStages.length - 1].end_date_obj;
+
+    if (!firstDate || !lastDate) return 0;
+    return Math.floor((lastDate - firstDate) / (1000 * 60 * 60 * 24)) + 1;
+  };
 
   return (
-    <div className="plan-container">
-      <div className="plan-title">
-        <span className="calendar-icon">
+    <section className="card-plan">
+      <div className="card-plan__header">
+        <span className="card-plan__icon">
           <GrPlan />
         </span>
-        <h2>Suggested Plan Based on Your Smoking Data</h2>
-      </div>
-      <div className="plan-cards">
-        <div
-          className="card full-width"
-          style={{ maxWidth: "1000px", width: "100%", margin: "0 auto" }}
-        >
-          <h3>Personalized Quit Plan</h3>
-          {!selectedStartDate ? (
-            <p className="text-center text-gray-500">
-              Please select a start date to view your personalized plan.
-            </p>
-          ) : (
-            <>
-              <p className="time">Estimated duration: {getTotalDays()} days</p>
-              <p>
-                This plan is tailored to your smoking status and quitting goal.
-              </p>
-              <h4>Stages:</h4>
-              <ul
-                className="stage-row"
-                style={{ justifyContent: "space-between" }}
-              >
-                {suggestedStages.map((stage, index) => (
-                  <li className="stage-box" key={index}>
-                    <div className="stage-item">
-                      <div className="stage-name">
-                        <strong>{stage.name}</strong>
-                      </div>
-                      <div className="stage-date">
-                        ({stage.start_date_obj?.toLocaleDateString("vi-VN")} →{" "}
-                        {stage.end_date_obj?.toLocaleDateString("vi-VN")})
-                      </div>
-                      <div className="stage-description">
-                        {stage.description.split("\n").map((line, i) => (
-                          <div key={i}>{line}</div>
-                        ))}
-                      </div>
-
-                      <div style={{ marginTop: "8px" }}>
-                        <label style={{ fontWeight: 500 }}>
-                          Max cigarettes/day:{" "}
-                        </label>
-                        <input
-                          type="number"
-                          value={maxCigsByStage[index]}
-                          onChange={(e) => {
-                            const newVals = [...maxCigsByStage];
-                            newVals[index] = Number(e.target.value);
-                            setMaxCigsByStage(newVals);
-                          }}
-                          min={0}
-                          style={{ width: "60px", marginLeft: "8px" }}
-                        />
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
+        <div>
+          <h2>Suggested structure</h2>
+          <p>We generate stages from your smoking data, then you fine-tune the daily limits.</p>
         </div>
       </div>
-    </div>
+
+      {isLoading ? (
+        <div className="card-plan__skeleton">
+          <div className="card-plan__skeleton-summary">
+            <div className="card-plan__skeleton-box"></div>
+            <div className="card-plan__skeleton-box"></div>
+          </div>
+          <div className="card-plan__skeleton-grid">
+            <div className="card-plan__skeleton-stage"></div>
+            <div className="card-plan__skeleton-stage"></div>
+            <div className="card-plan__skeleton-stage"></div>
+          </div>
+        </div>
+      ) : !selectedStartDate ? (
+        <div className="card-plan__empty">
+          Please select a start date to preview your personalized plan.
+        </div>
+      ) : (
+        <>
+          <div className="card-plan__summary">
+            <div className="card-plan__summary-item">
+              <span>Estimated duration</span>
+              <strong>{getTotalDays()} days</strong>
+            </div>
+            <div className="card-plan__summary-item">
+              <span>Total stages</span>
+              <strong>{suggestedStages.length}</strong>
+            </div>
+          </div>
+
+          <div className="card-plan__grid">
+            {suggestedStages.map((stage, index) => (
+              <article className="card-plan__stage" key={`${stage.name}-${index}`}>
+                <div className="card-plan__stage-top">
+                  <span className="card-plan__stage-index">Stage {index + 1}</span>
+                  <h3>{stage.name}</h3>
+                  <p>
+                    {stage.start_date_obj?.toLocaleDateString("vi-VN")} to{" "}
+                    {stage.end_date_obj?.toLocaleDateString("vi-VN")}
+                  </p>
+                </div>
+
+                <div className="card-plan__stage-body">
+                  {stage.description?.split("\n").map((line, lineIndex) => (
+                    <p key={lineIndex}>{line}</p>
+                  ))}
+                </div>
+
+                <div className="card-plan__field">
+                  <label htmlFor={`max-cigarettes-${index}`}>Max cigarettes/day</label>
+                  <input
+                    id={`max-cigarettes-${index}`}
+                    type="number"
+                    value={maxCigsByStage[index] ?? 0}
+                    onChange={(e) => {
+                      const nextValues = [...maxCigsByStage];
+                      nextValues[index] = Number(e.target.value);
+                      setMaxCigsByStage(nextValues);
+                    }}
+                    min={0}
+                  />
+                </div>
+              </article>
+            ))}
+          </div>
+        </>
+      )}
+    </section>
   );
 };
 

@@ -9,6 +9,7 @@ import { useAuth } from "../../context/authContext";
 import { auth, provider } from "../../config/firebase.config";
 import { ROUTER_URL } from "../../const/router.const";
 import { message } from "antd";
+import quit from "../../assets/quit.png";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -73,68 +74,94 @@ const LoginPage = () => {
 
   return (
     <div className="login-page">
-      <div className="login-container">
-        <h1 className="main-title">Welcome back!</h1>
-        <p className="subtitle">
-          Welcome to Moca! Wishing you a happy and healthy day!
-        </p>
+      <div className="login-shell">
+        <section className="login-hero">
+          <h1 className="login-hero__title">Return to your quit journey.</h1>
+          <p className="login-hero__description">
+            Track milestones, stay close to your coach, and keep your plan in
+            motion with the same calm experience used across the rest of SC.
+          </p>
 
-        <form className="login-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">Email address*</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
+          <div className="login-hero__media">
+            <img src={quit} alt="Quit smoking support journey" />
+          </div>
+        </section>
+
+        <div className="login-container">
+          <div className="login-container__header">
+            <span className="login-container__tag">Sign in</span>
+            <h2 className="main-title">Welcome back</h2>
+            <p className="subtitle">
+              Continue where you left off and manage your progress with one
+              account.
+            </p>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Password*</label>
-            <div className="password-input-wrapper">
+          <form className="login-form" onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
               <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                name="password"
-                placeholder="Please enter your password"
-                value={formData.password}
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                value={formData.email}
                 onChange={handleChange}
                 required
               />
-              <span className="eye-icon" onClick={togglePasswordVisibility}>
-                {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
-              </span>
             </div>
-          </div>
 
-          <Link to="/forgot-password" className="forgot-password">
-            Forgot password?
-          </Link>
+            <div className="form-group">
+              <div className="form-group__label-row">
+                <label htmlFor="password">Password</label>
+                <Link to="/forgot-password" className="forgot-password">
+                  Forgot password?
+                </Link>
+              </div>
+              <div className="password-input-wrapper">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+                <button
+                  type="button"
+                  className="eye-icon"
+                  onClick={togglePasswordVisibility}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                </button>
+              </div>
+            </div>
 
-          <button type="submit" className="login-button" disabled={loading}>
-            {loading ? "Signing in..." : "Sign In"}
-          </button>
+            <button type="submit" className="login-button" disabled={loading}>
+              {loading ? "Signing in..." : "Sign In"}
+            </button>
 
-          <div className="social-login-divider">
-            <span>Or sign in with</span>
-          </div>
+            <div className="social-login-divider">
+              <span>Or continue with</span>
+            </div>
 
-          <button
-            type="button"
-            className="google-login-button"
-            onClick={handleGoogleLogin}
-          >
-            <FcGoogle className="google-icon" />
-          </button>
+            <button
+              type="button"
+              className="google-login-button"
+              onClick={handleGoogleLogin}
+            >
+              <FcGoogle className="google-icon" />
+              <span>Sign in with Google</span>
+            </button>
 
-          <p className="signup-link">
-            Don't have an account? <Link to="/register">Sign up</Link>
-          </p>
-        </form>
+            <p className="signup-link">
+              Don&apos;t have an account?{" "}
+              <Link to={ROUTER_URL.COMMON.REGISTER}>Create one</Link>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );

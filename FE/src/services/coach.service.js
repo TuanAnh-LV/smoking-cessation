@@ -6,7 +6,7 @@ export const CoachService = {
     return BaseService.get({
       url: API.COACH.GET_COACH_RELATIONSHIP,
       isAuth: true,
-      isLoading: true,
+      isLoading: false,
     });
   },
 createCoach: (formData) => {
@@ -21,7 +21,7 @@ createCoach: (formData) => {
     return BaseService.get({
       url: API.COACH.GET_COACH_BY_ID.replace(":id", id),
       isAuth: true,
-      isLoading: true,
+      isLoading: false,
     });
   },
 

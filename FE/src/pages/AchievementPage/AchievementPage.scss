@@ -1,101 +1,131 @@
-.achievement-section {
-  padding: 20px;
+.achievement-page {
+  padding: 28px 20px 72px;
+}
+
+.achievement-hero {
+  max-width: 840px;
+  margin: 0 auto 28px;
   text-align: center;
+
+
   h1 {
-    font-size: 3em;
-    color: black; // Reddish color for title
-    margin-bottom: 10px;
-    font-weight: 600;
-  }
-  h2 {
-    font-size: 50px;
-    font-weight: 600;
-    margin-bottom: 10px;
+    margin: 0 0 12px;
+      color: #804622;
+      font-size: clamp(2.3rem, 4.9vw, 4rem);
+      line-height: 1.05;
+      font-weight: 700;
+      letter-spacing: -0.03em;
   }
 
   p {
-    font-size: 16px;
-    color: BLACK;
-    margin-bottom: 20px;
-  }
-  .full-badge {
-    background-color: #ffffff;
-    font-size: 50px;
-    margin-bottom: 10px;
-    text-align: left;
-    padding: 40px;
-    max-width: 1500px;
-    border-radius: 20px;
-    margin: auto; /* Center the block and add vertical margin */
-
-    h3 {
-      font-weight: 400;
-      font-size: 30px; /* Adjust font size as needed */
-      margin-bottom: 30px;
-    }
+    margin: 0 auto;
+    max-width: 44ch;
+    color: #4b5563;
+    font-size: clamp(1rem, 1.7vw, 1.12rem);
+    line-height: 1.75;
   }
 }
 
-.badge-section-content {
-  max-width: 900px; /* Limit the width of the content */
-  margin: 20px auto; /* Center the content block and add vertical margin */
-  text-align: left; /* Align text within this section to the left */
+.achievement-stats {
+  margin-bottom: 28px;
+}
+
+.achievement-sections {
+  display: grid;
+  gap: 24px;
+}
+
+.achievement-panel {
+  padding: 28px;
+  border: 1px solid #eee4db;
+  border-radius: 30px;
+  background: linear-gradient(180deg, #fffdfa 0%, #ffffff 100%);
+  box-shadow: 0 18px 40px rgba(17, 24, 39, 0.06);
+
+  &--upcoming {
+    background: linear-gradient(180deg, #fff9f4 0%, #ffffff 100%);
+  }
+}
+
+.achievement-panel__header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  text-align: left;
 
   h2 {
-    font-size: 20px; /* Slightly smaller than main title */
-    margin-bottom: 15px; /* Space below the heading */
-    color: #333; /* Darker color for section heading */
+    margin: 6px 0 0;
+    color: #111827;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    line-height: 1.15;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.95rem;
+    white-space: nowrap;
   }
 }
 
-.badge-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px; /* Adjust spacing as needed */
-  justify-content: center; /* Center the badges within the flex container */
-  margin-top: 0; /* Remove top margin as it's handled by badge-section-content */
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
 
-  /* Optional: styles for responsive layout if needed */
-  @media (min-width: 768px) {
-    display: flex; /* Keep flex for horizontal layout */
-    grid-template-columns: none; /* Remove grid styles */
-    justify-content: center; /* Ensure centering on larger screens */
+@media (max-width: 768px) {
+  .achievement-page {
+    padding: 22px 14px 56px;
+  }
+
+  .achievement-panel {
+    padding: 22px;
+    border-radius: 24px;
+  }
+
+  .achievement-panel__header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+
+    p {
+      white-space: normal;
+    }
+  }
+
+  .achievement-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
   }
 }
 
-.upcoming-badge-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px; /* Adjust spacing as needed */
-  justify-content: center; /* Center the badges within the flex container */
-  margin-top: 20px; /* Add some space above the upcoming badge list */
-}
+@media (max-width: 480px) {
+  .achievement-page {
+    padding: 18px 14px 44px;
+  }
 
-.badge-frame {
-  // This class might not be needed anymore if we use badge-section-content
-  // Review and potentially remove if redundant.
-  border: 1px solid #a7d3ff; /* Light blue border */
-  border-radius: 10px; /* Rounded corners */
-  padding: 20px; /* Padding inside the frame */
-  margin-top: 30px; /* Space above the frame */
-  max-width: 900px; /* Limit the width of the frame */
-  margin-left: auto; /* Center the frame */
-  margin-right: auto; /* Center the frame */
-  background-color: #ffffff; /* White background for the frame */
-}
+  .achievement-hero {
+    margin-bottom: 22px;
 
-.upcoming-badge-section {
-  background-color: #ffffff;
-  margin-top: 20px; /* Add space between achieved and upcoming sections */
-  text-align: left;
-  padding: 40px;
-  max-width: 1500px;
-  border-radius: 20px;
-  margin: 20px auto; /* Center the block and add vertical margin */
+    p {
+      line-height: 1.65;
+    }
+  }
 
-  h3 {
-    font-weight: 400;
-    font-size: 30px; /* Adjust font size as needed */
-    margin-bottom: 20px; /* Add space below the title */
+  .achievement-stats {
+    margin-bottom: 22px;
+  }
+
+  .achievement-panel {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .achievement-grid {
+    grid-template-columns: 1fr;
   }
 }

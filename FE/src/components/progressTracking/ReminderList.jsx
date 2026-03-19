@@ -1,7 +1,8 @@
 import React from "react";
 import { Trash2, Clock } from "lucide-react";
-import { ReminderService } from "../../services/reminder.service";
 import { message } from "antd";
+import { ReminderService } from "../../services/reminder.service";
+import "./ReminderList.scss";
 
 const ReminderList = ({ reminders, onDelete }) => {
   if (!reminders?.length) return null;
@@ -17,37 +18,38 @@ const ReminderList = ({ reminders, onDelete }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-5 mb-5">
-      <h3 className="text-md font-semibold mb-4 text-gray-800 flex items-center gap-2">
-        <Clock size={18} /> Your Reminders
-      </h3>
+    <div className="reminder-list">
+      <div className="reminder-list__header">
+        <h3>
+          <Clock size={18} />
+          Your reminders
+        </h3>
+      </div>
 
-      <ul className="space-y-4">
-        {reminders.map((r) => (
-          <li
-            key={r._id}
-            className="border border-gray-200 rounded-lg px-4 py-3 flex justify-between items-center hover:bg-gray-50"
-          >
-            <div>
-              <p className="font-medium text-gray-800">{r.title}</p>
-              {r.content && (
-                <p className="text-sm text-gray-600">{r.content}</p>
+      <ul className="reminder-list__items">
+        {reminders.map((reminder) => (
+          <li key={reminder._id} className="reminder-list__item">
+            <div className="reminder-list__content">
+              <p className="reminder-list__title">{reminder.title}</p>
+              {reminder.content && (
+                <p className="reminder-list__description">{reminder.content}</p>
               )}
-              <p className="text-xs text-gray-500 mt-1">
-                🕒{" "}
-                {new Date(r.remind_at).toLocaleString("vi-VN", {
+              <p className="reminder-list__time">
+                {new Date(reminder.remind_at).toLocaleString("vi-VN", {
                   hour: "2-digit",
                   minute: "2-digit",
                   day: "2-digit",
                   month: "2-digit",
                   year: "numeric",
-                })}{" "}
-                {r.is_recurring ? `• ${r.repeat_pattern}` : ""}
+                })}
+                {reminder.is_recurring ? ` • ${reminder.repeat_pattern}` : ""}
               </p>
             </div>
+
             <button
-              onClick={() => handleDelete(r._id)}
-              className="text-red-500 hover:text-red-700 p-1"
+              type="button"
+              onClick={() => handleDelete(reminder._id)}
+              className="reminder-list__delete"
               title="Delete"
             >
               <Trash2 size={18} />

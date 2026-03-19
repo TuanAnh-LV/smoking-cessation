@@ -1,0 +1,21 @@
+.stage-chart {
+  padding-top: 12px;
+
+  h4 {
+    margin: 0 0 12px;
+    color: #111827;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+}
+
+.stage-chart__canvas {
+  width: 100%;
+  height: 300px;
+}
+
+.stage-chart__empty {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.92rem;
+}

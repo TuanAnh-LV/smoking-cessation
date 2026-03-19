@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { BadgeService } from "../../services/badge.service";
 import StatCards from "../../components/StartCards/StatCards";
-import "../AchievementPage/AchievementPage.scss";
-
+import "./AchievementPage.scss";
 import { IoMedalOutline, IoStar } from "react-icons/io5";
-
 import { RiBookmarkLine } from "react-icons/ri";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import BadgeCard from "../../components/BadgeCard/BadgeCard";
@@ -16,20 +14,21 @@ const AchievementPage = () => {
   const [statData, setStatData] = useState({
     noSmokingData: {
       value: "0",
-      label: "Badge achieved",
+      label: "Badges achieved",
       icon: IoMedalOutline,
     },
     savingsData: {
       value: "0",
-      label: "Upcoming badge",
+      label: "Upcoming badges",
       icon: RiBookmarkLine,
     },
     healthData: {
       value: "0%",
-      label: "Complete",
+      label: "Completion",
       icon: IoCheckmarkCircleOutline,
     },
   });
+
   const isLoggedIn = () => !!localStorage.getItem("token");
 
   useEffect(() => {
@@ -47,17 +46,17 @@ const AchievementPage = () => {
           setStatData({
             noSmokingData: {
               value: `${summary.badge_achieved_count}`,
-              label: "Badge achieved",
+              label: "Badges achieved",
               icon: IoMedalOutline,
             },
             savingsData: {
               value: `${summary.badge_upcoming_count}`,
-              label: "Upcoming badge",
+              label: "Upcoming badges",
               icon: RiBookmarkLine,
             },
             healthData: {
               value: `${summary.completion_rate}%`,
-              label: "Complete",
+              label: "Completion",
               icon: IoCheckmarkCircleOutline,
             },
           });
@@ -80,37 +79,36 @@ const AchievementPage = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const fetchBadges = async () => {
-      try {
-        const achievedRes = await BadgeService.getUserBadges();
-        setAchievedBadges(achievedRes.data.badges || []);
-
-        const upcomingRes = await BadgeService.getUpcomingBadges();
-        setUpcomingBadges(upcomingRes.data.badges || []);
-      } catch (err) {
-        console.error("Failed to load badges", err);
-      }
-    };
-
-    fetchBadges();
-  }, []);
-
   return (
-    <div className="achievement-section">
-      <h1>Achievement badge</h1>
-      <p>Celebrate important milestones in your smoking cessation journey</p>
-      <StatCards
-        noSmokingData={statData.noSmokingData}
-        savingsData={statData.savingsData}
-        healthData={statData.healthData}
-      />
+    <div className="achievement-page">
+      <section className="achievement-hero">
+        <h1>Achievement badges</h1>
+        <p>
+          Celebrate each smoke-free milestone and keep track of the next badge
+          waiting on your journey.
+        </p>
+      </section>
 
-      {isLoggedIn() && (
-        <>
-          <div className="full-badge">
-            <h3>Badge achieved</h3>
-            <div className="badge-list">
+      <div className="achievement-stats">
+        <StatCards
+          noSmokingData={statData.noSmokingData}
+          savingsData={statData.savingsData}
+          healthData={statData.healthData}
+        />
+      </div>
+
+      {isLoggedIn() ? (
+        <div className="achievement-sections">
+          <section className="achievement-panel">
+            <div className="achievement-panel__header">
+              <div>
+                <span className="achievement-panel__label">Unlocked</span>
+                <h2>Badges achieved</h2>
+              </div>
+              <p>{achievedBadges.length} collected</p>
+            </div>
+
+            <div className="achievement-grid">
               {achievedBadges.map((badge) => (
                 <BadgeCard
                   key={badge._id}
@@ -124,18 +122,25 @@ const AchievementPage = () => {
                           "en-US",
                           {
                             timeZone: "UTC",
-                          }
+                          },
                         )
                       : ""
                   }
                 />
               ))}
             </div>
-          </div>
+          </section>
 
-          <div className="upcoming-badge-section">
-            <h3>Upcoming badge</h3>
-            <div className="upcoming-badge-list">
+          <section className="achievement-panel achievement-panel--upcoming">
+            <div className="achievement-panel__header">
+              <div>
+                <span className="achievement-panel__label">Next goals</span>
+                <h2>Upcoming badges</h2>
+              </div>
+              <p>{upcomingBadges.length} in progress</p>
+            </div>
+
+            <div className="achievement-grid">
               {upcomingBadges.map((badge) => (
                 <UpcomingBade
                   key={badge._id}
@@ -146,15 +151,18 @@ const AchievementPage = () => {
                 />
               ))}
             </div>
+          </section>
+        </div>
+      ) : (
+        <section className="achievement-panel">
+          <div className="achievement-panel__header">
+            <div>
+              <h2>All available badges</h2>
+            </div>
+            <p>Sign in to track progress</p>
           </div>
-        </>
-      )}
 
-      {/* Public fallback if NOT logged in */}
-      {!isLoggedIn() && (
-        <div className="full-badge">
-          <h3>All available badges</h3>
-          <div className="badge-list">
+          <div className="achievement-grid">
             {achievedBadges.map((badge) => (
               <BadgeCard
                 key={badge._id}
@@ -165,7 +173,7 @@ const AchievementPage = () => {
               />
             ))}
           </div>
-        </div>
+        </section>
       )}
     </div>
   );
