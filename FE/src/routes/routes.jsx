@@ -33,6 +33,7 @@ const AdminDashboard = lazy(() => import("../pages/Dashboard/Admin/AdminDashboar
 const BadgesManagement = lazy(() => import("../pages/Dashboard/Admin/BadgesManagement"));
 const CoachesManagement = lazy(() => import("../pages/Dashboard/Admin/CoachesManagement"));
 const MembershipsManagement = lazy(() => import("../pages/Dashboard/Admin/MembershipsManagement"));
+const CategoriesManagement = lazy(() => import("../pages/Dashboard/Admin/CategoriesManagement"));
 const QuitPlansManagement = lazy(() => import("../pages/Dashboard/Admin/QuitPlansManagement"));
 const TransactionsManagement = lazy(() => import("../pages/Dashboard/Admin/TransactionsManagement"));
 const UsersManagement = lazy(() => import("../pages/Dashboard/Admin/UsersManagement"));
@@ -68,8 +69,23 @@ const routes = [
       { path: ROUTER_URL.COMMON.PAYMENT_SUCCESS, element: <PaymentSuccess /> },
       { path: "/blogs", element: <BlogCategoryListPage /> },
       { path: "/blogs/category/:categoryId", element: <BlogCategoryPage /> },
+      {
+        path: "/blogs/:id/edit",
+        element: (
+          <ProtectedRoute allowedRoles={["member", "coach", "admin"]}>
+            <BlogCreatePage />
+          </ProtectedRoute>
+        ),
+      },
       { path: "/blogs/:id", element: <BlogDetailPage /> },
-      { path: "/blogs/create", element: <BlogCreatePage /> },
+      {
+        path: "/blogs/create",
+        element: (
+          <ProtectedRoute allowedRoles={["member", "coach", "admin"]}>
+            <BlogCreatePage />
+          </ProtectedRoute>
+        ),
+      },
       { path: ROUTER_URL.COMMON.CALL_PAGE, element: <CallPage /> },
       { path: ROUTER_URL.COMMON.VERIFY_EMAIL, element: <VerifyEmailPage /> },
     ],
@@ -92,6 +108,7 @@ const routes = [
       { path: "badges/create", element: <BadgeFormPage /> },
       { path: "badges/:id", element: <BadgeFormPage /> },
       { path: "memberships", element: <MembershipsManagement /> },
+      { path: "categories", element: <CategoriesManagement /> },
       { path: "quit-plans", element: <QuitPlansManagement /> },
       { path: "transactions", element: <TransactionsManagement /> },
       { path: "users", element: <UsersManagement /> },

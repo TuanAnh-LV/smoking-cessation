@@ -45,6 +45,7 @@ export const ROUTER_URL = {
     MANAGE_BADGE:"badges",
     MANAGE_COACH:"coaches",
     MANAGE_MEMBERSHIP:"memberships",
+    MANAGE_CATEGORY:"categories",
     MANAGE_QUITPLAN:"quit-plans",
     MANAGE_TRANSACTION:"transactions",
     MANAGE_USER:"users",

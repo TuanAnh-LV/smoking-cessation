@@ -6,21 +6,21 @@ export const BlogService = {
     return BaseService.get({
       url: API.BLOG.GET_ALL_BLOG,
       params,
-      isLoading: true
+      isLoading: true,
     });
   },
 
   getBlogById: (id) => {
     return BaseService.get({
       url: API.BLOG.GET_BLOG_BY_ID.replace(":id", id),
-      isLoading: true
+      isLoading: true,
     }).then((res) => {
-      // Flatten dữ liệu cho dễ dùng
+      const payload = res?.data || {};
       return {
-        ...res.blog,
-        likeCount: res.likeCount,
-        commentCount: res.commentCount,
-        isLikedByMe: res.blog?.isLikedByMe || false
+        ...(payload.blog || {}),
+        averageRating:
+          payload.blog?.averageRating ?? payload.averageRating ?? 0,
+        ratingCount: payload.blog?.ratingCount ?? payload.ratingCount ?? 0,
       };
     });
   },
@@ -29,20 +29,20 @@ export const BlogService = {
     return BaseService.post({
       url: API.BLOG.CREATE_BLOG,
       payload: data,
-      isLoading: true
+      isLoading: true,
     });
   },
 
   updateBlog: (id, data) => {
     return BaseService.put({
       url: API.BLOG.UPDATE_BLOG.replace(":id", id),
-      data,
+      payload: data,
       isLoading: true
     });
   },
 
   deleteBlog: (id) => {
-    return BaseService.delete({
+    return BaseService.remove({
       url: API.BLOG.DELETE_BLOG.replace(":id", id),
       isLoading: true
     });
@@ -51,21 +51,21 @@ export const BlogService = {
   likeBlog: (id) => {
     return BaseService.post({
       url: API.BLOG.LIKE_BLOG.replace(":id", id),
-      isLoading: false
+      isLoading: false,
     });
   },
 
   unlikeBlog: (id) => {
     return BaseService.post({
       url: API.BLOG.UNLIKE_BLOG.replace(":id", id),
-      isLoading: false
+      isLoading: false,
     });
   },
 
   shareBadges: (id, shared_badges) => {
     return BaseService.post({
       url: API.BLOG.SHARE_BADGES.replace(":id", id),
-      data: { shared_badges },
+      payload: { shared_badges },
       isLoading: true
     });
   }

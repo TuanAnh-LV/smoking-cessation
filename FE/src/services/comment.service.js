@@ -10,10 +10,13 @@ export const CommentService = {
     });
   },
 
-  createComment: (blogId, content) => {
+  createComment: (blogId, content, parent_id = null) => {
     return BaseService.post({
       url: API.COMMENT.CREATE_COMMENT.replace(":id", blogId),
-      payload: { content },
+      payload: {
+        content,
+        ...(parent_id ? { parent_id } : {}),
+      },
       isLoading: false
     });
   },
@@ -27,7 +30,7 @@ export const CommentService = {
   },
 
   deleteComment: (commentId) => {
-    return BaseService.delete({
+    return BaseService.remove({
       url: API.COMMENT.DELETE_COMMENT.replace(":id", commentId),
       isLoading: false
     });

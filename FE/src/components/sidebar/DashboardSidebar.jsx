@@ -11,6 +11,7 @@ import {
   Home,
   ChartBar,
   MessageCircle,
+  FolderTree,
 } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
@@ -21,6 +22,7 @@ const sidebarConfig = {
     { title: "Dashboard", path: "/admin", icon: LayoutDashboard },
     { title: "Users", path: "/admin/users", icon: Users },
     { title: "Memberships", path: "/admin/memberships", icon: CreditCard },
+    { title: "Categories", path: "/admin/categories", icon: FolderTree },
     { title: "Coaches", path: "/admin/coaches", icon: UserCheck },
     { title: "Badges", path: "/admin/badges", icon: Award },
     { title: "Quit Plans", path: "/admin/quit-plans", icon: ClipboardList },
